@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package seasons.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "scoresstatsservice/seasons/v1;v1";
+
+service Seasons {
+  rpc ListSeasons (ListSeasonsRequest) returns (ListSeasonsReply) {
+    option (google.api.http) = {
+      get: "/v1/seasons"
+    };
+  };
+}
+
+message ListSeasonsRequest {
+  // sport type unique identifier
+  string sport_type_id = 1 [json_name = "sp_type_id"];
+  // is active flag, default is `true`
+  optional bool is_active = 2 [json_name = "is_active"];
+}
+
+message ListSeasonsReply {
+  repeated Season data = 1;
+
+  message Season {
+    // unique season identifier
+    string id = 1 [json_name = "id"];
+    // season title
+    string title = 2 [json_name = "name"];
+    // season start date
+    google.protobuf.Timestamp start_date = 3 [json_name = "start_dt"];
+    // season end date
+    google.protobuf.Timestamp end_date = 4 [json_name = "end_dt"];
+    // sport type unique identifier
+    string sport_type_id = 5 [json_name = "sp_id"];
+    // is active flag
+    bool is_active = 6 [json_name = "is_active"];
+  }
+}

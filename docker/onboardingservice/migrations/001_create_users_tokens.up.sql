@@ -1,0 +1,30 @@
+CREATE TABLE roles (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(50) UNIQUE NOT NULL,
+  description TEXT,
+  active BOOLEAN DEFAULT true,
+  deleted BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  created_by INT,
+  updated_by INT
+
+);
+
+CREATE TABLE users (
+   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- Используем UUID
+   first_name VARCHAR(100) NOT NULL,
+   last_name VARCHAR(100) NOT NULL,
+   email VARCHAR(100) UNIQUE NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   role_id UUID REFERENCES roles(id) ON DELETE SET NULL,
+   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tokens (
+    token TEXT PRIMARY KEY,
+    user_id UUID REFERENCES users(id),
+    expires_at TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP + interval '24 hours'),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

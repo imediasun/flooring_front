@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package api.health.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "socialmediaservice/health/v1;v1";
+
+// The Health service definition.
+service Health {
+  rpc Check (google.protobuf.Empty) returns (CheckReply) {
+    option (google.api.http) = {
+			get: "/v1/health"
+    };
+  };
+}
+
+message CheckReply {
+  reserved 4;
+  string status = 1;
+  string version = 2;
+  string env = 3;
+  string mongo = 5;
+}

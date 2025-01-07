@@ -1,0 +1,268 @@
+syntax = "proto3";
+
+package api.configuration.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "configurationservice/configuration/v1;v1";
+
+service Configuration {
+  rpc ListConfigurations (ListConfigurationsRequest) returns (ListConfigurationsReply) {
+    option (google.api.http) = {
+      get: "/v1/configurations"
+    };
+  };
+
+  rpc SaveConfigurations(SaveConfigurationsRequest) returns (SaveConfigurationsReply) {
+    option (google.api.http) = {
+      post: "/v1/configurations",
+      body: "*"
+    };
+  };
+
+  rpc FindConfiguration(FindConfigurationRequest) returns (FindConfigurationReply) {
+    option(google.api.http) = {
+      get: "/v1/configurations/config/{key}"
+    };
+  };
+
+  rpc SaveDepartmentConfiguration(SaveDepartmentConfigurationRequest) returns (SaveDepartmentConfigurationReply) {
+    option(google.api.http) = {
+      post: "/v1/configurations/department",
+      body: "*"
+    };
+  }
+
+  rpc ListDepartmentConfiguration(ListDepartmentConfigurationRequest) returns (ListDepartmentConfigurationReply) {
+    option(google.api.http) = {
+      get: "/v1/configurations/department/{department_id}",
+    };
+  }
+
+  rpc AddCttMgtAccount (AddCttMgtAccountRequest) returns (AddCttMgtAccountResponse) {
+    option (google.api.http) = {
+      put: "/v1/configurations/cttmgt/{account_type}"
+      body: "*"
+    };
+  };
+
+  rpc SetCttMgtAccountFirstImportDate
+    (SetCttMgtAccountFirstImportDateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1/configurations/cttmgt/first-import-date"
+      body: "*"
+    };
+  };
+
+  rpc SetCttMgtAccountLastImportDate
+    (SetCttMgtAccountLastImportDateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1/configurations/cttmgt/last-import-date"
+      body: "*"
+    };
+  };
+
+  rpc SetCttMgtAccountFetchError
+    (SetCttMgtAccountFetchErrorRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1/configurations/cttmgt/fetch-error"
+      body: "*"
+    };
+  };
+
+  rpc DeleteCttMgtAccount(DeleteCttMgtAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/configurations/cttmgt/delete-account"
+      body: "*"
+    };
+  };
+
+  rpc GetCttMgtReadyToSync(google.protobuf.Empty) returns (GetCttMgtReadyToSyncReply) {
+    option (google.api.http) = {
+      get: "/v1/configurations/cttmgt/sync"
+    };
+  };
+}
+
+message ListDepartmentConfigurationRequest {
+  int32 department_id = 1 [json_name = "department_id"];
+}
+
+message ListDepartmentConfigurationReply {
+  DepartmentConfiguration configs = 1 [json_name = "configs"];
+  string configuration_id = 2 [json_name = "configuration_id"];
+}
+
+message DepartmentContentManagement {
+  repeated CttMgtAccount facebooks = 1 [json_name = "facebooks"];
+  repeated CttMgtAccount instagrams = 2 [json_name = "instagrams"];
+}
+
+message Donations {
+  string donation_status = 1 [json_name = "donation_status"];
+  google.protobuf.Timestamp start_time = 2 [json_name = "start_time"];
+  google.protobuf.Timestamp end_time = 3 [json_name = "end_time"];
+  string time_zone = 4 [json_name = "time_zone"];
+  string leaderboard_status = 5 [json_name = "leaderboard_status"];
+}
+
+message SaveDepartmentConfigurationRequest {
+  int32 group_id = 1[json_name = "group_id"];
+  DepartmentConfiguration configs = 2 [json_name = "configs"];
+
+  message DepartmentConfiguration {
+    DepartmentMixedRealityExperience mxrexp = 1 [json_name = "mxrexp"];
+
+    message DepartmentMixedRealityExperience {
+      string space_id = 1 [json_name = "space_id"];
+    }
+  }
+}
+
+message SaveDepartmentConfigurationReply {
+  DepartmentConfiguration configs = 1 [json_name = "configs"];
+  string configuration_id = 2 [json_name = "configuration_id"];
+}
+
+message DepartmentConfiguration {
+  DepartmentMixedRealityExperience mxrexp = 1 [json_name = "mxrexp"];
+  DepartmentContentManagement cttmgt = 2 [json_name = "cttmgt"];
+}
+
+message DepartmentMixedRealityExperience {
+  string space_id = 1 [json_name = "space_id"];
+}
+
+message ListConfigurationsRequest {
+  string tenant_id = 1 [json_name = "tenant_id"];
+  optional int32 group_id = 2 [json_name = "group_id"];
+}
+
+message ListConfigurationsReply {
+  string tenant_id = 1 [json_name = "tenant_id"];
+  optional int32 group_id = 2 [json_name = "group_id"];
+  ConfigurationsBody configs = 3[json_name = "configs"];
+}
+
+message SaveConfigurationsRequest {
+  string tenant_id = 1 [json_name = "tenant_id"];
+  optional int32 group_id = 2 [json_name = "group_id"];
+  ConfigurationsBody configs = 3[json_name = "configs"];
+}
+
+message SaveConfigurationsReply {
+  string tenant_id = 1 [json_name = "tenant_id"];
+  optional int32 group_id = 2 [json_name = "group_id"];
+  optional ConfigurationsBody configs = 3[json_name = "configs"];
+}
+
+message FindConfigurationRequest {
+  string key = 1 [(google.api.field_behavior) = REQUIRED, json_name = "key"];
+  int32 group_id = 2 [json_name = "group_id"];
+  string tenant_id = 3 [json_name = "tenant_id"];
+}
+
+message FindConfigurationReply {
+  optional MixedRealityExperience mxrexp = 1 [json_name = "mxrexp"];
+  optional MobileOrdering mobord = 2 [json_name = "mobord"];
+  optional DepartmentContentManagement cttmgt = 3 [json_name = "cttmgt"];
+  optional Donations donats = 5 [json_name = "donats"];
+  string id = 4;
+}
+
+message ConfigurationsBody {
+  optional MixedRealityExperience mxrexp = 1 [json_name = "mxrexp"];
+  optional MobileOrdering mobord = 2 [json_name = "mobord"];
+  optional DepartmentContentManagement cttmgt = 3 [json_name = "cttmgt"];
+  optional Donations donats = 4 [json_name = "donats"];
+}
+
+message MixedRealityExperience {
+  string base_url = 1 [json_name = "base_url"];
+  string org_id = 2 [json_name = "org_id"];
+  string default_space_id = 3 [json_name = "default_space_id"];
+}
+
+message MobileOrdering {
+  string shift4_app_key = 1 [json_name = "shift4_app_key"];
+  string shift4_org_name = 2 [json_name = "shift4_org_name"];
+  string shift4_device_id = 3 [json_name = "shift4_device_id"];
+}
+
+
+message AddCttMgtAccountRequest {
+  string user_access_token = 1 [json_name = "user_access_token"];
+  int32 group_id = 2 [json_name = "group_id"];
+  string account_type = 3 [json_name = "account_type"];
+}
+
+message AddCttMgtAccountResponse {
+  string configuration_id = 1 [json_name = "configuration_id"];
+  CttMgtAccount data = 2;
+}
+
+message SetCttMgtAccountFirstImportDateRequest {
+  string configuration_id = 1 [json_name = "configuration_id"];
+  string account_type = 2 [json_name = "account_type"];
+  string account_id = 3 [json_name = "account_id"];
+  google.protobuf.Timestamp date = 4;
+}
+
+message SetCttMgtAccountLastImportDateRequest {
+  string configuration_id = 1 [json_name = "configuration_id"];
+  string account_type = 2 [json_name = "account_type"];
+  string account_id = 3 [json_name = "account_id"];
+  google.protobuf.Timestamp date = 4;
+}
+
+message SetCttMgtAccountFetchErrorRequest {
+  string configuration_id = 1 [json_name = "configuration_id"];
+  string account_type = 2 [json_name = "account_type"];
+  string account_id = 3 [json_name = "account_id"];
+  string status = 4;
+  repeated PageError errors = 5;
+
+  message PageError {
+    string page_id = 1;
+    string error = 2;
+  }
+}
+
+message DeleteCttMgtAccountRequest {
+  string configuration_id = 1 [json_name = "configuration_id"];
+  string account_type = 2 [json_name = "account_type"];
+  string account_id = 3 [json_name = "account_id"];
+}
+
+message CttMgtAccount {
+  string status = 1;
+  Account account = 2;
+  repeated Page pages = 3;
+  google.protobuf.Timestamp effective_date = 4 [json_name = "effective_date"];
+  google.protobuf.Timestamp first_import_date = 5 [json_name = "first_import_date"];
+  google.protobuf.Timestamp last_import_date = 6 [json_name = "last_import_date"];
+
+  message Account {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+  }
+
+  message Page {
+    string id = 1;
+    string name = 2;
+    string token = 3;
+  }
+}
+
+message GetCttMgtReadyToSyncReply {
+  repeated Data data = 1;
+
+  message Data {
+    string tenant_id = 1;
+    optional int32 group_id = 2;
+  }
+}

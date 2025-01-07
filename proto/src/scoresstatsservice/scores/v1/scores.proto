@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package seasons.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "scoresstatsservice/scores/v1;v1";
+
+service Scores {
+  rpc GetScoresBySport (GetScoresBySportRequest) returns (GetScoresBySportReply) {
+    option (google.api.http) = {
+      get: "/v1/scores"
+    };
+  };
+}
+
+message GetScoresBySportRequest {
+  string sp_type = 1 [json_name = "sp_type"];
+  string season = 2 [json_name = "season"];
+}
+
+message GetScoresBySportReply {
+  repeated Score scores = 1 [json_name = "scores"];
+}
+
+message Score {
+  string evt_id = 1 [json_name = "evt_id"];
+  string sp_name = 2 [json_name = "sp_name"];
+  string evt_loc = 3 [json_name = "evt_loc"];
+  string evt_loc_type = 4 [json_name = "evt_loc_type"];
+  google.protobuf.Timestamp evt_start_dttm = 5 [json_name = "evt_start_dttm"];
+  bool game_inprogress = 6 [json_name = "game_inprogress"];
+  string vtm_id = 7 [json_name = "vtm_id"];
+  string vtm_name = 8 [json_name = "vtm_name"];
+  int32 vtm_wns = 9 [json_name = "vtm_wns"];
+  int32 vtm_lss = 10 [json_name = "vtm_lss"];
+  int32 vtm_scr = 11 [json_name = "vtm_scr"];
+  string vimg_src_key = 12 [json_name = "vimg_src_key"];
+  string htm_id = 13 [json_name = "htm_id"];
+  string htm_name = 14 [json_name = "htm_name"];
+  int32 htm_wns = 15 [json_name = "htm_wns"];
+  int32 htm_lss = 16 [json_name = "htm_lss"];
+  int32 htm_scr = 17 [json_name = "htm_scr"];
+  string himg_src_key = 18 [json_name = "himg_src_key"];
+  bool complete = 19 [json_name = "complete"];
+}

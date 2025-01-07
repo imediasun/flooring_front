@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package users;
+
+import "google/api/annotations.proto";
+
+option go_package = "onboardingservice/users/v1;v1";
+
+service UserService {
+  rpc CheckEmail (CheckEmailRequest) returns (CheckEmailResponse);
+
+  rpc SignUp (SignUpRequest) returns (SignUpResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/signup"
+    };
+  }
+
+  rpc SignIn (SignInRequest) returns (SignInResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/signin"
+    };
+  }
+
+  rpc Me (MeRequest) returns (MeResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/me"
+    };
+  }
+
+  rpc Logout (LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/logout"
+    };
+  }
+}
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string role_id = 5;
+  string role_name = 6;
+}
+
+message SignUpResponse {
+    string id = 1;
+    string email = 2;
+    string first_name = 3;
+    string last_name = 4;
+}
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string token = 1;        // Authentication token
+  string id = 2;
+  string email = 3;        // User email
+  string first_name = 4;   // User's first name
+  string last_name = 5;    // User's last name
+}
+
+message MeRequest {
+  string token = 1;
+}
+
+message MeResponse {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string role_id = 5;
+  string role_name = 6;
+}
+
+message LogoutRequest {
+  string token = 1;
+}
+
+message LogoutResponse {}
+
+message CheckEmailRequest {
+    string email = 1;
+}
+
+message CheckEmailResponse {
+    bool is_unique = 1;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package api.configurationservice.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "configurationservice/wifi/v1;v1";
+
+service WiFi {
+  rpc WiFiConfig (WiFiConfigRequest) returns (WiFiConfigReply) {
+    option (google.api.http) = {
+      get: "/v1/wifi/config"
+    };
+  };
+}
+
+message WiFiConfigRequest {
+  string event_id = 1 [json_name = "event_id"];
+}
+
+message WiFiConfigReply {
+  repeated string events = 1 [json_name = "events"];
+  string ssid = 2 [json_name = "ssid"];
+  string password = 3 [json_name = "password"];
+  string lat = 4 [json_name = "lat"];
+  string long = 5 [json_name = "long"];
+  int32 conn_geo_fence = 6 [json_name = "conn_geo_fence"];
+  int32 disconn_geo_fence = 7 [json_name = "disconn_geo_fence"];
+}

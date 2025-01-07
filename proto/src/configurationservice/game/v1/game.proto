@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package api.configurationservice.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+option go_package = "configurationservice/game/v1;v1";
+
+service Game {
+  rpc ListGameUrls (google.protobuf.Empty) returns (ListGameUrlsReply) {
+    option (google.api.http) = {
+      get: "/v1/game-urls"
+    };
+  };
+
+  rpc UpdateGameConfigStatus (UpdateGameConfigStatusRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1/game/config",
+      body: "*"
+    };
+  };
+
+  rpc GetGameConfig(GetGameConfigRequest) returns (GetGameConfigReply){
+    option (google.api.http) = {
+      get: "/v1/game/{event_id}/config"
+    };
+  };
+
+  rpc UpdateGameConfig (UpdateGameConfigRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/game/config",
+      body: "*"
+    };
+  }
+
+  rpc CreateGameConfig (CreateGameConfigRequest) returns (CreateGameConfigReply) {
+    option (google.api.http) = {
+      post: "/v1/game/config",
+      body: "*"
+    };
+  }
+  rpc GetConfiguredEventIDs (GetConfiguredEventIDsRequest) returns (GetConfiguredEventIDsReply) {
+    option (google.api.http) = {
+      get: "/v1/configured-events"
+    };
+  };
+  rpc SearchGameConfigs(SearchGameConfigsRequest) returns (SearchGameConfigsReply) {
+    option (google.api.http) = {
+      post: "/v1/game/config/search",
+      body: "*"
+    };
+  }
+}
+
+message GetConfiguredEventIDsRequest {
+  string tenant_id = 1;
+}
+
+message GetConfiguredEventIDsReply {
+  repeated string ids = 1;
+}
+
+message UpdateGameConfigRequest {
+  string id = 1;
+  string event_id = 2;
+  int32 conn_geo_fence_radius = 3;
+  int32 disconn_geo_fence_radius = 4;
+  bool enable_wifi = 5;
+  bool enable_mob_ord = 6;
+  bool enable_gamification = 7;
+  string ssid = 8;
+  string password = 9;
+  string in_game_exp_url = 10;
+}
+
+message CreateGameConfigRequest {
+  string sport_id = 1;
+  string event_id = 2;
+  string event_name = 3;
+  int32 conn_geo_fence_radius = 4;
+  int32 disconn_geo_fence_radius = 5;
+  bool enable_wifi = 6;
+  bool enable_mob_ord = 7;
+  bool enable_gamification = 8;
+  string ssid = 9;
+  string password = 10;
+  string status = 11;
+  string in_game_exp_url = 12;
+}
+
+message CreateGameConfigReply {
+  GameConfig config = 1;
+}
+
+message GetGameConfigRequest {
+  string event_id = 1;
+}
+
+message GetGameConfigReply {
+  GameConfig config = 1;
+}
+
+message UpdateGameConfigStatusRequest{
+  string id = 1 [json_name = "id"];
+  string action = 2 [json_name = "action"];
+}
+
+message ListGameUrlsReply {
+  repeated string in_game_exp_urls = 1 [json_name = "in_game_exp_urls"];
+}
+
+message SearchGameConfigsRequest {
+  string query = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  string order = 4;
+}
+
+message SearchGameConfigsReply {
+  repeated GameConfig data = 1;
+  int32 total = 2;
+}
+
+message GameConfig {
+  string id = 1;
+  string tenant_id = 2 [json_name = "tenant_id"];
+  string sport_id = 3 [json_name = "sport_id"];
+  string sport_name = 4 [json_name = "sport_name"];
+  string event_id = 5 [json_name = "event_id"];
+  string event_name = 6 [json_name = "event_name"];
+  int32 conn_geo_fence_radius = 7 [json_name = "conn_geo_fence_radius"];
+  int32 disconn_geo_fence_radius = 8 [json_name = "disconn_geo_fence_radius"];
+  bool enable_wifi = 9 [json_name = "enable_wifi"];
+  bool enable_mob_ord = 10 [json_name = "enable_mob_ord"];
+  bool enable_gamification = 11 [json_name = "enable_gamification"];
+  string ssid = 12;
+  string password = 13;
+  string status = 14;
+  string in_game_exp_url = 15 [json_name = "in_game_exp_url"];
+}

@@ -1,0 +1,239 @@
+syntax = "proto3";
+
+package notifications.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+option go_package = "notificationsmgmtservice/notifications/v1;v1";
+
+service Notifications {
+  rpc Create (CreateRequest) returns (CreateReply) {
+    option (google.api.http) = {
+      post: "/v1/notifications"
+      body: "*"
+    };
+  }
+  rpc Update (UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      patch: "/v1/notifications/{id}"
+      body: "*"
+    };
+  }
+  rpc Delete (DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/notifications/{id}"
+    };
+  }
+  rpc Publish (PublishRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/notifications/{id}/publish"
+      body: "*"
+    };
+  }
+  rpc Search (SearchRequest) returns (SearchReply) {
+    option (google.api.http) = {
+      post: "/v1/notifications/search"
+      body: "*"
+    };
+  }
+  //  all the types associated with  admin role.
+  rpc GetNotificationTypes (google.protobuf.Empty) returns (GetNotificationTypesReply) {
+    option (google.api.http) = {
+      get: "/v1/types"
+    };
+  }
+
+  // all the subtypes associated with type
+  rpc GetNotificationSubTypes (GetNotificationSubTypesRequest) returns (GetNotificationSubTypesReply) {
+    option (google.api.http) = {
+      get: "/v1/type/{type_id}/subtypes"
+    };
+  }
+
+  //pages mapping
+  rpc GetPages (google.protobuf.Empty) returns (GetPagesReply) {
+    option (google.api.http) = {
+      get: "/v1/pages"
+    };
+  }
+
+  rpc GetManagementPortalNotifications (google.protobuf.Empty) returns (GetManagementPortalNotificationsReply) {
+    option (google.api.http) = {
+      get: "/v1/notifications/portal"
+    };
+  }
+
+  rpc SendEmail (SendEmailRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/notifications/email",
+      body: "*"
+    };
+  }
+}
+
+message SendEmailRequest {
+  string from = 1 [json_name = "from"];
+  string subject = 2 [json_name = "subject"];
+  string content = 3 [json_name = "content"];
+  string text_content = 4 [json_name = "text_content"];
+  repeated string to_addresses = 5 [json_name = "to_addresses"];
+}
+
+message GetNotificationSubTypesRequest {
+  string type_id = 1 [
+    (validate.rules).string.min_len = 12,
+    json_name = "type_id",
+    (google.api.field_behavior) = REQUIRED
+  ];
+}
+
+
+
+message CreateRequest {
+  string title = 1 [(google.api.field_behavior) = REQUIRED];
+  string message = 2 [(google.api.field_behavior) = REQUIRED];
+  string type_id = 3 [(google.api.field_behavior) = REQUIRED, json_name = "type_id"];
+  optional int32  sub_type_id = 4 [json_name = "sub_type_id"];
+  optional string page_id = 5 [json_name = "page_id"];
+  optional string external_url = 6 [json_name = "external_url"];
+
+  string tenant_id = 7 [json_name = "tenant_id"];
+  string recipient_id = 8 [json_name = "recipient_id"];
+  string effective_date = 9 [json_name = "effective_date"];
+  string expiry_date = 10 [json_name = "expiry_date"];
+}
+
+message CreateReply {
+  string id = 1;
+}
+
+message UpdateRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string title = 2 [(google.api.field_behavior) = REQUIRED];
+  string message = 3 [(google.api.field_behavior) = REQUIRED];
+  string type_id = 4 [(google.api.field_behavior) = REQUIRED, json_name = "type_id"];
+  optional int32  sub_type_id = 5 [json_name = "sub_type_id"];
+  optional string page_id = 6 [json_name = "page_id"];
+  optional string external_url = 7 [json_name = "external_url"];
+
+  string tenant_id = 8 [json_name = "tenant_id"];
+  string recipient_id = 9 [json_name = "recipient_id"];
+  string effective_date = 10 [json_name = "effective_date"];
+  string expiry_date = 11 [json_name = "expiry_date"];
+}
+
+message DeleteRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message PublishRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message SearchRequest {
+  // text search by `title` and `message`
+  string query = 1;
+  // order direction, one of `asc`, `desc`
+  // default is `desc`
+  // order by is `updated_at`
+  string order = 2;
+  // limit the number of results
+  int32 limit = 3;
+  // offset the results
+  int32 offset = 4;
+  // status of the notification, one of `published`, `unpublished`
+  string status = 5;
+  // type of the notification
+  string type_id = 6 [json_name = "type_id"];
+  // subtype of the notification
+  string sub_type_id = 7 [json_name = "sub_type_id"];
+  // created by user
+  int32 created_by = 8 [json_name = "created_by"];
+  // created from date, format `yyyy-mm-dd`, example `2017-07-21`
+  string created_from = 9 [json_name = "created_from", (google.api.field_behavior) = REQUIRED];
+  // created to date, format `yyyy-mm-dd`, example `2017-07-21`
+  string created_to = 10 [json_name = "created_to", (google.api.field_behavior) = REQUIRED];
+
+  string tenant_id = 11 [json_name = "tenant_id"];
+}
+
+message SearchReply {
+  repeated Notification notifications = 1;
+  int32 total = 2;
+
+  message Notification {
+    string id = 1;
+    string title = 2;
+    string message = 3;
+    bool published = 4;
+    Type type = 5;
+    optional SubType sub_type = 6 [json_name = "sub_type"];
+    string page_id = 7 [json_name = "page_id"];
+    string external_url = 8 [json_name = "external_url"];
+    User updated_by = 9 [json_name = "updated_by"];
+    google.protobuf.Timestamp updated_at = 10 [json_name = "updated_at"];
+    optional string recipient_id = 11 [json_name = "recipient_id"];
+    optional string effective_date = 12 [json_name = "effective_date"];
+    optional string expiry_date = 13 [json_name = "expiry_date"];
+
+    message Type {
+      string id = 1;
+      string name = 2;
+    }
+
+    message SubType {
+      string id = 1;
+      string name = 2;
+    }
+
+    message User {
+      int32 id = 1;
+      string first_name = 2 [json_name = "first_name"];
+      string last_name = 3 [json_name = "last_name"];
+      string middle_name = 4 [json_name = "middle_name"];
+    }
+  }
+}
+
+message GetNotificationTypesReply {
+  repeated Type types = 1;
+
+  message Type {
+    string id = 1;
+    string name = 2 ;
+  }
+}
+
+message GetNotificationSubTypesReply {
+  repeated SubType sub_types = 1;
+
+  message SubType {
+    int32 id = 1;
+    string name = 2;
+  }
+}
+
+message GetPagesReply {
+  repeated Page pages = 1;
+
+  message Page {
+    string id = 1;
+    string name = 2 ;
+  }
+}
+
+message GetManagementPortalNotificationsReply {
+  repeated PortalNotification notifications = 1;
+
+  message PortalNotification {
+    string id = 1;
+    string title = 2;
+    string message = 3;
+  }
+}
+
+

@@ -1,0 +1,278 @@
+syntax = "proto3";
+
+package events.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "scoresstatsservice/events/v1;v1";
+
+service Events {
+  rpc GetUpcomingEvents (GetUpcomingEventsRequest) returns (GetUpcomingEventsReply) {
+    option (google.api.http) = {
+      get: "/v1/events/upcoming"
+    };
+  };
+
+  rpc EventList (EventListRequest) returns (EventListReply) {
+    option (google.api.http) = {
+      get: "/v1/events/list"
+    };
+  };
+
+  rpc GetGameday (GetGamedayRequest) returns (GetGamedayReply) {
+    option (google.api.http) = {
+      get: "/v1/events/gameday"
+    };
+  };
+
+  rpc GetGameByID (GetGameByIDRequest) returns (GetGameByIDResponse) {
+    option (google.api.http) = {
+      get: "/v1/events/{event_id}"
+    };
+  };
+
+  rpc GetEventSummary (GetEventSummaryRequest) returns (GetEventSummaryReply) {
+    option (google.api.http) = {
+      get: "/v1/events/{id}/summary"
+    };
+  };
+
+  rpc GetEventStats (GetEventStatsRequest) returns (GetEventStatsReply) {
+    option (google.api.http) = {
+      get: "/v1/events/{id}/stats"
+    };
+  };
+
+  rpc SetGameDay(SetGameDayRequest) returns (SetGameDayReply) {
+    option (google.api.http) = {
+      patch: "/v1/events/gameday"
+      body: "*"
+    };
+  }
+
+  rpc GetUnconfiguredEvents (EventListRequest) returns (EventListReply) {
+    option (google.api.http) = {
+      get: "/v1/events/unconfigured/{sport_type}"
+    };
+  }
+}
+
+message SetGameDayRequest {
+  string sp_type = 1;
+  string event_id = 2;
+  string status = 3;
+}
+
+
+message SetGameDayReply {
+  string message = 1;
+}
+
+message GetGameByIDRequest {
+  string event_id = 1 [json_name = "event_id"];
+}
+
+message GetGameByIDResponse {
+  string evt_id = 1 [json_name = "evt_id"];
+  int32 ext_evt_id = 2 [json_name = "ext_evt_id"];
+  string sp_type_id = 3 [json_name = "sp_type_id"];
+  string season_id = 4 [json_name = "season_id"];
+  int32 season_type = 5 [json_name = "season_type"];
+  google.protobuf.Timestamp evt_start_dttm = 6 [json_name = "evt_start_dttm"];
+  bool complete = 7 [json_name = "complete"];
+  bool game_inprogress = 8 [json_name = "game_inprogress"];
+  string title = 9 [json_name = "title"];
+  string htm_id = 10 [json_name = "htm_id"];
+  string vtm_id = 11 [json_name = "vtm_id"];
+  string evt_loc = 12 [json_name = "evt_loc"];
+  string evt_loc_type = 13 [json_name = "evt_loc_type"];
+  string venue = 14 [json_name = "venue"];
+}
+
+message GetUpcomingEventsRequest {
+  string order = 1 [json_name = "order"];
+  int32 limit = 2 [json_name = "limit"];
+  int32 offset = 3 [json_name = "offset"];
+  string query = 4 [json_name = "query"];
+  string sp_type = 5 [json_name = "sp_type"];
+}
+
+message GetUpcomingEventsReply {
+  repeated Event data = 1 [json_name = "data"];
+
+  message Event {
+    string id = 1 [json_name = "id"];
+    google.protobuf.Timestamp start_date = 3 [json_name = "start_dttm"];
+    string location_type = 4 [json_name = "loc_type"];
+    Sport sport = 5 [json_name = "sp"];
+    Opponent opponent = 6 [json_name = "op"];
+  }
+
+  message Sport {
+    string id = 1 [json_name = "id"];
+    string type = 2 [json_name = "type"];
+    string name = 3 [json_name = "name"];
+  }
+
+  message Opponent {
+    string id = 1 [json_name = "id"];
+    string name = 2 [json_name = "name"];
+    string logo = 3 [json_name = "logo"];
+  }
+}
+
+message EventListRequest {
+  string sport_type = 1 [json_name = "sport_type"];
+}
+
+message EventListReply {
+  repeated KeyValuePair items = 1 [json_name = "items"];
+}
+
+message KeyValuePair {
+  string key = 1 [json_name = "key"];
+  string value = 2 [json_name = "value"];
+}
+
+message GetEventSummaryRequest {
+  string id = 1 [json_name = "id"];
+}
+
+message GetEventSummaryReply {
+  string sp_name = 1 [json_name = "sp_name"];
+  Teams teams = 2 [json_name = "teams"];
+  Details details = 3 [json_name = "details"];
+  repeated Stats stats = 4 [json_name = "stats"];
+  repeated Period periods = 5 [json_name = "periods"];
+
+  message Details {
+    string loc = 1 [json_name = "loc"];
+    string stadium = 2 [json_name = "stadium"];
+    int32 attendance = 3 [json_name = "attendance"];
+  }
+
+  message Stats {
+    string action = 1 [json_name = "action"];
+    string home = 2 [json_name = "home"];
+    string visitor = 3 [json_name = "visitor"];
+  }
+
+  message Period {
+    Score score = 1 [json_name = "score"];
+    repeated Summary summaries = 2 [json_name = "summaries"];
+  }
+
+  message Summary {
+    string team_id = 1 [json_name = "tm_id"];
+    string clock = 2 [json_name = "clock"];
+    string description = 3 [json_name = "desc"];
+    Score scores = 4 [json_name = "scores"];
+  }
+}
+
+message Teams {
+  Team home = 1 [json_name = "home"];
+  Team visitor = 2 [json_name = "visitor"];
+}
+
+message Team {
+  string id = 1 [json_name = "id"];
+  int32 ext_id = 2 [json_name = "ext_id"];
+  string name = 3 [json_name = "name"];
+  string logo = 4 [json_name = "logo"];
+  int32 wns = 5 [json_name = "wns"];
+  int32 lss = 6 [json_name = "lss"];
+}
+
+message Score {
+  int32 home = 1 [json_name = "home"];
+  int32 visitor = 2 [json_name = "visitor"];
+}
+
+message GetEventStatsRequest {
+  // event identifier
+  string id = 1;
+}
+
+message GetEventStatsReply {
+  // event sport name
+  string sp_name = 1 [json_name = "sp_name"];
+  // teams
+  Teams teams = 2;
+
+  message Teams {
+    // home team
+    Team home = 1;
+    // visitor team
+    Team visitor = 2;
+  }
+
+  message Team {
+    // team id
+    string id = 1;
+    // team external id
+    int32 ext_id = 2;
+    // team name
+    string name = 3;
+    // team logo
+    string logo = 4;
+    // school
+    School school = 5;
+    repeated Player players = 6;
+  }
+
+  message School {
+    // school name
+    string name = 2;
+  }
+
+  message Player {
+    // player id
+    string id = 1;
+    // player name
+    string name = 2;
+    // player position
+    string position = 3;
+    // player statistics
+    repeated Data data = 4;
+  }
+
+  message Data {
+    // data type
+    string type = 1;
+    // data statistics
+    repeated Stats stats = 2;
+  }
+
+  message Stats {
+    // action name
+    string action = 1;
+    // action value
+    string value = 2;
+  }
+}
+
+message GetGamedayRequest {
+  optional string sport_type = 1 [json_name = "sp_type"];
+}
+
+message GetGamedayReply {
+  string id = 1 [json_name = "id"];
+  string sport_type = 2 [json_name = "sp_type"];
+  string sport_name = 3 [json_name = "sp_name"];
+  google.protobuf.Timestamp start_date = 4 [json_name = "start_dttm"];
+  bool live = 5 [json_name = "live"];
+  string location_type = 6 [json_name = "loc_type"];
+  string location = 7 [json_name = "loc"];
+  string stadium = 8 [json_name = "stadium"];
+  Teams teams = 9 [json_name = "teams"];
+  optional Score score = 10 [json_name = "score"];
+
+  message Score {
+    string period = 1 [json_name = "period"];
+    string clock = 2 [json_name = "clock"];
+    int32 home = 3 [json_name = "home"];
+    int32 visitor = 4 [json_name = "visitor"];
+  }
+}

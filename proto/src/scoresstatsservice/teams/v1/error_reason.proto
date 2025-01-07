@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package teams.v1;
+
+import "errors/errors.proto";
+
+option go_package = "scoresstatsservice/teams/v1;v1";
+
+enum Reason {
+  option (errors.default_code) = 500;
+
+  TEAMS_GET_ROSTERS_INVALID_PARAMETERS = 0 [(errors.code) = 400];
+  TEAMS_GET_ROSTERS_ERROR = 1 [(errors.code) = 500];
+  TEAM_GET_ROSTERS_NOT_FOUND = 2 [(errors.code) = 404];
+
+  TEAMS_GET_TEAM_INVALID_PARAMETERS = 3 [(errors.code) = 400];
+  TEAMS_GET_TEAM_NOT_FOUND = 4 [(errors.code) = 404];
+  TEAMS_GET_TEAM_ERROR = 5 [(errors.code) = 500];
+
+  TEAMS_GET_TEAM_SCHEDULES_INVALID_PARAMETERS = 6 [(errors.code) = 400];
+  TEAMS_GET_TEAM_SCHEDULES_ERROR = 7 [(errors.code) = 500];
+
+  TEAMS_GET_TEAM_SEASON_STATS_INVALID_PARAMETERS = 8 [(errors.code) = 400];
+  TEAMS_GET_TEAM_SEASON_STATS_ERROR = 9 [(errors.code) = 500];
+  TEAMS_GET_TEAM_SEASON_STATS_NOT_FOUND = 10 [(errors.code) = 404];
+
+}

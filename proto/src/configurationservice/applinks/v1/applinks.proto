@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.applinks.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "configurationservice/applinks/v1;v1";
+
+service AppLinks {
+  rpc ListAppLinks (google.protobuf.Empty) returns (ListAppLinksReply) {
+    option (google.api.http) = {
+      get: "/v1/applinks"
+    };
+  };
+}
+
+message ListAppLinksReply {
+  repeated Link links = 1 [json_name = "links"];
+}
+
+message Link {
+  bool use_icon = 1 [json_name = "use_icon"];
+  string icon = 2 [json_name = "icon"];
+  string title = 3 [json_name = "title"];
+  bool ext_link = 4 [json_name = "ext_link"];
+  optional string link = 5 [json_name = "link"];
+  optional AppLink app_link = 6 [json_name = "app_link"];
+}
+
+message AppLink {
+  string ios = 1 [json_name = "ios"];
+  string android = 2 [json_name = "android"];
+}

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package = "paymentservice/transaction/v1;v1";
+
+service TransactionService {
+  rpc CreateTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
+  rpc CompleteTransaction(CompleteTransactionRequest) returns (CompleteTransactionResponse);
+  rpc FailTransaction(FailTransactionRequest) returns (FailTransactionResponse);
+}
+
+message CreateTransactionRequest {
+  string user_id = 1;
+  string type = 2; // deposit, withdraw
+  double amount = 3;
+}
+
+message CreateTransactionResponse {
+  string transaction_id = 1;
+}
+
+message CompleteTransactionRequest {
+  string transaction_id = 1;
+}
+
+message CompleteTransactionResponse {}
+
+message FailTransactionRequest {
+  string transaction_id = 1;
+  string error_message = 2;
+}
+
+message FailTransactionResponse {}

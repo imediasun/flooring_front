@@ -1,0 +1,173 @@
+syntax = "proto3";
+
+package teams.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "scoresstatsservice/teams/v1;v1";
+
+service Teams {
+  rpc GetTeamRostersByTeamIDAndSport (GetTeamRostersByTeamIDAndSportRequest)
+      returns (GetTeamRostersByTeamIDAndSportReply) {
+    option (google.api.http) = {
+      get: "/v1/teams/{ext_team_id}/rosters"
+    };
+  };
+
+  rpc GetTeamByTeamID (GetTeamByTeamIDRequest) returns (GetTeamByTeamIDReply) {
+    option (google.api.http) = {
+      get: "/v1/teams/{ext_team_id}"
+    };
+  };
+
+  rpc GetTeamSchedules(GetTeamSchedulesRequest) returns (GetTeamSchedulesReply) {
+    option (google.api.http) = {
+      get: "/v1/teams/{ext_team_id}/schedules"
+    };
+  };
+
+  rpc GetPlayersStats(GetPlayersStatsRequest) returns (GetPlayersStatsReply) {
+    option (google.api.http) = {
+      get: "/v1/teams/{ext_team_id}/players/stats"
+    };
+  };
+
+  rpc GetTeamSeasonStats(GetTeamSeasonStatsRequest) returns (GetTeamSeasonStatsReply) {
+    option (google.api.http) = {
+      get: "/v1/teams/{ext_team_id}/stats"
+    };
+  };
+}
+
+message GetTeamSeasonStatsRequest {
+  int32 ext_team_id = 1 [json_name = "ext_team_id"];
+  string sp_type = 2 [json_name = "sp_type"];
+}
+
+message GetTeamSeasonStatsReply {
+  string evt_sp_name = 1 [json_name = "evt_sp_name"];
+  TeamStats team = 2 [json_name = "team"];
+  repeated PlayStat offenses = 3 [json_name = "offenses"];
+  repeated PlayStat defenses = 4 [json_name = "defenses"];
+
+  message PlayStat {
+    string name = 1[json_name = "name"];
+    string val = 2[json_name = "val"];
+    string rank = 3 [json_name = "rank"];
+  }
+}
+
+message GetTeamSchedulesReply {
+  string evt_sp_name = 1 [json_name = "evt_sp_name"];
+  TeamStats team = 2 [json_name = "team"];
+  repeated TeamScheduleMonth months = 3 [json_name = "months"];
+}
+
+message TeamScheduleMonth {
+  string month_name = 1 [json_name = "month_name"];
+  repeated TeamScheduleGame games = 2 [json_name = "games"];
+}
+
+message TeamScheduleGame {
+  int32 evt_id = 1 [json_name = "evt_id"];
+  int32 otm_id = 2 [json_name = "otm_id"];
+  google.protobuf.Timestamp evt_start_dttm = 3 [json_name = "evt_start_dttm"];
+  string otm_name = 4 [json_name = "otm_name"];
+  string oimg_src_key = 5 [json_name = "oimg_src_key"];
+}
+
+message GetTeamSchedulesRequest {
+  int32 ext_team_id = 1 [json_name = "ext_team_id"];
+  string sp_type = 2 [json_name = "sp_type"];
+}
+
+message GetTeamByTeamIDReply {
+  Team team = 1 [json_name = "team"];
+}
+
+message GetTeamByTeamIDRequest {
+  int32 ext_team_id = 1 [json_name = "ext_team_id"];
+}
+
+message Team {
+  string tm_id = 1 [json_name = "tm_id"];
+  int32 ext_tm_id = 2[json_name = "ext_tm_id"];
+  string tm_name = 3 [json_name = "tm_name"];
+  string ext_sch_id = 4 [json_name = "ext_sch_id"];
+  string sch_name = 5 [json_name = "sch_name"];
+  string conf_name = 6 [json_name = "conf_name"];
+  string img_src_key = 7 [json_name = "img_src_key"];
+}
+
+message GetTeamRostersByTeamIDAndSportReply {
+  Rosters rosters = 1 [json_name = "rosters"];
+}
+
+message GetTeamRostersByTeamIDAndSportRequest {
+  int32 ext_team_id = 1 [json_name = "ext_team_id"];
+  string sp_type = 2 [json_name = "sp_type"];
+}
+
+message TeamStats {
+  int32 id = 1 [json_name = "id"];
+  string name = 2 [json_name = "name"];
+  int32 wns = 3 [json_name = "wns"];
+  int32 lss = 4 [json_name = "lss"];
+  string streak = 5 [json_name = "streak"];
+  string img_src_key = 6 [json_name = "img_src_key"];
+}
+
+message Player {
+  string name = 1 [json_name = "name"];
+  string pos = 2 [json_name = "pos"];
+  int32 uni = 3 [json_name = "uni"];
+  int32 height = 4 [json_name = "height"];
+  int32 weight = 5 [json_name = "weight"];
+  string class = 6 [json_name = "class"];
+  string birth_city = 7 [json_name = "birth_city"];
+  string birth_state = 8 [json_name = "birth_state"];
+  string img_src_key = 9 [json_name = "img_src_key"];
+}
+
+message PlayerPosition {
+  string position_name = 1 [json_name = "position_name"];
+  repeated Player players = 2 [json_name = "players"];
+}
+
+message Rosters {
+  string evt_sp_name = 1 [json_name = "evt_sp_name"];
+  TeamStats team = 2 [json_name = "team"];
+  repeated PlayerPosition positions = 3 [json_name = "positions"];
+}
+
+message GetPlayersStatsRequest {
+  int32 ext_team_id = 1 [json_name = "ext_team_id"];
+}
+
+message GetPlayersStatsReply {
+  string sport_name = 1 [json_name = "sp_name"];
+  Team team = 2 [json_name = "team"];
+  repeated Stats stats = 3 [json_name = "stats"];
+
+  message Team {
+    int32 id = 1 [json_name = "id"];
+    string name = 2 [json_name = "name"];
+    int32 wns = 3 [json_name = "wns"];
+    int32 lss = 4 [json_name = "lss"];
+    int32 streak = 5 [json_name = "streak"];
+    string logo = 6 [json_name = "logo"];
+  }
+
+  message Stats {
+    repeated Row rows = 3 [json_name = "rows"];
+  }
+
+  message Row {
+    repeated Column columns = 1;
+  }
+
+  message Column {
+    string value = 1;
+  }
+}
