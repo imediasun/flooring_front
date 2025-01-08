@@ -102,14 +102,14 @@
     --accent: #ffd80a;
     --green: #39ff28;
     --red: #ff1e0d;
-    --font-segoe: "SegoeUI", sans-serif;
+    --font-segoe: "Fjalla One", sans-serif;
     --font-primary: var(--font-segoe);
     --font-size: 16px;
     --bg-primary: #040309;
     --text-color-primary: var(--white);
     --text-color-primary-hover: var(--accent);
     --current-scrollbar-width: 0px;
-    --header-height: 181px;
+    --header-height: 122px;
   }
   @media (max-width: 1310px) {
     :root {

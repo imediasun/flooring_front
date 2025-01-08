@@ -10,4 +10,9 @@ export default defineConfig({
         }),
         react(),
     ],
+    // css: {
+    //     preprocessorOptions: {
+    //         scss: {},
+    //     },
+    // },
 });

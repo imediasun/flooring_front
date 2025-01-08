@@ -1,0 +1,25 @@
+@use "../../scss-utils/mixins/media" as bp;
+
+.social-link {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border-radius: 50%;
+  padding: 5px;
+  overflow: hidden;
+  svg {
+    color: var(--dark);
+    transition: 0.2s;
+  }
+  &:hover {
+    @include bp.media-up(lg) {
+      svg {
+        color: #f78c82;
+      }
+    }
+  }
+}

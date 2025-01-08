@@ -1,0 +1,28 @@
+@use "./scss-utils/mixins/media" as bp;
+
+:root {
+  //   === Colors
+  --white: #fff;
+  --black: #000;
+  --blue: #0C0D5D;
+  --yellow: #FFCD00;
+  --grey: #D9D9DA;
+  --red: #FF3C3C;  
+
+  // === Topography variables
+  --ff-primary: "Open Sans", sans-serif;
+  --ff-secondary: "Fjalla One", sans-serif;
+  --font-size: 16px;
+
+  // === Theming variables
+  --bg-primary: var(--white);
+  --text-color-primary: var(--blue);
+
+  // === JS Controlling variables
+  --header-height: 122px;
+  --scrollbar-width: 0px;
+
+  @include bp.media-down(lg) {
+    --header-height: 60px;
+  }
+}

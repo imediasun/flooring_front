@@ -1,0 +1,27 @@
+@use "../scss-utils/mixins/media" as bp;
+
+.hero{
+  &-section{
+    padding: 100px 0 75px;
+    @include bp.media-down(lg){
+      padding: 50px 0 35px;
+    }
+  }
+
+  &-heading{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 37px;
+  }
+
+  &-title{
+    font-family: var(--ff-secondary);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 148px;
+    line-height: 100%;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+}
