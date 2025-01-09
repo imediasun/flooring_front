@@ -96,7 +96,7 @@
   }
   */
   
-  :root {
+  /* :root {
     --white: #fff;
     --black: #000;
     --accent: #ffd80a;
@@ -110,7 +110,7 @@
     --text-color-primary-hover: var(--accent);
     --current-scrollbar-width: 0px;
     --header-height: 122px;
-  }
+  } */
   @media (max-width: 1310px) {
     :root {
       --header-height: 156px;

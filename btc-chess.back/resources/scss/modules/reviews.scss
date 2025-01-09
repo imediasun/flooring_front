@@ -1,0 +1,111 @@
+@use "../scss-utils/mixins/media" as bp;
+
+.reviews{
+  &-section{
+    @include bp.media-down(xl){
+      padding-bottom: 230px !important;
+    }
+  }
+
+  &-man__img{
+    width: 270px;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    object-fit: contain;
+    bottom: 0;
+    left: -115px;
+    bottom: -150px;
+    pointer-events: none;
+    @include bp.media-down(xl){
+      bottom: -230px;
+      width: 200px;
+      left: -100px;
+    }
+    @include bp.media-down(lg){
+      left: -60px;
+    }
+  }
+
+  &__box{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+    @include bp.media-down(xl){
+      flex-wrap: wrap;
+    }
+  }
+
+  &-title{
+    width: fit-content;
+    z-index: 1;
+    position: relative;
+  }
+
+  &-slider__wrapp{
+    width: 66.6%;
+    position: relative;
+    z-index: 0;
+    &::after{
+      width: 3000px;
+      height: 100%;
+      content: "";
+      background: var(--white);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      z-index: 1;
+    }
+    @include bp.media-down(xl){
+      width: 100%;
+    }
+  }
+
+  &-slider{
+    width: 100%;
+    overflow: visible !important;
+    .swiper-slide{
+      height: auto;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &-card{
+    height: 100%;
+    background: var(--blue);
+    padding: 35px 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &-card__name{
+    font-family: var(--ff-secondary);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  &-card__review{
+    font-family: var(--ff-primary);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+}

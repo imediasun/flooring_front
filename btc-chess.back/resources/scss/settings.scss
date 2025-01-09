@@ -27,6 +27,7 @@ html {
 
 body {
   padding-right: var(--current-scrollbar-width);
+  background: var(--white);
 
   &._lock {
     overflow: hidden;

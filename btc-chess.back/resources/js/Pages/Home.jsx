@@ -2,6 +2,7 @@ import ChooseSection from '@/PapaCarlo/Modules/choose'
 import HeroSection from '@/PapaCarlo/Modules/hero'
 import NeedSection from '@/PapaCarlo/Modules/need'
 import PartnersSection from '@/PapaCarlo/Modules/partners'
+import ReviewsSection from '@/PapaCarlo/Modules/reviews'
 import ServicesSection from '@/PapaCarlo/Modules/services'
 import WorksSection from '@/PapaCarlo/Modules/works'
 import { Head } from '@inertiajs/react'
@@ -19,6 +20,7 @@ export default function Home() {
         <HeroSection/>
         <ServicesSection/>
         <ChooseSection/>
+        <ReviewsSection/>
         <WorksSection/>
         <PartnersSection/>
         <NeedSection/>
