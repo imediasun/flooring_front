@@ -196,11 +196,8 @@ fieldset {
 }
 
 .section-heading-title__box{
-  width: calc(100% - 677px);
+  width: fit-content;
   position: relative;
-  @include bp.media-down(xxl){
-    width: calc(100% - 607px);
-  }
   @include bp.media-down(xl){
     width: 100%;
   }

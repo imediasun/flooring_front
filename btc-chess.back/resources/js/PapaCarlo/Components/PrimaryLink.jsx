@@ -1,8 +1,9 @@
 import { Link } from '@inertiajs/react'
 
-export default function PrimaryLink({className = "", isTelLink = false, children, ...props }) {
+export default function PrimaryLink({className = "", isTelLink = false, href= "#", children, ...props }) {
   return (
     <Link
+      href={isTelLink ? "tel:+" + href : href}
       className={"primary-btn " + className}
       {...props}
     >

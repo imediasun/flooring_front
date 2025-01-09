@@ -16,7 +16,6 @@
     line-height: 100%;
     text-transform: uppercase;
     color: var(--yellow);
-    overflow-wrap: anywhere;
     @include bp.media-down(xxl){
       font-size: 100px;
     }
@@ -64,9 +63,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 30px 20px;
-    @include bp.media-down(lg){
-      justify-content: center;
-    }
   }
 
   &-advantage{

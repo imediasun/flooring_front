@@ -1,3 +1,4 @@
+import AppointmentSection from '@/PapaCarlo/Modules/appointment'
 import ChooseSection from '@/PapaCarlo/Modules/choose'
 import HeroSection from '@/PapaCarlo/Modules/hero'
 import NeedSection from '@/PapaCarlo/Modules/need'
@@ -21,6 +22,7 @@ export default function Home() {
         <ServicesSection/>
         <ChooseSection/>
         <ReviewsSection/>
+        <AppointmentSection/>
         <WorksSection/>
         <PartnersSection/>
         <NeedSection/>

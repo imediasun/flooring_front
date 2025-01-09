@@ -44,6 +44,10 @@
     width: fit-content;
     z-index: 1;
     position: relative;
+    max-width: 330px;
+    @include bp.media-down(lg){
+      max-width: 260px;
+    }
   }
 
   &-slider__wrapp{
