@@ -177,3 +177,69 @@ fieldset {
     }
   }
 }
+
+.section-heading{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px 37px;
+  margin-bottom: 40px;
+  @include bp.media-down(xl){
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  @include bp.media-down(lg){
+    margin-bottom: 30px;
+  }
+}
+
+.section-heading-title__box{
+  width: calc(100% - 677px);
+  position: relative;
+  @include bp.media-down(xxl){
+    width: calc(100% - 607px);
+  }
+  @include bp.media-down(xl){
+    width: 100%;
+  }
+}
+
+.section-heading__info{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+  @include bp.media-down(xxl){
+    max-width: 570px;
+  }
+  @include bp.media-down(xl){
+    max-width: none;
+  }
+}
+
+.section-heading__description{
+  font-family: var(--ff-primary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+  color: var(--blue);
+}
+
+.section-heading__btns{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px 20px;
+  flex-wrap: wrap;
+  .section-heading-btn{
+    width: calc(50% - 10px);
+    min-width: auto;
+    @include bp.media-down(sm){
+      width: 100%;
+    }
+  }
+}

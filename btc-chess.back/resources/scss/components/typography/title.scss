@@ -1,0 +1,39 @@
+@use "../../scss-utils/mixins/media.scss" as bp;
+
+.global-section-title{
+  font-family: var(--ff-secondary);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 46px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: var(--blue);
+  @include bp.media-down(lg){
+    font-size: 36px;
+  }
+
+  b{
+    font-weight: 400;
+    color: var(--yellow);
+    // margin: 0 6px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+
+  &.title-white{
+    color: var(--white);
+  } 
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.text-align-left{
+  text-align: left;
+}
+
+.text-align-right{
+  text-align: right;
+}
