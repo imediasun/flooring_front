@@ -142,9 +142,9 @@
 
     &:hover{
       @include bp.media-up(lg){
-        color: var(--yellow);
+        color: var(--red);
         svg{
-          fill: var(--yellow);
+          fill: var(--red);
         }
       }
     }
@@ -190,7 +190,6 @@
   }
 
   &-burger{
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,7 +226,7 @@
         opacity: 1;
       }
     }
-    
+
     @include bp.media-up(lg){
       display: none;
     }

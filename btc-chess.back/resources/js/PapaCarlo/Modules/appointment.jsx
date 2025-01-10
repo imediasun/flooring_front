@@ -1,3 +1,4 @@
+import AppointmentForm from "@/Pages/Partials/AppointmentForm"
 import appointmentPhoto from "../../../img/content/home/appointment/app-photo.png"
 
 export default function AppointmentSection() {
@@ -8,6 +9,7 @@ export default function AppointmentSection() {
         <div className="appointment-box">
           <div className="appointment-form">
             <div className="appointment-form__title">Let’s work together!</div>
+            <AppointmentForm/>
           </div>
           <div className="appointment-photo">
             <img src={appointmentPhoto} alt="img" className="appointment-photo__img" width="530" height="485" />

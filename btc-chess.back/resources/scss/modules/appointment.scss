@@ -24,7 +24,7 @@
     width: 100%;
     position: relative;
     max-width: 640px;
-    min-width: 500px;
+    min-width: 460px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -66,4 +66,25 @@
       pointer-events: none;
     }
   }
+
+  // form
+  &-formbox{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    transition: .3s;
+
+    &._loading{
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &__submit{
+      min-width: auto;
+      width: 100%;
+    }
+  }
+  // form end
 }
