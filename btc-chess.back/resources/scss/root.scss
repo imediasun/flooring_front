@@ -23,6 +23,9 @@
   --scrollbar-width: 0px;
 
   @include bp.media-down(lg) {
+    --header-height: 80px;
+  }
+  @include bp.media-down(md) {
     --header-height: 60px;
   }
 }

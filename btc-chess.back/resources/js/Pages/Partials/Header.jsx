@@ -1,78 +1,87 @@
 import { Link } from '@inertiajs/react'
 
-import logoWebp from '../../../img/content/logo.webp'
 import logoPng from '../../../img/content/logo.png'
+import SvgIcon from '@/PapaCarlo/Components/SvgIcon'
+import NavMenu from './NavMenu'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Header() {
+  const headerRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleMenu = () => {
+    if(!window.document.body.classList.contains("menu-lock")){
+      window.document.body.classList.add("menu-lock")
+    }else{
+      window.document.body.classList.remove("menu-lock")
+    }
+    setIsOpen((prev) => !prev)
+  }
+
+  useEffect(() => {
+    const windowResizeHandle = () => {
+      if (!headerRef.current) {
+        return
+      }
+
+      document.documentElement.style.setProperty(
+        "--header-height",
+        headerRef.current.offsetHeight + "px",
+      )
+    }
+
+    window.addEventListener("resize", windowResizeHandle)
+    windowResizeHandle()
+
+    return () => {
+      window.removeEventListener("resize", windowResizeHandle)
+    }
+  }, [headerRef])
+
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <div className="container">
-        <div className="header__content">
-          <div className="header__logo-wrapper">
-            <button className="burger-btn js-nav-trigger" type="button" aria-label="Navigation menu button">
-              <i></i>
-              <i></i>
-              <i></i>
-            </button>
-
-            <Link href="./" className="logo" aria-label="logo">
-              <picture className="logo__image">
-                <source srcSet={logoWebp} type="image/webp" className="logo__img" />
-                <img src={logoPng} alt="img" className="logo__img" width="146" height="143" />
-              </picture>
-            </Link>
-          </div>
-
-          <div className="nav__wrap">
-            <nav className="nav">
-              <ul className="nav__list">
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    News{' '}
-                  </a>
+        <div className="header-row">
+          <Link href="/" className="header-logo">
+            <img src={logoPng} alt="img" className="footer-logo__img" width="88" height="94" />
+          </Link>
+          <div className={`header-menu ${ isOpen ? "_active": ""}`}>
+            <div className="header-menu__inner">
+              <NavMenu/>
+              <ul className="header__socials">
+                <li>
+                  <Link href="/" className="header-socials__link" target="_blank">
+                    <SvgIcon name={"facebook"}/>
+                  </Link>
                 </li>
-
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    Wallet{' '}
-                  </a>
+                <li>
+                  <Link href="/" className="header-socials__link" target="_blank">
+                    <SvgIcon name={"google"}/>
+                  </Link>
                 </li>
-
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    Games{' '}
-                  </a>
-                </li>
-
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    Verse{' '}
-                  </a>
-                </li>
-
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    Learn{' '}
-                  </a>
-                </li>
-
-                <li className="nav__item">
-                  <a href="#" className="nav__link active">
-                    {' '}
-                    Newsletters{' '}
-                  </a>
+                <li>
+                  <Link href="/" className="header-socials__link" target="_blank">
+                    <SvgIcon name={"micro"}/>
+                  </Link>
                 </li>
               </ul>
-            </nav>
+            </div>
           </div>
+          <a href="tel:+4402586136" className="header-contact__link">
+            <span className="symbol">
+              <SvgIcon name="phone"/>
+            </span>
+            <span className="holder">(440) 258-6136</span>
+          </a>
 
-          <button className="btn ghost-btn header__button text-nowrap" type="button">
-            Get bitcoin
+          <button 
+            type="button" 
+            className={`header-burger ${ isOpen ? "_active": ""}`} 
+            aria-label="burger"
+            onClick={toggleMenu}
+          >
+            <SvgIcon name={"burger"}/>
+            <SvgIcon name={"close"}/>
           </button>
         </div>
       </div>

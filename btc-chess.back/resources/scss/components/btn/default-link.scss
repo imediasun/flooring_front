@@ -27,4 +27,12 @@
       }
     }
   }
+  &.link-grey{
+    color: var(--grey);
+    &:hover {
+      @include bp.media-up(lg) {
+        color: var(--yellow);
+      }
+    }
+  }
 }

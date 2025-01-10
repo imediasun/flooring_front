@@ -32,6 +32,12 @@ body {
   &._lock {
     overflow: hidden;
   }
+
+  &.menu-lock{
+    @include bp.media-down(lg){
+      overflow: hidden;
+    }
+  }
 }
 
 h1,
@@ -240,4 +246,8 @@ fieldset {
       width: 100%;
     }
   }
+}
+
+.pt-header-height{
+  padding-top: var(--header-height);
 }
