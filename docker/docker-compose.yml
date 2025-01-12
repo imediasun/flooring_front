@@ -39,8 +39,6 @@ services:
       - postgres_payment
       - redis
       #- onboardingsvc
-    networks:
-      - app-network
 
   postgres_front:
     image: postgres:14-alpine
@@ -53,8 +51,6 @@ services:
       - postgres_front_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    networks:
-      - app-network
 
   postgres_onboarding:
     image: postgres:14-alpine
@@ -75,8 +71,6 @@ services:
       retries: 5
     ports:
       - "5433:5432"
-    networks:
-      - app-network
 
   postgres_payment:
     image: postgres:14-alpine
@@ -96,8 +90,6 @@ services:
       retries: 5
     ports:
       - "5434:5432"
-    networks:
-      - app-network
 
   migrate_onboarding:
     image: migrate/migrate
@@ -111,8 +103,6 @@ services:
     depends_on:
       postgres_onboarding:
         condition: service_healthy
-    networks:
-      - app-network
 
   migrate_payment:
     image: migrate/migrate
@@ -126,8 +116,6 @@ services:
     depends_on:
       postgres_payment:
         condition: service_healthy
-    networks:
-      - app-network
 
     # Go microservice (AI)
 #  grpc-ai:
@@ -162,8 +150,6 @@ services:
     volumes:
       - ../docker/kafka/client-config.properties:/etc/kafka/client-config.properties
       - ../docker/kafka/zookeeper-jaas.conf:/etc/kafka/zookeeper-jaas.conf
-    networks:
-      - app-network
 
 
   kafka:
@@ -187,8 +173,6 @@ services:
       - "29092:29092"
     depends_on:
       - zookeeper
-    networks:
-      - app-network
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.1
@@ -210,8 +194,6 @@ services:
         /etc/confluent/docker/run
     ports:
       - "2181:2181"
-    networks:
-      - app-network
 
   zoonavigator:
     image: elkozmon/zoonavigator:latest
@@ -224,8 +206,6 @@ services:
       AUTH_PASSWORD: "sunimedia"       # Пароль
     ports:
       - 9100:9000
-    networks:
-      - app-network
     depends_on:
       - zookeeper
 
@@ -247,24 +227,23 @@ services:
     depends_on:
       - postgres_onboarding
       - migrate_onboarding
-    networks:
-      - app-network
 
   redis:
     image: "redis:alpine"
     container_name: redis-league
     ports:
       - "6379:6379"
-    networks:
-      - app-network
+    environment:
+      REDIS_PASSWORD: "Sunimedia@1lSenior"
+    command: [ "redis-server", "--requirepass", "Sunimedia@1lSenior" ]
 
-  nginx:
+  papacarlo-nginx:
     build:
       context: ../
       dockerfile: ./docker/nginx/Dockerfile
     #image: nginx
-    container_name: chess-nginx
-    hostname: chess-nginx
+    container_name: papacarlo-nginx
+    hostname: papacarlo-nginx
     healthcheck:
       test: [ "CMD", "service", "nginx", "status" ]
       timeout: 10s
@@ -273,17 +252,14 @@ services:
       - ../docker/nginx/conf.d:/etc/nginx/sites-enabled
       - ../docker/nginx/logs:/var/log/nginx
     ports:
-      - 80:80
-      - 443:443
-      - 3030:3030
+      - 8088:80
+      - 8443:443
     expose:
       - 80
     depends_on:
       - php-fpm
       - redis
       - zoonavigator
-    networks:
-      - app-network
 
 volumes:
   postgres_onboarding_data:
@@ -291,5 +267,5 @@ volumes:
   postgres_front_data:
 
 networks:
-  app-network:
+  default:
     driver: bridge

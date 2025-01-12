@@ -1,13 +1,13 @@
-#!/bin/bash  
+#!/bin/bash
 
-set -x
+set -e
 
+# Директория для хранения сертификатов (это стандартный путь для Let's Encrypt)
 CERT_DIR=$PWD/nginx/cert/private
 
-# Создаем директорию для сертификатов, если её нет
-if [ ! -d "$CERT_DIR" ]; then
-    mkdir -p "$CERT_DIR"
-fi
+WEBROOT="/var/www/certbot"
+NGINX_CONTAINER="reverse-nginx" # Замените на имя вашего контейнера Nginx
+EMAIL="dev.magellan@gmail.com" # Замените на ваш действительный email
 
 # Проверяем, переданы ли доменные имена
 if [ -z "$@" ]; then
@@ -15,26 +15,51 @@ if [ -z "$@" ]; then
     exit 1
 fi
 
-# Генерация сертификатов для каждого домена
-for DOMAIN_NAME in "$@"; do
-    # Генерация приватного ключа
-    openssl genrsa -out "${CERT_DIR}/${DOMAIN_NAME}.key" 4096
+# Убедитесь, что директория для webroot существует
+if [ ! -d "$WEBROOT" ]; then
+    mkdir -p "$WEBROOT"
+fi
 
-    # Создание запроса на сертификат (CSR)
-    openssl req -new -key "${CERT_DIR}/${DOMAIN_NAME}.key" \
-        -out "${CERT_DIR}/${DOMAIN_NAME}.csr" \
-        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=${DOMAIN_NAME}"
+# Запускаем генерацию сертификатов для каждого домена
+for DOMAIN in "$@"; do
+    echo "Setting up SSL for $DOMAIN"
 
-    # Генерация самоподписанного сертификата
-    openssl x509 -req -days 365 \
-        -in "${CERT_DIR}/${DOMAIN_NAME}.csr" \
-        -signkey "${CERT_DIR}/${DOMAIN_NAME}.key" \
-        -out "${CERT_DIR}/${DOMAIN_NAME}.crt"
+    # Проверяем, существует ли уже сертификат
+    if [ -d "$CERT_DIR/$DOMAIN" ]; then
+        echo "Certificate for $DOMAIN already exists. Skipping..."
+        continue
+    fi
 
-    # Создаем PEM-файл, объединяющий сертификат и приватный ключ
-    cat "${CERT_DIR}/${DOMAIN_NAME}.crt" "${CERT_DIR}/${DOMAIN_NAME}.key" > "${CERT_DIR}/${DOMAIN_NAME}.pem"
+    # Убедитесь, что Nginx настроен на обработку запросов /.well-known/acme-challenge/
+    echo "Configuring Nginx for $DOMAIN"
+    docker exec $NGINX_CONTAINER bash -c "
+    cat > /etc/nginx/conf.d/$DOMAIN-temp.conf <<EOL
+server {
+    listen 80;
+    server_name $DOMAIN;
+    location /.well-known/acme-challenge/ {
+        root $WEBROOT;
+    }
+}
+EOL
+    nginx -s reload
+    "
+
+    # Генерируем сертификат через Certbot
+    docker run --rm --name certbot \
+        -v "$WEBROOT":/var/www/certbot \
+        -v "/etc/letsencrypt:/etc/letsencrypt" \
+        certbot/certbot certonly --webroot \
+        -w /var/www/certbot \
+        -d "$DOMAIN" \
+        --non-interactive --agree-tos -m "$EMAIL"
+
+    # Удаляем временную конфигурацию Nginx
+    echo "Removing temporary Nginx configuration for $DOMAIN"
+    docker exec $NGINX_CONTAINER bash -c "
+    rm -f /etc/nginx/conf.d/$DOMAIN-temp.conf
+    nginx -s reload
+    "
 done
 
-# Установка сертификатов в систему, если требуется
-cp -r "${CERT_DIR}"/*.crt /usr/local/share/ca-certificates/
-update-ca-certificates
+echo "SSL setup complete. Certificates are stored in $CERT_DIR."
