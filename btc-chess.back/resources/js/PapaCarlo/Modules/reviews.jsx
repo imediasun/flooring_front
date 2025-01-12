@@ -44,6 +44,22 @@ export default function ReviewsSection() {
                   </div>
                 </div>
               </SwiperSlide>
+                <SwiperSlide>
+                    <div className="reviews-card">
+                        <div className="reviews-card__name">J Miller</div>
+                        <div className="reviews-card__review">
+                            <p>Lorem ipsum dolor sit amet consectetur. Rhoncus et adipiscing est commodo. Lobortis viverra quis sollicitudin tortor diam vulputate suspendisse. Donec ullamcorper enim venenatis dis venenatis ac in.</p>
+                        </div>
+                    </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="reviews-card">
+                        <div className="reviews-card__name">J Miller</div>
+                        <div className="reviews-card__review">
+                            <p>Lorem ipsum dolor sit amet consectetur. Rhoncus et adipiscing est commodo. Lobortis viverra quis sollicitudin tortor diam vulputate suspendisse. Donec ullamcorper enim venenatis dis venenatis ac in.</p>
+                        </div>
+                    </div>
+                </SwiperSlide>
               <SwiperSlide>
                 <div className="reviews-card">
                   <div className="reviews-card__name">J Miller</div>
