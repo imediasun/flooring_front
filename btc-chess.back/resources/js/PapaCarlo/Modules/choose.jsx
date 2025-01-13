@@ -20,7 +20,7 @@ export default function ChooseSection() {
                   <img src={ChooceItem1} alt="img" className="services-item__img" width="86" height="86" />
                 </div>
                 <div className="choose-item__name">Customer satisfaction</div>
-                <div className="choose-item__description">Lorem ipsum dolor sit amet consectetur. Auctor laoreet nibh porttitor convallis non nisl quis in semper. Elementum pretium molestie faucibus est sit sit nibh mauris amet.</div>
+                <div className="choose-item__description">We’re not happy until you are, which is why we have so many happy clients.</div>
               </div>
             </div>
             <div className="choose-item_wrapp">
@@ -29,7 +29,7 @@ export default function ChooseSection() {
                   <img src={ChooceItem2} alt="img" className="services-item__img" width="86" height="86" />
                 </div>
                 <div className="choose-item__name">Quality Workmanship</div>
-                <div className="choose-item__description">Lorem ipsum dolor sit amet consectetur. Adipiscing eget dignissim sem quis nunc hac arcu non habitasse. Diam in ut tincidunt egestas quisque quam sed. </div>
+                <div className="choose-item__description">At Papa Carlo Company, we believe that every project deserves nothing less than excellence. Whether it’s a small repair or a custom build, we bring the same dedication to every project. </div>
               </div>
             </div>
             <div className="choose-item_wrapp">
@@ -38,7 +38,7 @@ export default function ChooseSection() {
                   <img src={ChooceItem3} alt="img" className="services-item__img" width="86" height="86" />
                 </div>
                 <div className="choose-item__name">Honesty and Integrity</div>
-                <div className="choose-item__description">Lorem ipsum dolor sit amet consectetur. Fringilla amet tellus platea quam sed aenean purus lobortis. Nisl tincidunt egestas tellus et at gravida libero tincidunt.</div>
+                <div className="choose-item__description">We deliver on our promises, meeting deadlines and exceeding expectations. We never cut corners because your trust matters to us. When you choose us, you’re choosing a team that stands by its word and works with your best interests at heart.</div>
               </div>
             </div>
           </div>

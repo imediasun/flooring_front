@@ -1,16 +1,17 @@
 import SvgIcon from "@/PapaCarlo/Components/SvgIcon";
-import { useState, useEffect, useRef } from "react"; 
+import { useState, useEffect, useRef } from "react";
 
 const menuData = [
   { label: "About", href: "/" },
   {
     label: "Services",
     submenu: [
-      { label: "Lorem ipsum", href: "/" },
-      { label: "Lorem ipsum amet", href: "/" },
-      { label: "Lorem ipsum dolor sit", href: "/" },
-      { label: "Lorem ipsum", href: "/" },
-      { label: "Lorem ipsum dolor", href: "/" },
+      { label: "Bathroom", href: "/bathroom" },
+      { label: "Electrical works", href: "/electrical_works" },
+      { label: "Assembly", href: "/assembly" },
+      { label: "Handyman jobs", href: "/handyman_jobs" },
+      { label: "Plumbing", href: "/plumbing" },
+      { label: "Maintenance", href: "/maintenance" },
     ],
   },
   {

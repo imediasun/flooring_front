@@ -20,8 +20,8 @@ export default function WorksSection() {
             <div className="works-item__photo">
               <img src={work1Img} alt="img" className="works-item__img" width="420" height="365" />
             </div>
-            <div className="works-item__name">Lorem ipsum</div>
-            <div className="works-item__description">Lorem ipsum dolor sit amet consectetur. Quis laoreet cursus morbi vel erat. Ullamcorper cursus nam volutpat rhoncus gravida quam dui sem nunc.</div>
+            <div className="works-item__name">Craftsmanship</div>
+            <div className="works-item__description">Precision, attention to detail, and a commitment to excellence in every project.</div>
             <DefaultLink
               className="link-red link-underline works-item__link"
             >View more</DefaultLink>
@@ -31,8 +31,8 @@ export default function WorksSection() {
             <div className="works-item__photo">
               <img src={work2Img} alt="img" className="works-item__img" width="420" height="365" />
             </div>
-            <div className="works-item__name">Lorem ipsum</div>
-            <div className="works-item__description">Lorem ipsum dolor sit amet consectetur. Quis laoreet cursus morbi vel erat. Ullamcorper cursus nam volutpat rhoncus gravida quam dui sem nunc.</div>
+            <div className="works-item__name">Durability</div>
+            <div className="works-item__description">Built to last with high-quality materials and expert techniques.</div>
             <DefaultLink
               className="link-red link-underline works-item__link"
             >View more</DefaultLink>
@@ -42,8 +42,8 @@ export default function WorksSection() {
             <div className="works-item__photo">
               <img src={work3Img} alt="img" className="works-item__img" width="420" height="365" />
             </div>
-            <div className="works-item__name">Lorem ipsum</div>
-            <div className="works-item__description">Lorem ipsum dolor sit amet consectetur. Quis laoreet cursus morbi vel erat. Ullamcorper cursus nam volutpat rhoncus gravida quam dui sem nunc.</div>
+            <div className="works-item__name">Creativity</div>
+            <div className="works-item__description"> Custom designs tailored to your unique style and needs.</div>
             <DefaultLink
               className="link-red link-underline works-item__link"
             >View more</DefaultLink>
@@ -53,8 +53,8 @@ export default function WorksSection() {
             <div className="works-item__photo">
               <img src={work4Img} alt="img" className="works-item__img" width="420" height="365" />
             </div>
-            <div className="works-item__name">Lorem ipsum</div>
-            <div className="works-item__description">Lorem ipsum dolor sit amet consectetur. Quis laoreet cursus morbi vel erat. Ullamcorper cursus nam volutpat rhoncus gravida quam dui sem nunc.</div>
+            <div className="works-item__name">Functionality</div>
+            <div className="works-item__description">Practical solutions that add value and enhance your space.</div>
             <DefaultLink
               className="link-red link-underline works-item__link"
             >View more</DefaultLink>

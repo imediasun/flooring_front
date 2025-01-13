@@ -10,7 +10,7 @@ export default function HeroSection() {
             <h1 className="hero-title">Carpentry</h1>
           </div>
           <div className="section-heading__info">
-            <div className="section-heading__description">Lorem ipsum dolor sit amet consectetur. Quis sit tortor vitae semper cras. Pharetra ac elementum dictumst interdum et dolor bibendum. Habitasse pellentesque neque amet et eros donec fermentum. Volutpat felis aenean eu ut auctor quis metus vel aliquam.</div>
+            <div className="section-heading__description">"Crafting quality solutions for your home! 🛠️ From custom carpentry to repairs, we bring precision, reliability, and expert craftsmanship to every project. Serving Seattle with pride—let’s build something great together!"</div>
             <div className="section-heading__btns">
               <PrimaryLink
                 isTelLink={true}
@@ -33,15 +33,22 @@ export default function HeroSection() {
         <div className="hero-advantages">
           <div className="hero-advantage">
             <div className="hero-advantage__title">Getting the best value</div>
-            <div className="hero-advantage-description">Lorem ipsum dolor sit amet consectetur. Amet pellentesque eu convallis sodales tristique elit. Id rhoncus bibendum sagittis molestie nisl fames mi. Interdum arcu nunc porta tellus massa nunc.</div>
+            <div className="hero-advantage-description"> In Seattle, we pride ourselves on offering exceptional carpentry services at fair prices. Let’s create something amazing together—contact us today!</div>
           </div>
           <div className="hero-advantage">
             <div className="hero-advantage__title">Finding the perfect carpentry services</div>
-            <div className="hero-advantage-description">Lorem ipsum dolor sit amet consectetur. Amet pellentesque eu convallis sodales tristique elit. Id rhoncus bibendum sagittis molestie nisl fames mi. Interdum arcu nunc porta tellus massa nunc.</div>
+            <div className="hero-advantage-description">Whether you need custom furniture, home repairs, or creative woodwork designs, choosing the right carpenter is key to bringing your vision to life.</div>
           </div>
           <div className="hero-advantage">
             <div className="hero-advantage__title">Our common projects</div>
-            <div className="hero-advantage-description">Lorem ipsum dolor sit amet consectetur. Amet pellentesque eu convallis sodales tristique elit. Id rhoncus bibendum sagittis molestie nisl fames mi. Interdum arcu nunc porta tellus massa nunc.</div>
+            <div className="hero-advantage-description">At PapaCarlo Handyman Company, we specialize in crafting solutions for your home and business needs.  Click here to see our most popular projects: Custom Furniture – Tables, shelves, cabinets, and more designed to match your style.
+                Home Repairs – Door replacements, trim work, and structural fixes done with precision.
+                Decks & Patios – Beautiful outdoor spaces built to last in Seattle’s weather.
+                Built-Ins & Storage Solutions – Maximize your space with custom closets, shelves, and organizers.
+                Kitchen & Bathroom Upgrades – From cabinets to vanities, we add charm and functionality.
+                Woodworking Details – Accent walls, crown molding, and other touches to elevate your home.           Ready to start your next project? Let us bring your vision to life!
+
+                Contact us today for a free estimate!</div>
           </div>
         </div>
       </div>
