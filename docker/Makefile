@@ -33,7 +33,7 @@ setup:  ## Create and start containers
 	$(MAKE) install
 	$(MAKE) up-php
 	$(MAKE) up-migrate-onboarding
-	$(MAKE) up-nginx
+	$(MAKE) up-papacarlo-nginx
 
 setup-db:  ## Create and start containers
 	$(MAKE) up-postgres_onboarding
@@ -75,8 +75,8 @@ up-redis: ## Create and start containers
 up-frontend: ## Start panel-ui
 	docker compose up --build  -d frontend
 
-up-nginx:
-	docker compose up -d --no-deps --build nginx
+up-papacarlo-nginx:
+	docker compose up -d --no-deps --build papacarlo-nginx
 
 proto-regenerate: ## Regenerate proto files in the existing php-fpm container
 	docker exec -u root php-fpm make proto
@@ -96,8 +96,7 @@ install-certs: ## Create and start containers
 	sudo chmod 777 -R /etc/ssl/certs/
 	sudo chmod 777 -R ./nginx/cert
 	chmod +x ./nginx/create-certificates.sh
-	sudo ./nginx/create-certificates.sh btc-chess.back btc-chess.front
-	sudo ./nginx/create-certificates.sh bitcoin-chess.net bitcoin-chess.com
+	sudo ./nginx/create-certificates.sh bitcoin-chess.nl bitcoin-chess.com
 
 
 install-frontend: ## Install dependecy before run in watcher mode

@@ -1,12 +1,12 @@
 import './bootstrap'
-import '../css/app.css'
+import '../scss/main.scss'
 import './main.js'
 
 import { createRoot } from 'react-dom/client'
 import { createInertiaApp } from '@inertiajs/react'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Chess-BTC'
+const appName = import.meta.env.VITE_APP_NAME || 'PAPACARLO'
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,

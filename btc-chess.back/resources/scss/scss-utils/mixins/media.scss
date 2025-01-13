@@ -1,0 +1,48 @@
+@use "sass:math";
+
+$breakpoints: (
+  xs: 375px,
+  xm: 450px,
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$point-diff: 0.1;
+
+@mixin media-up($point) {
+  @each $breakpoint, $value in $breakpoints {
+    @if $breakpoint == $point {
+      @media (min-width: $value) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin media-down($point) {
+  @each $breakpoint, $value in $breakpoints {
+    @if $breakpoint == $point {
+      @media (max-width: ($value - $point-diff)) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin media-between($point_1, $point_2) {
+  $min: $point_1 + px;
+  $max: $point_2 + px;
+
+  @each $breakpoint, $value in $breakpoints {
+    @if $breakpoint == $point_1 {
+      $min: $value;
+    }
+
+    @if $breakpoint == $point_2 {
+      $max: $value;
+    }
+  }
+}

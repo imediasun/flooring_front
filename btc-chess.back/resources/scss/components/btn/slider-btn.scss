@@ -1,0 +1,52 @@
+@use "../../scss-utils/mixins/media" as bp;
+
+.global-slider-btns{
+  width: 100%;
+  position: relative;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @include bp.media-down(lg){
+    margin-top: 15px;
+  }
+}
+
+.global-slider-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  transition: .3s;
+  background: var(--white);
+
+  &.swiper-button-disabled{
+    pointer-events: none;
+    svg{
+      stroke: var(--grey);
+    }
+  }
+
+  svg{
+    width: 12px;
+    height: 22px;
+    object-fit: contain;
+    stroke: var(--blue);
+    fill: transparent;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+    transition: .3s;
+  }
+
+  &:hover{
+    @include bp.media-up(lg){
+      background: var(--yellow);
+      svg{
+        stroke: var(--white);
+      }
+    }
+  }
+}

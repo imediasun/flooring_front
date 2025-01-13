@@ -232,6 +232,9 @@ services:
     container_name: redis-league
     ports:
       - "6379:6379"
+    environment:
+      REDIS_PASSWORD: "Sunimedia@1lSenior"
+    command: [ "redis-server", "--requirepass", "Sunimedia@1lSenior" ]
 
   papacarlo-nginx:
     build:
