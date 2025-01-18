@@ -17,7 +17,8 @@ export default function ServicesSection() {
             <h3 className="global-section-title services-title">Our <b>Services</b></h3>
           </div>
           <div className="section-heading__info">
-            <div className="section-heading__description">Lorem ipsum dolor sit amet consectetur. Quis sit tortor vitae semper cras. Pharetra ac elementum dictumst interdum et dolor bibendum. Habitasse pellentesque neque amet et eros donec fermentum. Volutpat felis aenean eu ut auctor quis metus vel aliquam.</div>
+            <div className="section-heading__description">At PapaCarlo Company we specialize in providing top-notch carpentry and handyman services in Seattle. Whether you need custom woodworking, furniture assembly, home repairs, or full-scale renovations, we deliver exceptional craftsmanship and reliable solutions tailored to your needs.
+                Give us a Phone Call or Get a Qoute to astimate your future order</div>
             <div className="section-heading__btns">
               <PrimaryLink
                 isTelLink={true}
@@ -68,7 +69,7 @@ export default function ServicesSection() {
             </div>
             <div className="services-item__name">Plumbing</div>
           </div>
-          
+
           <div className="services-item">
             <div className="services-item__photo">
               <img src={service6Img} alt="img" className="services-item__img" width="420" height="365" />

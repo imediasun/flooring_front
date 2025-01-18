@@ -41,12 +41,8 @@ export default function HeroSection() {
           </div>
           <div className="hero-advantage">
             <div className="hero-advantage__title">Our common projects</div>
-            <div className="hero-advantage-description">At PapaCarlo Handyman Company, we specialize in crafting solutions for your home and business needs.  Click here to see our most popular projects: Custom Furniture – Tables, shelves, cabinets, and more designed to match your style.
+            <div className="hero-advantage-description">At PapaCarlo Handyman Company, we specialize in crafting solutions for your home and business needs.           Custom Furniture – Tables, shelves, cabinets, and more designed to match your style.
                 Home Repairs – Door replacements, trim work, and structural fixes done with precision.
-                Decks & Patios – Beautiful outdoor spaces built to last in Seattle’s weather.
-                Built-Ins & Storage Solutions – Maximize your space with custom closets, shelves, and organizers.
-                Kitchen & Bathroom Upgrades – From cabinets to vanities, we add charm and functionality.
-                Woodworking Details – Accent walls, crown molding, and other touches to elevate your home.           Ready to start your next project? Let us bring your vision to life!
 
                 Contact us today for a free estimate!</div>
           </div>
