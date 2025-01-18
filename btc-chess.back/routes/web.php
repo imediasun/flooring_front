@@ -1,18 +1,20 @@
 <?php
 
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AppointmentController;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-});
+Route::post('/appointments', [AppointmentController::class, 'submit'])->name('appointments.submit');
+
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/rooms/{room_name}', [IndexController::class, 'rooms'])->name('index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
