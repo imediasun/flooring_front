@@ -6,23 +6,15 @@ const menuData = [
   {
     label: "Services",
     submenu: [
-      { label: "Bathroom", href: "/bathroom" },
-      { label: "Electrical works", href: "/electrical_works" },
-      { label: "Assembly", href: "/assembly" },
-      { label: "Handyman jobs", href: "/handyman_jobs" },
-      { label: "Plumbing", href: "/plumbing" },
-      { label: "Maintenance", href: "/maintenance" },
+      { label: "Bathroom", href: "/rooms/Bathroom" },
+      { label: "Attic", href: "/rooms/Attic" },
+      { label: "Kitchen", href: "/rooms/Kitchen" },
+      { label: "Hall and Resting Area", href: "/rooms/Hall" },
+      { label: "Garage", href: "/rooms/Garage" },
+      { label: "Stairs", href: "/rooms/Stairs" },
     ],
   },
-  {
-    label: "Blog",
-    submenu: [
-      { label: "Blog 1", href: "/" },
-      { label: "Blog 2", href: "/" },
-      { label: "Blog 3", href: "/" },
-    ],
-  },
-  { label: "Reviews", href: "/" },
+  { label: "Reviews", href: "#reviews_box" },
   { label: "Contact us", href: "/" },
 ]
 

@@ -35,9 +35,8 @@ services:
       - 9000
     depends_on:
       - postgres_front
-      - postgres_onboarding
-      - postgres_payment
       - redis
+      - papacarlo-mailhog
 
   postgres_front:
     image: postgres:14-alpine
@@ -50,182 +49,6 @@ services:
       - postgres_front_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-
-  postgres_onboarding:
-    image: postgres:14-alpine
-    container_name: postgres_onboarding
-    environment:
-      POSTGRES_USER: chess_user
-      POSTGRES_PASSWORD: chess_password
-      POSTGRES_DB: chess_onboarding_db
-      PUID: ${PUID:-1002}
-      PGID: ${PGID:-1002}
-    volumes:
-      - postgres_onboarding_data:/var/lib/postgresql/data
-      - ./onboardingservice/database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U chess_user" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    ports:
-      - "5433:5432"
-
-  postgres_payment:
-    image: postgres:14-alpine
-    environment:
-      POSTGRES_USER: chess_user
-      POSTGRES_PASSWORD: chess_password
-      POSTGRES_DB: chess_payment_db
-      PUID: ${PUID:-1002}
-      PGID: ${PGID:-1002}
-    volumes:
-      - postgres_payment_data:/var/lib/postgresql/data
-      - ./paymentservice/database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U chess_user" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    ports:
-      - "5434:5432"
-
-  migrate_onboarding:
-    image: migrate/migrate
-    volumes:
-      - ./onboardingservice/migrations:/migrations
-    command: [
-      "-source", "file:///migrations",
-      "-database", "postgres://chess_user:chess_password@postgres_onboarding:5432/chess_onboarding_db?sslmode=disable",
-      "up"
-    ]
-    depends_on:
-      postgres_onboarding:
-        condition: service_healthy
-
-  migrate_payment:
-    image: migrate/migrate
-    volumes:
-      - ./paymentservice/migrations:/migrations
-    command: [
-      "-source", "file:///migrations",
-      "-database", "postgres://chess_user:chess_password@postgres_payment:5432/chess_payment_db?sslmode=disable",
-      "up"
-    ]
-    depends_on:
-      postgres_payment:
-        condition: service_healthy
-
-    # Go microservice (AI)
-#  grpc-ai:
-#    container_name: grpc-ai
-#    build:
-#      context: ../  # Assuming Go microservice code is in the ai_service folder
-#      dockerfile: ./ai_service/Dockerfile
-#      args:
-#        progress: plain
-#    volumes:
-#      - ../ai_service :/app
-#    ports:
-#      - "50051:50051"  # Expose gRPC port
-#    expose:
-#      - 50051
-#    networks:
-#      - app-network
-
-  create-topics:
-    image: confluentinc/cp-kafka:7.4.1
-    depends_on:
-      - kafka
-    entrypoint: >
-      /bin/sh -c "
-      while ! nc -z kafka 9092; do sleep 1; done;
-      kafka-topics --create
-      --topic user-account-events
-      --bootstrap-server kafka:9092
-      --replication-factor 1
-      --partitions 1
-      --command-config /etc/kafka/client-config.properties"
-    volumes:
-      - ../docker/kafka/client-config.properties:/etc/kafka/client-config.properties
-      - ../docker/kafka/zookeeper-jaas.conf:/etc/kafka/zookeeper-jaas.conf
-
-
-  kafka:
-    image: confluentinc/cp-kafka:7.4.1
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      #KAFKA_CREATE_TOPICS: "user-account-events:1:1"
-      KAFKA_ZOOKEEPER_SASL_ENABLED: "true"                      # Включить SASL аутентификацию
-      KAFKA_ZOOKEEPER_SASL_MECHANISM: "DIGEST-MD5"              # Механизм аутентификации
-      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/zookeeper-jaas.conf"
-    volumes:
-      - ../docker/kafka/zookeeper-jaas.conf:/etc/kafka/zookeeper-jaas.conf
-    ports:
-      - "9092:9092"
-      - "29092:29092"
-    depends_on:
-      - zookeeper
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.1
-    container_name: zookeeper
-    hostname: zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-      ALLOW_ANONYMOUS_LOGIN: "no"  # Запрет анонимного доступа
-      ZOOKEEPER_AUTH_PROVIDER_1: "org.apache.zookeeper.server.auth.DigestAuthenticationProvider"
-      ZOOKEEPER_DIGEST_AUTH_USER: "admin:sunimedia"
-    volumes:
-      - ../docker/kafka/zookeeper-jaas.conf:/etc/kafka/zookeeper-jaas.conf
-    command:
-      - bash
-      - -c
-      - |
-        export KAFKA_OPTS="-Djava.security.auth.login.config=/etc/kafka/zookeeper-jaas.conf"
-        /etc/confluent/docker/run
-    ports:
-      - "2181:2181"
-
-  zoonavigator:
-    image: elkozmon/zoonavigator:latest
-    container_name: zoonavigator
-    hostname: zoonavigator
-    environment:
-      ZOOKEEPER_HOSTS: zookeeper:2181
-      AUTH_SCHEME: "digest"               # Указываем, что используем Digest
-      AUTH_USERNAME: "admin"             # Имя пользователя
-      AUTH_PASSWORD: "sunimedia"       # Пароль
-    ports:
-      - 9100:9000
-    depends_on:
-      - zookeeper
-
-  onboardingsvc:
-    container_name: onboardingsvc
-    build:
-      context: ../ # Assuming Go microservice code is in the ai_service folder
-      dockerfile: ./docker/onboardingservice/Dockerfile
-      args:
-        progress: plain
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
-    volumes:
-      - ../onboardingservice/configs:/configs
-    working_dir: /app
-    ports:
-      - "50052:50052"  # Expose gRPC port
-    expose:
-      - 50052
-    depends_on:
-      - postgres_onboarding
-      - migrate_onboarding
 
   redis:
     image: "redis:alpine"
@@ -258,7 +81,13 @@ services:
     depends_on:
       - php-fpm
       - redis
-      - zoonavigator
+
+  papacarlo-mailhog:
+    image: mailhog/mailhog:latest
+    container_name: papacarlo-mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
 
 volumes:
   postgres_onboarding_data:

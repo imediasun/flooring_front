@@ -27,6 +27,7 @@
         <meta property="og:image:height" content="32" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@magellan_it" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Fix IOS zoom to input on focus -->
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no , maximum-scale=1.0,user-scalable=no" /> -->

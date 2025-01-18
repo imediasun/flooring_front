@@ -27,12 +27,11 @@ generate-grpc-ai:
         /var/www/backend/ai_service/ai_service.proto
 
 setup:  ## Create and start containers
-	$(MAKE) up-postgres_onboarding
 	$(MAKE) up-postgres_front
 	$(MAKE) up-redis
+	$(MAKE) up-mailhog
 	$(MAKE) install
 	$(MAKE) up-php
-	$(MAKE) up-migrate-onboarding
 	$(MAKE) up-papacarlo-nginx
 
 setup-db:  ## Create and start containers
@@ -41,6 +40,9 @@ setup-db:  ## Create and start containers
 
 up-migrate-onboarding: ## Create and start containers
 	docker compose up -d migrate_onboarding
+
+up-mailhog: ## Create and start containers
+	docker compose up -d papacarlo-mailhog
 
 up-create-topics:
 	docker compose up -d create-topics

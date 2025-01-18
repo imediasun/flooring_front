@@ -34,49 +34,63 @@ export default function ServicesSection() {
           </div>
         </div>
 
-        <div className="services-list">
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service1Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Electrical works</div>
-          </div>
+          <div className="services-list">
 
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service2Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Bathroom</div>
-          </div>
 
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service3Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Assembly</div>
-          </div>
+              <div className="services-item">
+                  <a href={"/rooms/Bathroom"}>
+                      <div className="services-item__photo">
+                          <img src={service2Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                  <div className="services-item__name">Bathroom</div>
+              </div>
 
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service4Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Handyman jobs</div>
-          </div>
+              <div className="services-item">
+                  <a href={"/rooms/Attic"}>
+                      <div className="services-item__photo">
+                          <img src={service1Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                      <div className="services-item__name">Attic</div>
+              </div>
 
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service5Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Plumbing</div>
-          </div>
+              <div className="services-item">
+                  <a href={"/rooms/Kitchen"}>
+                      <div className="services-item__photo">
+                          <img src={service3Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                      <div className="services-item__name">Kitchen</div>
+              </div>
 
-          <div className="services-item">
-            <div className="services-item__photo">
-              <img src={service6Img} alt="img" className="services-item__img" width="420" height="365" />
-            </div>
-            <div className="services-item__name">Maintenance</div>
+              <div className="services-item">
+                  <a href={"/rooms/Hall"}>
+                      <div className="services-item__photo">
+                          <img src={service4Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                      <div className="services-item__name">Hall and Resting Area</div>
+              </div>
+
+              <div className="services-item">
+                  <a href={"/rooms/Garage"}>
+                      <div className="services-item__photo">
+                          <img src={service5Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                      <div className="services-item__name">Garage</div>
+              </div>
+
+              <div className="services-item">
+                  <a href={"/rooms/Stairs"}>
+                      <div className="services-item__photo">
+                          <img src={service6Img} alt="img" className="services-item__img" width="420" height="365"/>
+                      </div>
+                  </a>
+                      <div className="services-item__name">Stairs</div>
+              </div>
           </div>
-        </div>
       </div>
     </div>
   )
