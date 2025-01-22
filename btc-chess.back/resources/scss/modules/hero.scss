@@ -19,7 +19,7 @@
     @include bp.media-down(xxl){
       font-size: 100px;
     }
-    
+
     @include bp.media-down(lg){
       font-size: 65px;
     }
@@ -34,7 +34,7 @@
     margin-bottom: 50px;
     @media(min-width:1500px){
       height: auto;
-      aspect-ratio: 2.5 / 1; 
+      aspect-ratio: 2.5 / 1;
       max-height: 700px;
     }
     @include bp.media-down(lg){
@@ -101,4 +101,8 @@
     letter-spacing: -0.02em;
     color: var(--blue);
   }
+}
+
+.hero-banner-with-stairs{
+    margin-top:50px;
 }

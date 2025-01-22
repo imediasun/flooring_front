@@ -24,11 +24,11 @@ export default function Footer() {
                   <span className="holder">2117 E 28th <br />St, Lorain, <br />OH 44055</span>
                 </a>
 
-                <a href="tel:+4402586136" className="footer-contact">
+                <a href="tel:+19169381545" className="footer-contact">
                   <span className="symbol">
                     <SvgIcon name={"phone"}/>
                   </span>
-                  <span className="holder">(440) 258-6136</span>
+                  <span className="holder">+1(916)938-15-45</span>
                 </a>
 
                 <ul className="footer-socials">

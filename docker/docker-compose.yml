@@ -74,8 +74,8 @@ services:
       - ../docker/nginx/conf.d:/etc/nginx/sites-enabled
       - ../docker/nginx/logs:/var/log/nginx
     ports:
-      - 80:80
-      - 443:443
+      - 8880:80
+      - 8443:443
     expose:
       - 80
     depends_on:

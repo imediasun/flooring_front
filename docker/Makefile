@@ -98,7 +98,7 @@ install-certs: ## Create and start containers
 	sudo chmod 777 -R /etc/ssl/certs/
 	sudo chmod 777 -R ./nginx/cert
 	chmod +x ./nginx/create-certificates.sh
-	sudo ./nginx/create-certificates.sh bitcoin-chess.nl bitcoin-chess.com btc-chess.back
+	sudo ./nginx/create-certificates.sh papacarlohandyman.com bitcoin-chess.com btc-chess.back
 
 
 install-frontend: ## Install dependecy before run in watcher mode

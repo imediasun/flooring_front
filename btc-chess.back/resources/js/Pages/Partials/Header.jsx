@@ -67,16 +67,16 @@ export default function Header() {
               </ul>
             </div>
           </div>
-          <a href="tel:+4402586136" className="header-contact__link">
+          <a href="tel:+19169381545" className="header-contact__link">
             <span className="symbol">
               <SvgIcon name="phone"/>
             </span>
-            <span className="holder">(440) 258-6136</span>
+            <span className="holder">+1(916)938-15-45</span>
           </a>
 
-          <button 
-            type="button" 
-            className={`header-burger ${ isOpen ? "_active": ""}`} 
+          <button
+            type="button"
+            className={`header-burger ${ isOpen ? "_active": ""}`}
             aria-label="burger"
             onClick={toggleMenu}
           >

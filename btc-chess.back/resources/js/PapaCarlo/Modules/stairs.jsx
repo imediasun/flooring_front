@@ -1,5 +1,5 @@
 import PrimaryLink from "../Components/PrimaryLink";
-import heroImgPng from "../../../img/content/home/hero.png"
+import heroImgPng from "../../../img/content/home/stairs.jpg"
 
 export default function StairsSection() {
   return(
@@ -14,9 +14,9 @@ export default function StairsSection() {
             <div className="section-heading__btns">
               <PrimaryLink
                 isTelLink={true}
-                href={"tel:4402586136"}
+                href={"tel:19169381545"}
                 className={"section-heading-btn"}
-              >(440) 258-6136</PrimaryLink>
+              >+1(916)938-15-45</PrimaryLink>
 
               <PrimaryLink
                 href={"/"}
