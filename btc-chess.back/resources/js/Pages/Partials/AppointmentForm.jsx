@@ -39,6 +39,7 @@ export default function AppointmentForm() {
                 headers: {
                     "Content-Type": "application/json",
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    "X-Requested-With": "XMLHttpRequest",
                 },
                 body: JSON.stringify(data),
             });
@@ -73,6 +74,7 @@ export default function AppointmentForm() {
                 className={`appointment-formbox ${isLoading ? "_loading" : ""}`}
                 onSubmit={handleSubmit(onSubmit)}
             >
+                <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').content}/>
                 <div className="form-field__list appointment-form__list">
                     <div className={`form-field ${errors.firstName ? "_invalid" : ""}`}>
                         <div className="form-field__input-wrapp">
@@ -80,7 +82,7 @@ export default function AppointmentForm() {
                                 placeholder="First name"
                                 className="form-field__input"
                                 type="text"
-                                {...register("firstName", { required: "First name is required" })}
+                                {...register("firstName", {required: "First name is required"})}
                             />
                         </div>
                         <div className="form-field__error">{errors.firstName ? errors.firstName.message : ""}</div>
@@ -92,7 +94,7 @@ export default function AppointmentForm() {
                                 placeholder="Last name"
                                 className="form-field__input"
                                 type="text"
-                                {...register("lastName", { required: "Last name is required" })}
+                                {...register("lastName", {required: "Last name is required"})}
                             />
                         </div>
                         <div className="form-field__error">{errors.lastName ? errors.lastName.message : ""}</div>
@@ -106,7 +108,7 @@ export default function AppointmentForm() {
                                 type="text"
                                 {...register("email", {
                                     required: "Email is required",
-                                    pattern: { value: getPattern("email"), message: "Invalid email value" },
+                                    pattern: {value: getPattern("email"), message: "Invalid email value"},
                                 })}
                             />
                         </div>
@@ -121,7 +123,7 @@ export default function AppointmentForm() {
                                 type="text"
                                 {...register("phone", {
                                     required: "Phone number is required",
-                                    pattern: { value: getPattern("phone"), message: "Invalid phone value" },
+                                    pattern: {value: getPattern("phone"), message: "Invalid phone value"},
                                 })}
                             />
                         </div>
@@ -134,10 +136,10 @@ export default function AppointmentForm() {
                                 placeholder="Date"
                                 className="form-field__input"
                                 type="date"
-                                {...register("date", { required: "Date is required" })}
+                                {...register("date", {required: "Date is required"})}
                             />
                             <div className="form-field__icon">
-                                <SvgIcon name={"calendar-v2"} />
+                                <SvgIcon name={"calendar-v2"}/>
                             </div>
                         </div>
                         <div className="form-field__error">{errors.date ? errors.date.message : ""}</div>
@@ -151,7 +153,7 @@ export default function AppointmentForm() {
                                 name="specialist" // Явно передаем имя поля
                                 holder={"Specialist"}
                                 onChangeForm={onChangeSelectHandle}
-                                {...register("specialist", { required: "Specialist is required" })}
+                                {...register("specialist", {required: "Specialist is required"})}
                             />
                         </div>
                         <div className="form-field__error">{errors.specialist ? errors.specialist.message : ""}</div>
@@ -162,7 +164,7 @@ export default function AppointmentForm() {
                             <textarea
                                 placeholder="How can we help?"
                                 className="form-field__textarea"
-                                {...register("message", { required: "Message is required" })}
+                                {...register("message", {required: "Message is required"})}
                             />
                         </div>
                         <div className="form-field__error">{errors.message ? errors.message.message : ""}</div>

@@ -1,19 +1,29 @@
 import PrimaryLink from "../Components/PrimaryLink";
 import heroImgPng from "../../../img/content/home/hero.png"
 import heroImgPngWithStairs from "../../../img/content/home/hero_with_stairs.jpeg"
+import review_papacarlo from "../../../img/content/home/review_papacarlo.png";
+import wrenchImg from "../../../img/content/home/services/wrench.png";
 
 export default function HeroSection() {
   return(
     <div className="global-section hero-section">
         <div className="container">
+
             <div className="section-heading">
+
+
                 <div className="section-heading-title__box">
+
+                    <div className="section-heading-title__box">
+                        <img src={wrenchImg} alt="img" className="services-wrench__img" width="217" height="231"/>
+                        <h3 className="global-section-title services-title">About <b>Us</b></h3><br></br>
+                    </div>
+
                     <h1 className="hero-title">Handyman</h1>
                 </div>
+
                 <div className="section-heading__info">
-                    <div className="section-heading__description">"Crafting quality solutions for your home! 🛠️ From
-                        custom carpentry to repairs, we bring precision, reliability, and expert craftsmanship to every
-                        project. Serving Seattle with pride—let’s build something great together!"
+                    <div className="section-heading__description">"Founded in 2022 in California, our handyman company relocated to Washington and now serves Seattle, Renton, Kent, Bellevue, and beyond. With over 700 completed projects and 300 reviews (97% positive), we’ve earned a reputation for reliability and quality."
                     </div>
                     <div className="section-heading__btns">
                         <PrimaryLink

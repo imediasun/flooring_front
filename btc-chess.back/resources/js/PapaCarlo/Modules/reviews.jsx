@@ -1,4 +1,4 @@
-import handyman from "../../../img/content/home/handyman.png"
+import handyman from "../../../img/content/logo2.png"
 import review_papacarlo from "../../../img/content/home/review_papacarlo.png"
 import { Navigation } from "swiper/modules"
 import {Swiper, SwiperSlide} from "swiper/react"
@@ -14,7 +14,7 @@ export default function ReviewsSection() {
           <img src={handyman} alt="img" className="reviews-man__img" width="270" height="320" />
           <h3 className="global-section-title reviews-title">What Our Clients <br />& <b>PARTNERS Have to Say</b></h3>
             <div className="reviews-papacarlo">
-                <img src={review_papacarlo} alt="img" className="reviews-man__img" width="270" height="320"/>
+                <img src={review_papacarlo} alt="img" className="reviews-stars" width="270" height="320"/>
             </div>
           <div className="reviews-slider__wrapp">
             <Swiper

@@ -15,7 +15,7 @@
     object-fit: contain;
     bottom: 0;
     left: -115px;
-    bottom: -150px;
+    bottom: -50px;
     pointer-events: none;
     @include bp.media-down(xl){
       bottom: -230px;
@@ -23,7 +23,7 @@
       left: -100px;
     }
     @include bp.media-down(lg){
-      left: -60px;
+      left: 0px;
     }
   }
 
@@ -114,8 +114,26 @@
   }
 }
 
-.reviews-papacarlo{
+.reviews-papacarlo {
     position:absolute;
-    top:90px;
-    left:190px;
+    top:190px;
+    left:150px;
+    z-index: 3;
+    @include bp.media-down(xl){
+        position: static;
+        display: flex;
+        height: auto;
+        width: 100%;
+        justify-content: end;
+        transform: translate(0, -50px);
+    }
+    .reviews-stars {
+        width: 200px;
+        height: auto;
+        @include bp.media-down(xl){
+            left: unset;
+            bottom: unset;
+        }
+    }
 }
+

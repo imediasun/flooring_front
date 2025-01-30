@@ -8,7 +8,7 @@ import BathroomSection from '@/PapaCarlo/Modules/bathroom'
 import NeedSection from '@/PapaCarlo/Modules/need'
 import PartnersSection from '@/PapaCarlo/Modules/partners'
 import ReviewsSection from '@/PapaCarlo/Modules/reviews'
-import ServicesSection from '@/PapaCarlo/Modules/services'
+import BathroomServicesSection from '@/PapaCarlo/Modules/bathroom_services'
 import WorksSection from '@/PapaCarlo/Modules/works'
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
 
       <div className="content pt-header-height">
         <BathroomSection/>
-        <ServicesSection/>
+        <BathroomServicesSection/>
       </div>
       <Footer />
     </>

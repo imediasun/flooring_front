@@ -1,6 +1,6 @@
 import DefaultLink from "@/PapaCarlo/Components/DefaultLink";
 import { Link } from "@inertiajs/react";
-import logoImg from "../../../img/content/logo-white.png"
+import logoImg from "../../../img/content/logo2.png"
 import NavMenu from "./NavMenu";
 import SvgIcon from "@/PapaCarlo/Components/SvgIcon";
 
@@ -21,7 +21,7 @@ export default function Footer() {
                   <span className="symbol">
                     <SvgIcon name={"location"}/>
                   </span>
-                  <span className="holder">2117 E 28th <br />St, Lorain, <br />OH 44055</span>
+                  <span className="holder">225 logan ave s <br />apt 211,  <br />Renton,</span>
                 </a>
 
                 <a href="tel:+19169381545" className="footer-contact">

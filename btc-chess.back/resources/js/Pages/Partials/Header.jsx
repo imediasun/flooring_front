@@ -1,9 +1,11 @@
 import { Link } from '@inertiajs/react'
 
-import logoPng from '../../../img/content/logo.png'
+import logoPng from '../../../img/content/logo2.png'
 import SvgIcon from '@/PapaCarlo/Components/SvgIcon'
 import NavMenu from './NavMenu'
 import { useEffect, useRef, useState } from 'react'
+import PrimaryLink from "@/PapaCarlo/Components/PrimaryLink.jsx";
+import review_papacarlo from "../../../img/content/home/review_papacarlo.png";
 
 export default function Header() {
   const headerRef = useRef(null)
@@ -45,6 +47,15 @@ export default function Header() {
           <Link href="/" className="header-logo">
             <img src={logoPng} alt="img" className="footer-logo__img" width="88" height="94" />
           </Link>
+          <Link className="header-logo-review" href="https://www.thumbtack.com/wa/seattle/furniture-assembly/papa-carlo/service/461811540583702537?referrer_pk=479947431592157197&utm_medium=ios">
+                    <img
+                        src={review_papacarlo}
+                        alt="img"
+                        className="header_reviews-man__img"
+                        width={270}
+                        height={96}
+                    />
+            </Link>
           <div className={`header-menu ${ isOpen ? "_active": ""}`}>
             <div className="header-menu__inner">
               <NavMenu/>

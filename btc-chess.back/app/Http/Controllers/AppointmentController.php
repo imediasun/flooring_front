@@ -29,7 +29,7 @@ class AppointmentController extends Controller
 
         // Отправка письма
         Mail::send('emails.appointment', ['data' => $validatedData], function ($message) use ($validatedData) {
-            $message->to('dev.magellan@gmail.com') // Email администратора
+            $message->to('papacarlohandyman@gmail.com') // Email администратора
             ->subject('New Appointment Request')
                 ->from($validatedData['email'], $validatedData['firstName'] . ' ' . $validatedData['lastName']);
         });
