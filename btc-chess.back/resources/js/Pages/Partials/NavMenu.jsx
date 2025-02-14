@@ -1,4 +1,4 @@
-import SvgIcon from "@/PapaCarlo/Components/SvgIcon";
+import SvgIcon from "@/Flooring/Components/SvgIcon";
 import { useState, useEffect, useRef } from "react";
 
 const menuData = [

@@ -1,8 +1,8 @@
-import DefaultLink from "@/PapaCarlo/Components/DefaultLink";
+import DefaultLink from "@/Flooring/Components/DefaultLink";
 import { Link } from "@inertiajs/react";
 import logoImg from "../../../img/content/logo2.png"
 import NavMenu from "./NavMenu";
-import SvgIcon from "@/PapaCarlo/Components/SvgIcon";
+import SvgIcon from "@/Flooring/Components/SvgIcon";
 
 export default function Footer() {
   return (

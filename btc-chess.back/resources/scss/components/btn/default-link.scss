@@ -3,36 +3,47 @@
 .default-link{
   font-family: var(--ff-primary);
   font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 130%;
-  letter-spacing: -0.02em;
-  color: var(--blue);
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 120%;
+  letter-spacing: -0.05em;
+  color: var(--pale_oyster);
   transition: .3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--pale_oyster);
+  text-transform: uppercase;
+
+  .symbol{
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg{
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      fill: var(--pale_oyster);
+      transition: .3s;
+    }
+  }
   &:hover {
     @include bp.media-up(lg) {
-      color: var(--red);
-    }
-  }
-
-  &.link-underline{
-    text-decoration: underline;
-  }
-
-  &.link-red{
-    color: var(--red);
-    &:hover {
-      @include bp.media-up(lg) {
-        color: var(--yellow);
+      color: var(--oil);
+      border-color: var(--oil);
+      svg{
+        fill: var(--oil);
       }
     }
   }
-  &.link-grey{
-    color: var(--grey);
-    &:hover {
-      @include bp.media-up(lg) {
-        color: var(--yellow);
-      }
-    }
+
+  @include bp.media-down(lg) {
+    text-transform: none;
+    font-size: 16px;
+    gap: 2px;
   }
 }
