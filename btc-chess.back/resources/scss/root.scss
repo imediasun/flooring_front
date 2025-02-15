@@ -8,6 +8,7 @@
   --judge_gray: #523F31;
   --roman_coffee: #796254;
   --pale_oyster: #9D8A7C;
+  --red: #ff1e0d;
 
   // === Topography variables
   --ff-primary: "CityBoysSoft", sans-serif;
@@ -19,13 +20,10 @@
   --text-color-primary: var(--oil);
 
   // === JS Controlling variables
-  --header-height: 122px;
+  --header-height: 140px;
   --scrollbar-width: 0px;
 
   @include bp.media-down(lg) {
-    --header-height: 80px;
-  }
-  @include bp.media-down(md) {
-    --header-height: 60px;
+    --header-height: 75px;
   }
 }

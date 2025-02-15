@@ -1,19 +1,13 @@
 import AppointmentForm from "@/Pages/Partials/AppointmentForm"
-// import appointmentPhoto from "../../../img/content/home/appointment/app-photo.png"
 
 export default function AppointmentSection() {
   return(
-    <div className="global-section s-py-100 appointment-section">
+    <div className="global-section appointment-section" id="appointment">
       <div className="container">
-        <h3 className="global-section-title appointment-title title-white"><b>Book</b> appointment</h3>
-        <div className="appointment-box">
-          <div className="appointment-form">
-            <div className="appointment-form__title">Let’s work together!</div>
-            <AppointmentForm/>
-          </div>
-          <div className="appointment-photo">
-            {/* <img src={appointmentPhoto} alt="img" className="appointment-photo__img" width="530" height="485" /> */}
-          </div>
+        <h3 className="global-section-title appointment-title">LOOKING FOR NEW <b>EXCLUSIVE</b> BRANDED FLOORS?</h3>
+        <div className="appointment-subtitle">Tell us more about your project. Please provide date and time options for a personal consultation at our showroom.</div>
+        <div className="appointment-form">
+          <AppointmentForm/>
         </div>
       </div>
     </div>

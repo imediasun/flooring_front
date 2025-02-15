@@ -13,9 +13,21 @@
   b{
     color: var(--pale_oyster);
   }
+  
+  @include bp.media-down(xxl){
+    font-size: 70px;
+  }
+  @include bp.media-down(xl){
+    font-size: 64px;
+  }
+  
+  @include bp.media-down(lg){
+    font-size: 44px;
+  }
 
-  // @include bp.media-down(lg){
-  // }
+  @include bp.media-down(md){
+    font-size: 32px;
+  }
 }
 
 .global-section-bigtitle{

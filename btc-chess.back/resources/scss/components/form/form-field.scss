@@ -1,21 +1,18 @@
 @use "../../scss-utils/mixins/media.scss" as bp;
 
 .form-field{
-  width: calc(50% - 10px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
-  @include bp.media-down(sm){
-    width: 100%;
-  }
 
   &._invalid{
     .form-field__error{
       opacity: 1;
       visibility: visible;
-      transform: translateY(115%);  
+      transform: translateY(110%);  
     }
-    .form-field__input, .form-field__textarea, .form-field__select-toggler{
+    .form-field__input, .form-field__textarea{
       border-color: var(--red) !important;
       color: var(--red) !important;
       opacity: 1;
@@ -25,17 +22,13 @@
     }
   }
 
-  &.w-full{
-    width: 100%;
-  }
-
   &__list{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px 20px;
+    gap:  20px;
     @include bp.media-down(lg){
-      gap: 20px;
+      gap: 16px;
     }
   }
 
@@ -47,28 +40,31 @@
   &__input{
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--white);
+    border-bottom: 1px solid #523F3133;
     transition: .3s;
-    color: var(--white);
-    min-height: 41px;
-    background: var(--blue);
+    color: var(--pale_oyster);
+    min-height: 37px;
+    background: transparent;
     outline: none;
     font-family: var(--ff-primary);
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -0.05em;
     position: relative;
     z-index: 1;
+    padding: 5px 0 10px;
+    @include bp.media-down(lg){
+      font-size: 16px;
+    }
 
     &::placeholder{
-      color: var(--grey);
-      opacity: 0.7;
+      color: var(--pale_oyster);
     }
 
     &:focus{
-      border-color: var(--yellow);
+      border-color: var(--oil);
     }
     -moz-appearance: none; /* Remove default appearance in Firefox */
     appearance: none; /* Cross-browser compatibility */
@@ -77,35 +73,54 @@
   &__textarea{
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--white);
+    border-bottom: 1px solid #523F3133;
     transition: .3s;
-    color: var(--white);
-    height: 120px;
-    background: var(--blue);
+    color: var(--pale_oyster);
+    height: 85px;
+    background: transparent;
     outline: none;
     font-family: var(--ff-primary);
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -0.05em;
     position: relative;
     z-index: 1;
-    padding: 10px 0;
+    padding: 5px 0 15px;
+    @include bp.media-down(lg){
+      font-size: 16px;
+      height: 66px;
+    }
+
     &:focus{
-      border-color: var(--yellow);
+      border-color: var(--oil);
     }
 
     &::placeholder{
-      color: var(--grey);
-      opacity: 0.7;
-    }
-
-    @include bp.media-down(lg){
-      height: 90px;
+      color: var(--pale_oyster);
     }
   }
 
+  &__text{
+    width: 100%;
+    padding: 5px 0 10px;
+    font-family: var(--ff-primary);
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -0.05em;
+    color: var(--oil);
+    border-bottom: 1px solid #523F3133;
+    @include bp.media-down(lg){
+      font-size: 16px;
+    }
+
+    p{
+      max-width: calc(100% - 40px);
+    }
+  }
   &__error{
     position: absolute;
     bottom: 0;
@@ -116,8 +131,8 @@
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
+    line-height: 120%;
+    letter-spacing: -0.05em;
     color: var(--red);
     transition: .2s;
   }
@@ -131,124 +146,27 @@
     justify-content: center;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-60%);
     z-index: 1;
-    background: var(--blue);
+    background: transparent;
+    pointer-events: none;
     svg{
       width: 24px;
       height: 24px;
       object-fit: contain;
-      fill: var(--white);
+      fill: var(--roman_coffee);
       transition: .3s;
+      background: #F7F4F2;
       &.stroke{
         fill: transparent;
-        stroke: var(--white);
+        stroke: var(--roman_coffee);
         stroke-width: 1.5px;
-      }
-    }
-  }
-
-  &__select {
-    width: 100%;
-    position: relative;
-
-    &._opened{
-      .form-field__select-toggler{
-        border-color: var(--yellow);
-        svg{
-          transform: rotate(180deg);
-        }
-      }
-
-      .form-field__select-list{
-        opacity: 1;
-        visibility: visible;
-        pointer-events: all;
-      }
-    }
-  }
-
-  &__select-toggler{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 41px;
-    border-bottom: 1px solid var(--white);
-    transition: .3s;
-    background: var(--blue);
-    font-family: var(--ff-primary);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
-    color: var(--grey);
-    .form-field__select-toggler-holder{
-      opacity: 0.7;
-    }
-
-    svg{
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
-      fill: var(--white);
-      object-fit: contain;
-      transition: .3s;
-    }
-  }
-
-  &__select-list{
-    position: absolute;
-    background: var(--white);
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    transform: translateY(100%);
-    z-index: 2;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: .3s;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    overflow-y: auto;
-    max-height: 125px;
-    box-sizing: border-box;
-  }
-
-  &__select-list-item{
-    width: 100%;
-    position: relative;
-    display: inline-flex;
-    &._active{
-      .form-field__select-list-btn{
-        color: var(--red);
-      }
-    }
-  }
-
-  &__select-list-btn{
-    display: inline-flex;
-    transition: .3s;
-    font-family: var(--ff-primary);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
-    color: var(--blue);
-    padding: 5px 10px;
-    &:hover{
-      @include bp.media-up(lg){
-        color: var(--red);
       }
     }
   }
 }
 
-input[type='date']::-webkit-calendar-picker-indicator {
+input[type='date']::-webkit-calendar-picker-indicator, input[type='time']::-webkit-calendar-picker-indicator {
   background: transparent;
   bottom: 0;
   color: transparent;
