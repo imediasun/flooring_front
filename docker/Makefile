@@ -14,14 +14,14 @@ up-go-ai:
 	docker-compose up -d grpc-ai
 
 connect_back: #connect to php application
-	@docker exec -it php-fpm bash
+	@docker exec -it flooring-php-fpm bash
 
 install: install-php
 #install-frontend
 
 # Generate gRPC PHP classes inside the php-fpm container
 generate-grpc-ai:
-	docker-compose exec php-fpm protoc \
+	docker-compose exec flooring-php-fpm protoc \
         --proto_path=/var/www/backend/ai_service \
         --php_out=/var/www/backend/src/Service \
         /var/www/backend/ai_service/ai_service.proto
@@ -29,7 +29,6 @@ generate-grpc-ai:
 setup:  ## Create and start containers
 	$(MAKE) up-postgres_front
 	$(MAKE) up-redis
-	$(MAKE) up-mailhog
 	$(MAKE) install
 	$(MAKE) up-php
 	$(MAKE) up-papacarlo-nginx
@@ -69,26 +68,26 @@ up-postgres_payment: ## Create and start containers
 	docker compose up -d postgres_payment
 
 up-postgres_front: ## Create and start containers
-	docker compose up -d postgres_front
+	docker compose up -d flooring-postgres_front
 
 up-redis: ## Create and start containers
-	docker compose up -d redis
+	docker compose up -d flooring-redis
 
 up-frontend: ## Start panel-ui
 	docker compose up --build  -d frontend
 
 up-papacarlo-nginx:
-	docker compose up -d --no-deps --build papacarlo-nginx
+	docker compose up -d --no-deps --build flooring-nginx
 
 proto-regenerate: ## Regenerate proto files in the existing php-fpm container
-	docker exec -u root php-fpm make proto
+	docker exec -u root flooring-php-fpm make proto
 
 install-php: ## install-php
 	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-	docker compose build php-fpm
-	docker compose run --rm --no-deps -u root php-fpm make proto
-	docker compose run --rm --no-deps -u root php-fpm composer install
-	docker compose run --rm --no-deps -u root php-fpm php artisan migrate
+	docker compose build flooring-php-fpm
+	docker compose run --rm --no-deps -u root flooring-php-fpm make proto
+	docker compose run --rm --no-deps -u root flooring-php-fpm composer install
+	docker compose run --rm --no-deps -u root flooring-php-fpm php artisan migrate
 
 install-onboarding: ## install-php
 	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
@@ -98,7 +97,7 @@ install-certs: ## Create and start containers
 	sudo chmod 777 -R /etc/ssl/certs/
 	sudo chmod 777 -R ./nginx/cert
 	chmod +x ./nginx/create-certificates.sh
-	sudo ./nginx/create-certificates.sh papacarlohandyman.com bitcoin-chess.com btc-chess.back
+	sudo ./nginx/create-certificates.sh elitehouseflooring.com bitcoin-chess.com btc-chess.back
 
 
 install-frontend: ## Install dependecy before run in watcher mode
@@ -106,7 +105,7 @@ install-frontend: ## Install dependecy before run in watcher mode
 	docker compose run --rm --no-deps frontend yarn install
 
 up-php: ## Create and start containers
-	docker-compose up -d php-fpm
+	docker-compose up -d flooring-php-fpm
 
 test:
-	docker-compose exec php-fpm vendor/bin/phpunit --configuration phpunit.xml
+	docker-compose exec flooring-php-fpm vendor/bin/phpunit --configuration phpunit.xml

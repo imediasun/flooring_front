@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  php-fpm:
-    container_name: php-fpm
+  flooring-php-fpm:
+    container_name: flooring-php-fpm
     build:
       context: ../
       dockerfile: ./docker/php-fpm/Dockerfile
@@ -34,38 +34,43 @@ services:
     expose:
       - 9000
     depends_on:
-      - postgres_front
-      - redis
-      - papacarlo-mailhog
+      - flooring-postgres_front
+      - flooring-redis
+    networks:
+      - flooring
 
-  postgres_front:
+  flooring-postgres_front:
     image: postgres:14-alpine
-    container_name: postgres-front
+    container_name: flooring-postgres-front
     environment:
       POSTGRES_USER: chess_user
       POSTGRES_PASSWORD: chess_password
       POSTGRES_DB: chess_db
     volumes:
-      - postgres_front_data:/var/lib/postgresql/data
+      - flooring-postgres_front_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5437:5432"
+    networks:
+      - flooring
 
-  redis:
+  flooring-redis:
     image: "redis:alpine"
-    container_name: redis-league
+    container_name: flooring-redis-league
     ports:
-      - "6379:6379"
+      - "6399:6379"
     environment:
       REDIS_PASSWORD: "Sunimedia@1lSenior"
     command: [ "redis-server", "--requirepass", "Sunimedia@1lSenior" ]
+    networks:
+      - flooring
 
-  papacarlo-nginx:
+  flooring-nginx:
     build:
       context: ../
       dockerfile: ./docker/nginx/Dockerfile
     #image: nginx
-    container_name: papacarlo-nginx
-    hostname: papacarlo-nginx
+    container_name: flooring-nginx
+    hostname: flooring-nginx
     healthcheck:
       test: [ "CMD", "service", "nginx", "status" ]
       timeout: 10s
@@ -74,26 +79,19 @@ services:
       - ../docker/nginx/conf.d:/etc/nginx/sites-enabled
       - ../docker/nginx/logs:/var/log/nginx
     ports:
-      - 8880:80
-      - 8443:443
+      - 8860:80
+      - 8463:443
     expose:
       - 80
     depends_on:
-      - php-fpm
-      - redis
-
-  papacarlo-mailhog:
-    image: mailhog/mailhog:latest
-    container_name: papacarlo-mailhog
-    ports:
-      - 1025:1025 # smtp server
-      - 8025:8025 # web ui
+      - flooring-php-fpm
+      - flooring-redis
+    networks:
+      - flooring
 
 volumes:
-  postgres_onboarding_data:
-  postgres_payment_data:
-  postgres_front_data:
+  flooring-postgres_front_data:
 
 networks:
-  default:
+  flooring:
     driver: bridge

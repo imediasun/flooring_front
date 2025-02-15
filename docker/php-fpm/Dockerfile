@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.2-fpm
 ARG PUID=1002
 ARG PGID=1002
 ARG GIT_SAFE_DIR=/var/www/btc-chess.back
@@ -90,7 +90,8 @@ COPY ./docker/nginx/cert/private/btc-chess.back.key /etc/nginx/cert/private/btc-
 RUN cat /etc/nginx/cert/private/btc-chess.back.crt /etc/nginx/cert/private/btc-chess.back.key > /etc/nginx/cert/private/cacert.pem
 # Измените UID и GID пользователя www-data
 
-
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 775 /var/www
 RUN chmod 777 /tmp
 # Переключитесь на пользователя www-data
 USER www-data
