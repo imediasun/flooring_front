@@ -128,7 +128,7 @@
     display: inline-flex;
     margin-left: auto;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 28px;
     li{
@@ -141,6 +141,12 @@
       width: 100%;
       margin: 0 auto;
       margin-top: 15px;
+      gap: 12px 28px;
+      justify-content: center;
+    }
+
+    @include bp.media-down(sm){
+      max-width: 280px;
     }
   }
 

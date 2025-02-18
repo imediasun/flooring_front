@@ -78,6 +78,9 @@ export default function Header() {
               </ul>
               <ul className="header__socials">
                 <li>
+                  <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Instagram</a>
+                </li>
+                <li>
                   <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Linkedin</a>
                 </li>
                 <li>

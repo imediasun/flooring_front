@@ -119,6 +119,11 @@
     @include bp.media-up(lg){
       display: none;
     }
+    @include bp.media-down(sm){
+      gap: 12px 20px;
+      justify-content: center;
+      max-width: 280px;
+    }
   }
 
   &-socials__link{

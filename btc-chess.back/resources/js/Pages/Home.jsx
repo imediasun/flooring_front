@@ -10,6 +10,27 @@ import ProductsHome from '@/Flooring/Modules/products-section';
 import BlogSection from '@/Flooring/Modules/blog-section';
 import BannerOverview from '@/Flooring/Modules/banner-overview';
 import FAQSection from '@/Flooring/Modules/faq';
+import CatalogGrid from '@/Flooring/Modules/catalog-grid';
+
+// export default function Home() {
+//   return (
+//     <>
+//       <Head title="Flooring Main" />
+//       <Header />
+//       <img src={bg} alt="bg img" width="100%" height="100%" className="page_bg"/>
+//       <div className="content pt-header-height">
+//         <HeroSection/>
+//         <AboutSection/>
+//         <ProductsHome/>
+//         <BlogSection/>
+//         <BannerOverview/>
+//         <FAQSection/>
+//         <AppointmentSection/>
+//       </div>
+//       <Footer />
+//     </>
+//   )
+// }
 
 export default function Home() {
   return (
@@ -18,12 +39,7 @@ export default function Home() {
       <Header />
       <img src={bg} alt="bg img" width="100%" height="100%" className="page_bg"/>
       <div className="content pt-header-height">
-        <HeroSection/>
-        <AboutSection/>
-        <ProductsHome/>
-        <BlogSection/>
-        <BannerOverview/>
-        <FAQSection/>
+        <CatalogGrid/>
         <AppointmentSection/>
       </div>
       <Footer />
