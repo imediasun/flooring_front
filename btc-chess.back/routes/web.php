@@ -14,6 +14,7 @@ Route::post('/appointments', [AppointmentController::class, 'submit'])->name('ap
 
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/catalog', [IndexController::class, 'catalog'])->name('catalog');
 Route::get('/rooms/{room_name}', [IndexController::class, 'rooms'])->name('index');
 
 Route::get('/dashboard', function () {
