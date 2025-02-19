@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 const menuData = [
   { label: "About us", href: "/" },
-  { label: "Catalog", href: "/" },
+  { label: "Catalog", href: "/catalog" },
   {
     label: "Inspiration",
     href: "/",

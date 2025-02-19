@@ -93,6 +93,14 @@ export default function SvgIcon({name}) {
           </svg>
         )
       }
+    case "arrow-down":
+      {
+        return(
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.91406 11.1618L5.63225 10.3017L9.89844 15.3746V2.69238H10.9297V15.3746L15.1959 10.3017L15.9141 11.1618L10.4141 17.6924L4.91406 11.1618Z"/>
+          </svg>
+        )
+      }
     case "sort":
       {
         return(
@@ -106,6 +114,30 @@ export default function SvgIcon({name}) {
               <rect width="24" height="24" fill="white"/>
             </clipPath>
             </defs>
+          </svg>
+        )
+      }
+    case "filter":
+      {
+        return(
+          <svg viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg" className="stroke">
+            <path d="M1 3C1 1.89543 1.89543 1 3 1H21C22.1046 1 23 1.89543 23 3V4.21751C23 4.97739 22.7116 5.70895 22.1932 6.26446L15.8379 13.0737C15.4922 13.444 15.3 13.9317 15.3 14.4383V19.082C15.3 19.4607 15.086 19.807 14.7472 19.9764L10.1472 22.2764C9.48231 22.6088 8.7 22.1253 8.7 21.382V14.4383C8.7 13.9317 8.50776 13.444 8.16211 13.0737L1.80683 6.26446C1.28836 5.70895 1 4.97739 1 4.21751V3Z"/>
+          </svg>
+        )
+      }
+    case "clear":
+      {
+        return(
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" className="stroke">
+            <path d="M8.99995 9.49995L5 5.5M5 5.5L1 1.5M5 5.5L9 1.5M5 5.5L1 9.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )
+      }
+    case "filter-set":
+      {
+        return(
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 24" className="stroke">
+            <path d="M3.5 7H6.5M6.5 7C6.5 8.65685 7.84315 10 9.5 10C11.1569 10 12.5 8.65685 12.5 7C12.5 5.34315 11.1569 4 9.5 4C7.84315 4 6.5 5.34315 6.5 7ZM3.5 17H9.5M18.5 17H21.5M18.5 17C18.5 18.6569 17.1569 20 15.5 20C13.8431 20 12.5 18.6569 12.5 17C12.5 15.3431 13.8431 14 15.5 14C17.1569 14 18.5 15.3431 18.5 17ZM15.5 7H21.5" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
         )
       }

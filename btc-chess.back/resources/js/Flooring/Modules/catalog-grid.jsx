@@ -16,8 +16,22 @@ import product14Img from "../../../img/content/catalog/product14.png"
 import product15Img from "../../../img/content/catalog/product15.png"
 import Pagination from "../Components/Pagination";
 import SortTrigger from "../Components/Sort";
+import FiltersSidebar from "@/Pages/Partials/Filters";
+import SvgIcon from "../Components/SvgIcon";
+import { useState } from "react";
 
 export default function CatalogGrid() {
+  const [isOpenFilters, setIsOpenFilters] = useState(false)
+
+  const closeFiltersHandle = () => {
+    setIsOpenFilters(false)
+    window.document.body.classList.remove("menu-lock")
+  }
+  const opneFiltersHandle = () => {
+    window.document.body.classList.add("menu-lock")
+    setIsOpenFilters(true)
+  }
+
   const breadcrumbsData = [
     {
       "label": "Main",
@@ -68,12 +82,16 @@ export default function CatalogGrid() {
           </div>
 
           <div className="catalog-grid__controls">
+            <button type="button" aria-label="filters btn" className="catalog-filters-trigger" onClick={opneFiltersHandle}>
+              <span className="symbol"><SvgIcon name={"filter-set"} /></span>
+              <span className="value">Filter</span>
+            </button>
             <SortTrigger/>
           </div>
 
           <div className="catalog-grid__row">
             <div className="catalog-grid__sidebar">
-              <div className="catalog-filters"></div>
+              <FiltersSidebar isOpen={isOpenFilters} closeFilters={closeFiltersHandle} openFilters={opneFiltersHandle}/>
             </div>
             <div className="catalog-grid__content">
               <div className="catalog-list">

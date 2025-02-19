@@ -13,7 +13,7 @@ export default function Footer() {
                 <a href="/" aria-label="footer link" className="footer-menu__link">About us</a>
               </li>
               <li>
-                <a href="/" aria-label="footer link" className="footer-menu__link">Catalog</a>
+                <a href="/catalog" aria-label="footer link" className="footer-menu__link">Catalog</a>
               </li>
               <li>
                 <a href="/" aria-label="footer link" className="footer-menu__link">Inspiration</a>
