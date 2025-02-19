@@ -85,6 +85,30 @@ export default function SvgIcon({name}) {
 
         )
       }
+    case "arrow-right-down":
+      {
+        return(
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.21059 14.7669L7.11027 13.6509L13.714 14.2214L4.74631 5.25369L5.47551 4.52449L14.4432 13.4922L13.8728 6.88845L14.9888 6.98876L15.7175 15.4957L7.21059 14.7669Z"/>
+          </svg>
+        )
+      }
+    case "sort":
+      {
+        return(
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="stroke">
+            <g clipPath="url(#clip0_301_4544)">
+              <path d="M3 9L7 5M7 5L11 9M7 5V19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M21 15L17 19M17 19L13 15M17 19V5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_301_4544">
+              <rect width="24" height="24" fill="white"/>
+            </clipPath>
+            </defs>
+          </svg>
+        )
+      }
     default: 
       return <></>
   }

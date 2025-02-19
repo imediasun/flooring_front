@@ -10,7 +10,6 @@ import ProductsHome from '@/Flooring/Modules/products-section';
 import BlogSection from '@/Flooring/Modules/blog-section';
 import BannerOverview from '@/Flooring/Modules/banner-overview';
 import FAQSection from '@/Flooring/Modules/faq';
-import CatalogGrid from '@/Flooring/Modules/catalog-grid';
 
 export default function Home() {
   return (

@@ -3,7 +3,6 @@ import Header from './Partials/Header'
 import Footer from './Partials/Footer'
 import bg from "../../img/content/bg.png";
 
-import HeroSection from '@/Flooring/Modules/hero'
 import AppointmentSection from '@/Flooring/Modules/appointment'
 import CatalogGrid from "@/Flooring/Modules/catalog-grid.jsx";
 
