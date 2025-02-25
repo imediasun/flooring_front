@@ -1,11 +1,9 @@
-import { Link } from '@inertiajs/react'
-
-import logoPng from '../../../img/content/logo2.png'
-import SvgIcon from '@/PapaCarlo/Components/SvgIcon'
+import logoPng from '../../../img/content/logo.png'
+import SvgIcon from '@/Flooring/Components/SvgIcon'
 import NavMenu from './NavMenu'
 import { useEffect, useRef, useState } from 'react'
-import PrimaryLink from "@/PapaCarlo/Components/PrimaryLink.jsx";
-import review_papacarlo from "../../../img/content/home/review_papacarlo.png";
+
+import { scrollToAnchor } from '@/Flooring/Libs/anchor-scroll'
 
 export default function Header() {
   const headerRef = useRef(null)
@@ -20,6 +18,11 @@ export default function Header() {
     setIsOpen((prev) => !prev)
   }
 
+  const anchorClick = (event, id) => {
+    event.preventDefault();
+    scrollToAnchor(id)
+  }
+
   useEffect(() => {
     const windowResizeHandle = () => {
       if (!headerRef.current) {
@@ -32,11 +35,26 @@ export default function Header() {
       )
     }
 
+    const windowScrollHandle = () => {
+      if (!headerRef.current) {
+        return
+      }
+
+      if(window.scrollY > 0){
+        headerRef.current.classList.add("_scrolled")
+      }else{
+        headerRef.current.classList.remove("_scrolled")
+      }
+    }
+
     window.addEventListener("resize", windowResizeHandle)
+    window.addEventListener("scroll", windowScrollHandle)
     windowResizeHandle()
+    windowScrollHandle()
 
     return () => {
       window.removeEventListener("resize", windowResizeHandle)
+      window.removeEventListener("scroll", windowScrollHandle)
     }
   }, [headerRef])
 
@@ -44,45 +62,41 @@ export default function Header() {
     <header className="header" ref={headerRef}>
       <div className="container">
         <div className="header-row">
-          <Link href="/" className="header-logo">
-            <img src={logoPng} alt="img" className="footer-logo__img" width="88" height="94" />
-          </Link>
-          <Link className="header-logo-review" href="https://www.thumbtack.com/wa/seattle/furniture-assembly/papa-carlo/service/461811540583702537?referrer_pk=479947431592157197&utm_medium=ios">
-                    <img
-                        src={review_papacarlo}
-                        alt="img"
-                        className="header_reviews-man__img"
-                        width={270}
-                        height={96}
-                    />
-            </Link>
+          <a href="/" className="header-logo" aria-label="home link">
+            <img src={logoPng} alt="img" className="footer-logo__img" width="100" height="110" />
+          </a>
           <div className={`header-menu ${ isOpen ? "_active": ""}`}>
             <div className="header-menu__inner">
               <NavMenu/>
+              <ul className="header__contacts">
+                <li>
+                  <a href="tel:+2064688097" className="header-contacts__link" aria-label="contact link">206-468-8097</a>
+                </li>
+                <li>
+                  <a href="mailto:elitehousewa@gmail.com" className="header-contacts__link" aria-label="contact link">elitehousewa@gmail.com</a>
+                </li>
+              </ul>
               <ul className="header__socials">
                 <li>
-                  <Link href="/" className="header-socials__link" target="_blank">
-                    <SvgIcon name={"facebook"}/>
-                  </Link>
+                  <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Instagram</a>
                 </li>
                 <li>
-                  <Link href="/" className="header-socials__link" target="_blank">
-                    <SvgIcon name={"google"}/>
-                  </Link>
+                  <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Linkedin</a>
                 </li>
                 <li>
-                  <Link href="/" className="header-socials__link" target="_blank">
-                    <SvgIcon name={"micro"}/>
-                  </Link>
+                  <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Facebook</a>
+                </li>
+                <li>
+                  <a href="#" className="header-socials__link" target="_blank" aria-label="social link">Twitter</a>
                 </li>
               </ul>
             </div>
           </div>
-          <a href="tel:+19169381545" className="header-contact__link">
+          <a href="#" className="default-link header-contact__link" onClick={(event) => anchorClick(event, "appointment")}>
+            <span className="value">Let’s talk</span>
             <span className="symbol">
-              <SvgIcon name="phone"/>
+              <SvgIcon name="arrow"/>
             </span>
-            <span className="holder">+1(916)938-15-45</span>
           </a>
 
           <button
@@ -91,7 +105,7 @@ export default function Header() {
             aria-label="burger"
             onClick={toggleMenu}
           >
-            <SvgIcon name={"burger"}/>
+            <SvgIcon name={"menu"}/>
             <SvgIcon name={"close"}/>
           </button>
         </div>

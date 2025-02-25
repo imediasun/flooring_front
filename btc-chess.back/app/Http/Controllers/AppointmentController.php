@@ -19,19 +19,18 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|string',
             'date' => 'required|date',
-            'specialist' => 'required|string',
+            'time' => 'required|string',
             'message' => 'required|string',
         ]);
 
         // Отправка письма
         Mail::send('emails.appointment', ['data' => $validatedData], function ($message) use ($validatedData) {
-            $message->to('papacarlohandyman@gmail.com') // Email администратора
+            $message->to('elitehousewa@gmail.com') // Email администратора
             ->subject('New Appointment Request')
-                ->from($validatedData['email'], $validatedData['firstName'] . ' ' . $validatedData['lastName']);
+                ->from($validatedData['email'], $validatedData['firstName'] . ' ');
         });
 
         return response()->json(['message' => 'Appointment submitted successfully.'], 200);

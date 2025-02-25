@@ -23,6 +23,15 @@ class IndexController extends Controller {
         ]);
     }
 
+    public function catalog(Request $request): Response
+    {
+
+        return Inertia::render('Catalog', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+        ]);
+    }
+
     public function rooms($room_name,Request $request): Response
     {
         return Inertia::render($room_name, [

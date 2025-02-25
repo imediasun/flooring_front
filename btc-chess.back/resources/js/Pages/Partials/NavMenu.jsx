@@ -1,21 +1,22 @@
-import SvgIcon from "@/PapaCarlo/Components/SvgIcon";
+import SvgIcon from "@/Flooring/Components/SvgIcon";
 import { useState, useEffect, useRef } from "react";
 
 const menuData = [
-  { label: "About", href: "/" },
+  { label: "About us", href: "/" },
+  { label: "Catalog", href: "/catalog" },
   {
-    label: "Services",
+    label: "Inspiration",
+    href: "/",
     submenu: [
-      { label: "Bathroom", href: "/rooms/Bathroom" },
-      { label: "Attic", href: "/rooms/Attic" },
-      { label: "Kitchen", href: "/rooms/Kitchen" },
-      { label: "Hall and Resting Area", href: "/rooms/Hall" },
-      { label: "Garage", href: "/rooms/Garage" },
-      { label: "Stairs", href: "/rooms/Stairs" },
+      { label: "Lorem ipsum", href: "/" },
+      { label: "Lorem ipsum", href: "/" },
+      { label: "Lorem ipsum", href: "/" },
+      { label: "Lorem ipsum", href: "/" },
+      { label: "Lorem ipsum", href: "/" }
     ],
   },
-  { label: "Reviews", href: "#reviews_box" },
-  { label: "Contact us", href: "/" },
+  { label: "FAQ", href: "/" },
+  { label: "Contact", href: "/" },
 ]
 
 export default function NavMenu() {
@@ -54,11 +55,12 @@ export default function NavMenu() {
             ) : (
               <span
                 className="nav_link"
-                onClick={() => toggleSubmenu(index)}
               >
-                {item.label}
-                {item.submenu && <span className="nav_arrow">
-                  <SvgIcon name={"arrow"}/>
+                <a href={item.href} className="nav_link">
+                  {item.label}
+                </a>
+                {item.submenu && <span className="nav_arrow" onClick={() => toggleSubmenu(index)}>
+                  <SvgIcon name={"arrow-v2"}/>
                 </span>}
               </span>
             )}

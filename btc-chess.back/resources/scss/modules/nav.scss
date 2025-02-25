@@ -7,15 +7,16 @@
 
   &_links{
     display: inline-flex;
-    gap: 35px;
+    gap: 40px;
     justify-content: space-between;
     align-items: center;
     @include bp.media-down(lg){
-      gap: 25px;
+      gap: 20px;
       width: 100%;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: center;
+      margin-bottom: 66px;
     }
   }
 
@@ -26,16 +27,16 @@
 
     &._active{
       .nav_link{
-        color: var(--grey);
+        color: var(--pale_oyster);
         svg{
-          fill: var(--grey);
-          transform: rotate(180deg);
+          fill: var(--pale_oyster);
+          transform: rotate(0deg);
           @include bp.media-down(lg){
-            fill: var(--yellow);
+            fill: var(--oil);
           }
         }
         @include bp.media-down(lg){
-          color: var(--yellow);
+          color: var(--oil);
         }
       }
       .nav_submenu{
@@ -47,9 +48,6 @@
         }
       }
     }
-    @include bp.media-down(lg){
-      width: 100%;
-    }
   }
 
   &_link{
@@ -58,25 +56,25 @@
     cursor: pointer;
     transition: .3s;
     width: fit-content;
-    font-family: var(--ff-secondary);
+    font-family: var(--ff-primary);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 120%;
-    color: var(--blue);
+    letter-spacing: -0.05em;
+    color: var(--oil);
     &:hover{
       @include bp.media-up(lg){
-        color: var(--red);
+        color: var(--pale_oyster);
         svg{
-          fill: var(--red);
+          fill: var(--pale_oyster);
         }
       }
     }
 
     @include bp.media-down(lg){
-      color: var(--white);
-      gap: 10px;
-      justify-content: space-between;
+      text-transform: uppercase;
+      justify-content: center;
       font-size: 16px;
       width: 100%;
     }
@@ -98,43 +96,25 @@
       object-fit: contain;
       width: 24px;
       height: 24px;
-      fill: var(--blue);
+      fill: var(--oil);
       transition: .3s;
-      @include bp.media-down(lg){
-        fill: var(--white);
-      }
+      transform: rotate(180deg);
     }
   }
 
   &_submenu{
     position: absolute;
-    bottom: -16px;
-    left: -16px;
+    bottom: -11px;
+    left: 0;
     transform: translateY(100%);
     z-index: 1;
-    background: var(--blue);
-    padding: 15px;
-    border-radius: 8px;
-    width: 185px;
+    background: var(--white);
+    padding: 10px 10px 15px;
+    width: 160px;
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
     transition: .2s;
-    &::after{
-      width: 16px;
-      height: 16px;
-      background: var(--blue);
-      content: "";
-      position: absolute;
-      top: -7px;
-      left: 32px;
-      transform: rotate(45deg);
-      z-index: -1;
-      pointer-events: none;
-      @include bp.media-down(lg){
-        display: none;
-      }
-    }
     @include bp.media-down(lg){
       position: relative;
       bottom: 0;
@@ -144,7 +124,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: all;
-      padding: 10px 15px;
+      padding: 10px;
       display: none; 
     }
   }
@@ -153,10 +133,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    @include bp.media-down(lg){
-      gap: 10px;
-    }
+    gap: 10px;
   }
 
   &_submenu__item{
@@ -166,22 +143,23 @@
   }
 
   &_submenu__link{
-    font-family: var(--ff-secondary);
+    font-family: var(--ff-primary);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 120%;
     display: flex;
     align-items: center;
-    color: var(--white);
+    color: var(--pale_oyster);
     transition: .3s;
     &:hover{
       @include bp.media-up(lg){
-        color: var(--yellow);
+        color: var(--oil);
       }
     }
     @include bp.media-down(lg){
       font-size: 16px;
+      color: var(--roman_coffee);
     }
   }
 }

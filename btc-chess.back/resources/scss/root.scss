@@ -2,30 +2,28 @@
 
 :root {
   //   === Colors
-  --white: #F9FAFF;
+  --white: #FFFCFA;
   --black: #000;
-  --blue: #0C0D5D;
-  --yellow: #FFCD00;
-  --grey: #D9D9DA;
-  --red: #FF3C3C;  
+  --oil: #2D1E17;
+  --judge_gray: #523F31;
+  --roman_coffee: #796254;
+  --pale_oyster: #9D8A7C;
+  --red: #ff1e0d;
 
   // === Topography variables
-  --ff-primary: "Open Sans", sans-serif;
-  --ff-secondary: "Fjalla One", sans-serif;
-  --font-size: 16px;
+  --ff-primary: "CityBoysSoft", sans-serif;
+  --ff-secondary: "Lust Pro Didone", sans-serif;
+  --font-size: 18px;
 
   // === Theming variables
   --bg-primary: var(--white);
-  --text-color-primary: var(--blue);
+  --text-color-primary: var(--oil);
 
   // === JS Controlling variables
-  --header-height: 122px;
+  --header-height: 140px;
   --scrollbar-width: 0px;
 
   @include bp.media-down(lg) {
-    --header-height: 80px;
-  }
-  @include bp.media-down(md) {
-    --header-height: 60px;
+    --header-height: 75px;
   }
 }

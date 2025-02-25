@@ -1,0 +1,111 @@
+@use "../../scss-utils/mixins/media" as bp;
+
+.pagination{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  @include bp.media-down(lg){
+    gap: 10px;
+  }
+
+  @media(max-width: 359px){
+    gap: 6px; 
+  }
+
+  &-link{
+    padding: 10px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: .3s;
+    color: var(--oil);
+    font-family: var(--ff-primary);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    letter-spacing: -0.9px;
+    border: 1px solid transparent;
+    @include bp.media-down(lg){
+      padding: 6px 8px;
+      font-size: 16px;
+    }
+    @media(max-width: 359px){
+      padding: 4px 6px;
+      font-size: 15px; 
+    }
+
+    &:hover{
+      @include bp.media-up(lg){
+        color: var(--pale_oyster);
+        border-color: var(--pale_oyster);
+      }
+    }
+
+    &.disabled-link{
+      pointer-events: none;
+    }
+  }
+
+  &-pages{
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    @include bp.media-down(lg){
+      gap: 10px;
+    }
+    @media(max-width: 359px){
+      gap: 6px; 
+    }
+  }
+
+  &-pages-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-page-link{
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+    color: var(--oil);
+    font-family: var(--ff-primary);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    letter-spacing: -0.9px;
+    transition: .3s;
+    border: 1px solid transparent;
+    @include bp.media-down(lg){
+      padding: 6px 8px;
+      font-size: 16px;
+    }
+    @media(max-width: 359px){
+      padding: 4px 6px;
+      font-size: 15px; 
+    }
+
+    &.active-page{
+      background: var(--pale_oyster);
+      color: var(--white);
+    }
+
+    &:hover{
+      @include bp.media-up(lg){
+        border-color: var(--pale_oyster);
+      }
+    }
+
+    &.disabled-link{
+      pointer-events: none;
+    }
+  }
+}
