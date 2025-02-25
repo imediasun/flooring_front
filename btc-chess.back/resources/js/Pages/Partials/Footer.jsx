@@ -47,10 +47,10 @@ export default function Footer() {
           <div className="footer-box__col tablet-full-col">
             <ul className="footer__socials">
               <li>
-                <a href="#" className="footer-socials__link" target="_blank" aria-label="social link">Instagram</a>
+                <a href="https://www.instagram.com/_german_flooring_?igsh=MTFyZHN3Zm96YTZ2ZA==" className="footer-socials__link" target="_blank" aria-label="social link">Instagram</a>
               </li>
               <li>
-                <a href="#" className="footer-socials__link" target="_blank" aria-label="social link">Linkedin</a>
+                <a href="https://www.facebook.com/share/14qP2wjRL3Q/?mibextid=wwXIfr" className="footer-socials__link" target="_blank" aria-label="social link">Linkedin</a>
               </li>
               <li>
                 <a href="#" className="footer-socials__link" target="_blank" aria-label="social link">Facebook</a>

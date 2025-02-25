@@ -67,13 +67,13 @@ export default function AppointmentForm() {
             >
                 <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').content}/>
                 <div className="form-field__list appointment-form__list">
-                    <div className={`form-field ${errors.name ? "_invalid" : ""}`}>
+                    <div className={`form-field ${errors.firstName ? "_invalid" : ""}`}>
                         <div className="form-field__input-wrapp">
                             <input
                                 placeholder="Your name"
                                 className="form-field__input"
                                 type="text"
-                                {...register("name", {required: "Name is required"})}
+                                {...register("firstName", {required: "Name is required"})}
                             />
                         </div>
                         <div className="form-field__error">{errors.name ? errors.name.message : ""}</div>
@@ -107,7 +107,7 @@ export default function AppointmentForm() {
                             />
                         </div>
                         <div className="form-field__error">{errors.email ? errors.email.message : ""}</div>
-                    </div>                    
+                    </div>
 
                     <div className={`form-field ${errors.date ? "_invalid" : ""}`}>
                         <div className="form-field__input-wrapp">

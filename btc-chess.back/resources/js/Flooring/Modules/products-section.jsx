@@ -25,10 +25,10 @@ export default function ProductsHome() {
               </div>
               <div className="products-home-item__info">
                 <div className="products-home-item__description">
-                  Flooring Panels and Wood Flooring Design 
+                  Flooring Panels and Wood Flooring Design
                 </div>
                 <div className="products-home-item__description">
-                  Our flooring panels and wood flooring collection offers high-quality, durable, and stylish solutions to enhance any interior with natural textures and premium finishes. 
+                  Our flooring panels and wood flooring collection offers high-quality, durable, and stylish solutions to enhance any interior with natural textures and premium finishes.
                 </div>
               </div>
             </div>
@@ -45,10 +45,10 @@ export default function ProductsHome() {
               </div>
               <div className="products-home-item__info">
                 <div className="products-home-item__description">
-                  Stone and Quarts Tile for Bathroom
+                    Our Ceramic Bath Tubs for Bathroom Interiors
                 </div>
                 <div className="products-home-item__description">
-                  Our stone and quartz tile collection for bathrooms combines elegance and durability, offering water-resistant and stylish solutions for a sophisticated interior.
+                    Our bath tubs collection for bathrooms combines elegance and durability, offering water-resistant and stylish solutions for sophisticated interior.
                 </div>
               </div>
             </div>
