@@ -76,11 +76,12 @@ services:
       timeout: 10s
     volumes:
       - ../btc-chess.back:/var/www/btc-chess.back
+      - ../docker/nginx/cert/private:/etc/nginx/cert
       - ../docker/nginx/conf.d:/etc/nginx/sites-enabled
       - ../docker/nginx/logs:/var/log/nginx
     ports:
-      - 8860:80
-      - 8463:443
+      - 80:80
+      - 443:443
     expose:
       - 80
     depends_on:
