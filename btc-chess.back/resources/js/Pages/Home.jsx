@@ -11,7 +11,8 @@ import BlogSection from '@/Flooring/Modules/blog-section';
 import BannerOverview from '@/Flooring/Modules/banner-overview';
 import FAQSection from '@/Flooring/Modules/faq';
 
-export default function Home() {
+export default function Home({canLogin, canRegister}) {
+
   return (
     <>
       <Head title="Flooring Main" />

@@ -4,7 +4,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
-use Illuminate\Foundation\Application;
+
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +15,7 @@ Route::post('/appointments', [AppointmentController::class, 'submit'])->name('ap
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/catalog', [IndexController::class, 'catalog'])->name('catalog');
+Route::get('/filter-products', [IndexController::class, 'filter'])->name('filter');
 Route::get('/rooms/{room_name}', [IndexController::class, 'rooms'])->name('index');
 
 Route::get('/dashboard', function () {

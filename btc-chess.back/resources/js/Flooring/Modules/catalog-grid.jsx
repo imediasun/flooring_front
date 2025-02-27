@@ -20,7 +20,15 @@ import FiltersSidebar from "@/Pages/Partials/Filters";
 import SvgIcon from "../Components/SvgIcon";
 import { useState } from "react";
 
-export default function CatalogGrid() {
+
+export default function CatalogGrid({
+                                        categories,
+                                        brands,
+                                        colors,
+                                        sizes,
+                                        intends,
+                                        stocks,
+                                        waterproofs}) {
   const [isOpenFilters, setIsOpenFilters] = useState(false)
 
   const closeFiltersHandle = () => {
@@ -91,7 +99,8 @@ export default function CatalogGrid() {
 
           <div className="catalog-grid__row">
             <div className="catalog-grid__sidebar">
-              <FiltersSidebar isOpen={isOpenFilters} closeFilters={closeFiltersHandle} openFilters={opneFiltersHandle}/>
+              <FiltersSidebar waterproofs={waterproofs} categories={categories} brands={brands}
+                              colors={colors} sizes={sizes} intends={intends} stocks={stocks} isOpen={isOpenFilters} closeFilters={closeFiltersHandle} openFilters={opneFiltersHandle}/>
             </div>
             <div className="catalog-grid__content">
               <div className="catalog-list">
