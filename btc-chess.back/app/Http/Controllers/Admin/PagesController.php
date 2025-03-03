@@ -1,69 +1,86 @@
 <?php
 namespace App\Http\Controllers\Admin;
+use App\Models\Page;
+use App\Services\Photos;
 use Auth;
 use Illuminate\Http\Request;
 
+
 class PagesController {
 
-    public function getFakeData () {
-        // We have to create field settings in JSON that will be contains all params that shows on page
-        // Before returning the data, we will format the data separately
-        // We must establish the linkage through the alias field.
-        // Example for contact page settings => [
-        // 'instagram',
-        // 'linkedin',
-        // 'facebook',
-        // 'twitter',
-        // 'email'
-        // 'phone' ]
-        return [
-            ['id' => 1,
-                'name' => 'Main page',
-                'alias' => 'main',
-            ],
-            ['id' => 2, 'name' => 'Who we are?', 'alias' => 'Who_we_are'],
-            ['id' => 3, 'name' => 'Contact us', 'alias' => 'contact_us'],
-        ];
-    }
+    const PATH_PAGE_PHOTOS = '/photos/pages/';
 
     public function index(Request $request)
     {
-        $response = response()->json([
-            'list' => $this->getFakeData(),
-            'pagination' => [
-                'current_page' => 2,
-                'per_page' => 10,
-                'total' =>  100,
-                'last_page' => 10
-            ]
-       ]);
-
-        return $response;
+        $pages = Page::paginate(10);
+        return response()->json($pages);
     }
 
     public function store(Request $request) {
-        // тут повинен бути код що добавляє в базі даних значення після цього ми повністю оновляємо всі елементи
+
+        $settings = json_decode($request->settings, true);
+
+        $bannerImage = Photos::savePhotoFromBase64($settings['banner'], self::PATH_PAGE_PHOTOS);
+
+        if ($bannerImage) {
+            $settings['banner'] = $bannerImage;
+        }
+
+        Everything::create([
+            'name' => $request->name,
+            'alias' => $request->alias,
+            'settings' => $settings,
+        ]);
+
         return response()->json([
-            'status' => 1
+            'status' => 1,
         ]);
     }
 
-    public function show(Request $request) {
-        return ['id' => 8, 'order' => 8, 'name' => 'Администрирование', 'description' => 'Системное администрирование'];
+    public function show(Request $request, $id) {
+        $page = Page::find($id);
+        if ($page) {
+            return response()->json($page->toArray());
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
-    public function update(Request $request) {
-        // тут повинен бути код що змінює в базі даних значення
-        return response()->json([
-            'status' => 1
-        ]);
+    public function update(Request $request, $id) {
+        $page = Page::find($id);
+        if ($page) {
+            $requestSettings = json_decode($request->settings, true);
+            $bannerImage = Photos::savePhotoFromBase64($requestSettings['banner'], self::PATH_PAGE_PHOTOS);
+
+            $update = [
+                'name' => $request->name,
+                'alias' => $request->alias
+            ];
+
+            if ($bannerImage) {
+                $settings = json_decode($page->settings, true);
+                Photos::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['banner']);
+
+                $requestSettings['banner'] = $bannerImage;
+                $update['settings'] = $requestSettings;
+            }
+
+            $page->update($update);
+            return response()->json(['status' => 1]);
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
-    public function destroy(Request $request) {
-        // тут повинен бути код що видаляє в базі даних значення
-        return response()->json([
-            'status' => 1
-        ]);
+    public function destroy(Request $request, $id) {
+        $page = Page::find($id);
+        if ($page) {
+            Photos::delete($page);
+            $page->delete();
+            return response()->json(['status' => 1]);
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
 }

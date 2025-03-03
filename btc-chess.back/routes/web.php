@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\StocksController;
 use App\Http\Controllers\Admin\SizesController;
 use App\Http\Controllers\Admin\WaterproofsController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\EverythingsController;
 
 
 use App\Http\Controllers\GameController;
@@ -94,13 +95,10 @@ Route::prefix('/api/admin')->group(function () {
         'create', 'edit',
     ]);
 
+    Route::resource('/everythings', EverythingsController::class)->except([
+        'create', 'edit',
+    ]);
 
-//
-//
-//    Route::get('/brands', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::get('/categories', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
