@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Blog extends Model
 {
     use HasFactory;
 
-    protected $table = 'pages';
+    protected $table = 'blogs';
 
     protected $fillable = [
-        'name',
-        'alias',
-        'settings',
-    ];
-
-
-    protected $casts = [
-        'settings' => 'array',
+        'title',
+        'small_caption',
+        'big_caption',
+        'big_photo',
+        'small_photo',
     ];
 }

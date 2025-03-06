@@ -1,30 +1,31 @@
 <?php
 namespace App\Http\Controllers\Admin;
-use App\Http\Resources\EverythingResource;
-use App\Models\Everything;
+use App\Http\Resources\BlogResource;
+use App\Models\Blog;
 use App\Services\Photos;
 use Auth;
 use Illuminate\Http\Request;
 
-class EverythingsController {
+class BlogsController {
 
-    const PATH_EVERYTHING_PHOTOS = 'photos/everythings/';
+    const PATH_BLOG_PHOTOS = 'photos/blogs/';
 
     public function index(Request $request)
     {
-        $everythings = Everything::paginate(2);
-        $result = $everythings->toArray();
-        $result['data'] = EverythingResource::collection($everythings);
+        $blogs = Blog::paginate(2);
+        $result = $blogs->toArray();
+        $result['data'] = BlogResource::collection($blogs);
         return response()->json($result);
     }
 
     public function store(Request $request) {
-        $bigImage = Photos::savePhotoFromBase64($request->big_photo, self::PATH_EVERYTHING_PHOTOS);
-        $smallImage = Photos::savePhotoFromBase64($request->small_photo, self::PATH_EVERYTHING_PHOTOS);
+        $bigImage = Photos::savePhotoFromBase64($request->big_photo, self::PATH_BLOG_PHOTOS);
+        $smallImage = Photos::savePhotoFromBase64($request->small_photo, self::PATH_BLOG_PHOTOS);
 
-        Everything::create([
+        Blog::create([
             'big_caption' => $request->big_caption,
             'small_caption' => $request->small_caption,
+            'title' => $request->title,
             'big_photo' => $bigImage,
             'small_photo' => $smallImage
         ]);
@@ -35,37 +36,37 @@ class EverythingsController {
     }
 
     public function show(Request $request, $id) {
-        $everything = Everything::find($id);
-        if ($everything) {
-            return response()->json(new EverythingResource($everything));
+        $blog = Blog::find($id);
+        if ($blog) {
+            return response()->json(new BlogResource($blog));
         } else {
             return response()->json(['message' => 'Record not found.'], 404);
         }
     }
 
     public function update(Request $request, $id) {
-        $everything = Everything::find($id);
-        if ($everything) {
-
-            $bigImage = Photos::savePhotoFromBase64($request->big_photo, self::PATH_EVERYTHING_PHOTOS);
-            $smallImage = Photos::savePhotoFromBase64($request->small_photo, self::PATH_EVERYTHING_PHOTOS);
+        $blog = Blog::find($id);
+        if ($blog) {
+            $bigImage = Photos::savePhotoFromBase64($request->big_photo, self::PATH_BLOG_PHOTOS);
+            $smallImage = Photos::savePhotoFromBase64($request->small_photo, self::PATH_BLOG_PHOTOS);
 
             $update = [
                 'big_caption' => $request->big_caption,
-                'small_caption' => $request->small_caption
+                'small_caption' => $request->small_caption,
+                'title' => $request->title
             ];
 
             if ($bigImage) {
-                Photos::deleteOne(self::PATH_EVERYTHING_PHOTOS . $everything->big_photo);
+                Photos::deleteOne(BlogsController::PATH_BLOG_PHOTOS . $blog->big_photo);
                 $update['big_photo'] = $bigImage;
             }
 
             if ($smallImage) {
-                Photos::deleteOne(self::PATH_EVERYTHING_PHOTOS . $everything->small_photo);
+                Photos::deleteOne(BlogsController::PATH_BLOG_PHOTOS . $blog->small_photo);
                 $update['small_photo'] = $smallImage;
             }
 
-            $everything->update($update);
+            $blog->update($update);
             return response()->json(['status' => 1]);
         } else {
             return response()->json(['message' => 'Record not found.'], 404);
@@ -73,10 +74,10 @@ class EverythingsController {
     }
 
     public function destroy(Request $request, $id) {
-        $everything = Everything::find($id);
-        if ($everything) {
-            Photos::delete($everything);
-            $everything->delete();
+        $blog = Blog::find($id);
+        if ($blog) {
+            Photos::delete($blog);
+            $blog->delete();
             return response()->json(['status' => 1]);
         } else {
             return response()->json(['message' => 'Record not found.'], 404);

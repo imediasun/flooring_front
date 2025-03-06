@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Size extends Model
 {
     use HasFactory;
 
-    protected $table = 'pages';
+    protected $table = 'sizes';
 
     protected $fillable = [
         'name',
-        'alias',
-        'settings',
-    ];
-
-
-    protected $casts = [
-        'settings' => 'array',
+        'slug',
+        'order',
+        'is_active',
+        'width',
+        'height',
+        'depth'
     ];
 }

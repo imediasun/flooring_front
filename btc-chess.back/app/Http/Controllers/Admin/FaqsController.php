@@ -2,4 +2,4 @@
 namespace App\Http\Controllers\Admin;
 use Auth;
 
-class BrandsController extends AdminBaseController {}
+class FaqsController extends AdminBaseController {}

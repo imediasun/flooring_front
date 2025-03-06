@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PagesController {
 
-    const PATH_PAGE_PHOTOS = '/photos/pages/';
+    const PATH_PAGE_PHOTOS = '';
 
     public function index(Request $request)
     {
@@ -18,15 +18,23 @@ class PagesController {
 
     public function store(Request $request) {
 
-        $settings = json_decode($request->settings, true);
+        $settings = $request->settings;
 
-        $bannerImage = Photos::savePhotoFromBase64($settings['banner'], self::PATH_PAGE_PHOTOS);
-
-        if ($bannerImage) {
-            $settings['banner'] = $bannerImage;
+        if (isset($settings['top_banner'])) {
+            $topBanner = Photos::savePhotoFromBase64($settings['top_banner'], self::PATH_PAGE_PHOTOS);
+            if ($topBanner) {
+                $settings['top_banner'] = $topBanner;
+            }
         }
 
-        Everything::create([
+        if (isset($settings['bottom_banner'])) {
+            $bottomBanner = Photos::savePhotoFromBase64($settings['bottom_banner'], self::PATH_PAGE_PHOTOS);
+            if ($bottomBanner) {
+                $settings['bottom_banner'] = $bottomBanner;
+            }
+        }
+
+        Page::create([
             'name' => $request->name,
             'alias' => $request->alias,
             'settings' => $settings,
@@ -49,21 +57,32 @@ class PagesController {
     public function update(Request $request, $id) {
         $page = Page::find($id);
         if ($page) {
-            $requestSettings = json_decode($request->settings, true);
-            $bannerImage = Photos::savePhotoFromBase64($requestSettings['banner'], self::PATH_PAGE_PHOTOS);
+            $requestSettings = $request->settings;
 
             $update = [
                 'name' => $request->name,
                 'alias' => $request->alias
             ];
 
-            if ($bannerImage) {
-                $settings = json_decode($page->settings, true);
-                Photos::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['banner']);
-
-                $requestSettings['banner'] = $bannerImage;
-                $update['settings'] = $requestSettings;
+            if (isset($requestSettings['top_banner'])) {
+                $topBanner = Photos::savePhotoFromBase64($requestSettings['top_banner'], self::PATH_PAGE_PHOTOS);
+                if ($topBanner) {
+                    $settings = $page->settings;
+                    Photos::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['top_banner']);
+                    $requestSettings['top_banner'] = $topBanner;
+                }
             }
+
+            if (isset($requestSettings['bottom_banner'])) {
+                $bottomBanner = Photos::savePhotoFromBase64($requestSettings['bottom_banner'], self::PATH_PAGE_PHOTOS);
+                if ($bottomBanner) {
+                    $settings = $page->settings;
+                    Photos::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['bottom_banner']);
+                    $requestSettings['bottom_banner'] = $bottomBanner;
+                }
+            }
+
+            $update['settings'] = $requestSettings;
 
             $page->update($update);
             return response()->json(['status' => 1]);

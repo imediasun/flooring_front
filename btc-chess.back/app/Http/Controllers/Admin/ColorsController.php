@@ -1,64 +1,77 @@
 <?php
 namespace App\Http\Controllers\Admin;
+use App\Http\Resources\ColorResource;
+use App\Models\Color;
+use App\Services\Photos;
 use Auth;
 use Illuminate\Http\Request;
 
 class ColorsController {
 
-    public function getFakeData () {
-        return [
-            ['id' => 8, 'order' => 8, 'name' => 'Администрирование', 'description' => 'Системное администрирование'],
-            ['id' => 9, 'order' => 9, 'name' => 'Аутсорсинг и консалтинг', 'description' => 'Передача задач сторонней организации'],
-            ['id' => 10, 'order' => 10, 'name' => 'Переводы', 'description' => 'Устные и письменные переводы'],
-            ['id' => 1, 'order' => 1, 'name' => 'Программирование', 'description' => 'Разработка программного обеспечения'],
-            ['id' => 2, 'order' => 2, 'name' => 'Дизайн и арт', 'description' => 'Создание визуальных образов'],
-//            ['id' => 3, 'order' => 3, 'name' => 'Услуги', 'description' => 'Предоставление различных услуг'],
-//            ['id' => 4, 'order' => 4, 'name' => 'Фото, аудио и видео', 'description' => 'Создание и обработка медиаконтента'],
-//            ['id' => 5, 'order' => 5, 'name' => 'Продвижение', 'description' => 'Маркетинг и реклама'],
-//            ['id' => 6, 'order' => 6, 'name' => 'Архитектура и инжиниринг', 'description' => 'Проектирование и строительство'],
-//            ['id' => 7, 'order' => 7, 'name' => 'Мобильные приложения', 'description' => 'Разработка мобильных приложений'],
-//            ['id' => 11, 'order' => 11, 'name' => 'Мобильные приложения11', 'description' => 'Разработка мобильных приложений11'],
-        ];
-    }
+    const PATH_COLOR_PHOTOS = 'photos/colors/';
+
 
     public function index(Request $request)
     {
-        $response = response()->json([
-            'list' => $this->getFakeData(),
-            'pagination' => [
-                'current_page' => 2,
-                'per_page' => 10,
-                'total' =>  100,
-                'last_page' => 10
-            ]
-       ]);
-
-        return $response;
+        $colors = Color::paginate(10);
+        $result = $colors->toArray();
+        $result['data'] = ColorResource::collection($colors);
+        return response()->json($result);
     }
 
     public function store(Request $request) {
-        // тут повинен бути код що добавляє в базі даних значення після цього ми повністю оновляємо всі елементи
+        $photo = Photos::savePhotoFromBase64($request->photo, self::PATH_COLOR_PHOTOS);
+
+        Color::create([
+            'hash' => $request->hash,
+            'name' => $request->name,
+            'photo' => $photo,
+        ]);
+
         return response()->json([
-            'status' => 1
+            'status' => 1,
         ]);
     }
 
-    public function show(Request $request) {
-        return ['id' => 8, 'order' => 8, 'name' => 'Администрирование', 'description' => 'Системное администрирование'];
+    public function show(Request $request, $id) {
+        $color = Color::find($id);
+        if ($color) {
+            return response()->json(new ColorResource($color));
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
-    public function update(Request $request) {
-        // тут повинен бути код що змінює в базі даних значення
-        return response()->json([
-            'status' => 1
-        ]);
+    public function update(Request $request, $id) {
+        $color = Color::find($id);
+        if ($color) {
+            $photo = Photos::savePhotoFromBase64($request->photo, self::PATH_COLOR_PHOTOS);
+            $update = [
+                'name' => $request->name,
+                'hash' => $request->hash,
+            ];
+
+            if ($photo) {
+                Photos::deleteOne(self::PATH_COLOR_PHOTOS . $color->photo);
+                $update['photo'] = $photo;
+            }
+
+            $color->update($update);
+            return response()->json(['status' => 1]);
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
-    public function destroy(Request $request) {
-        // тут повинен бути код що видаляє в базі даних значення
-        return response()->json([
-            'status' => 1
-        ]);
+    public function destroy(Request $request, $id) {
+        $color = Color::find($id);
+        if ($color) {
+            Photos::delete($color);
+            $color->delete();
+            return response()->json(['status' => 1]);
+        } else {
+            return response()->json(['message' => 'Record not found.'], 404);
+        }
     }
 
 }

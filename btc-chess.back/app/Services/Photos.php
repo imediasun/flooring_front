@@ -2,13 +2,22 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\Admin\ArticlesController;
+use App\Http\Controllers\Admin\BlogsController;
+use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\EverythingsController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Models\Article;
+use App\Models\Blog;
+use App\Models\Color;
 use App\Models\Everything;
+use App\Models\Page;
 use Illuminate\Support\Facades\Storage;
 
 class Photos
 {
+
+    const MAIN_ALIAS = 'main';
 
     public static function savePhotoFromBase64($base64Image, $path) : string {
         if (!$base64Image) {
@@ -18,7 +27,7 @@ class Photos
         $imageType = str_replace('data:image/', '', $imageData[0]);
         $image = substr($base64Image, strpos($base64Image, ',') + 1);
         $imageData = base64_decode($image);
-        $imageName = substr(uniqid(time() . '_', true), 0, 32) . '.' . $imageType;
+        $imageName = uniqid(time() . '_', false) . '.' . $imageType;
         Storage::put($path . $imageName, $imageData);
         return $imageName;
     }
@@ -34,11 +43,30 @@ class Photos
             self::deleteOne(EverythingsController::PATH_EVERYTHING_PHOTOS . $model->big_photo);
         }
 
-        if ($model instanceof Page) {
-            $settings = json_decode($model->settings, true);
-            if ($settings['banner']) {
-                self::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['banner']);
+        if ($model instanceof Article) {
+            self::deleteOne(ArticlesController::PATH_ARTICLE_PHOTOS . $model->small_photo);
+            self::deleteOne(ArticlesController::PATH_ARTICLE_PHOTOS . $model->big_photo);
+        }
+
+        if ($model instanceof Blog) {
+            self::deleteOne(BlogsController::PATH_BLOG_PHOTOS . $model->small_photo);
+            self::deleteOne(BlogsController::PATH_BLOG_PHOTOS . $model->big_photo);
+        }
+
+        if ($model instanceof Page && $model->alias === self::MAIN_ALIAS) {
+            $settings = $model->settings;
+
+            if ($settings['top_banner']) {
+                self::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['top_banner']);
             }
+
+            if ($settings['bottom_banner']) {
+                self::deleteOne(PagesController::PATH_PAGE_PHOTOS . $settings['bottom_banner']);
+            }
+        }
+
+        if ($model instanceof Color) {
+            self::deleteOne(ColorsController::PATH_COLOR_PHOTOS . $model->photo);
         }
     }
 }

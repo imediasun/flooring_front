@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticlesController;
+use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
+use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\IntendsController;
 use App\Http\Controllers\Admin\StocksController;
 use App\Http\Controllers\Admin\SizesController;
@@ -96,6 +99,18 @@ Route::prefix('/api/admin')->group(function () {
     ]);
 
     Route::resource('/everythings', EverythingsController::class)->except([
+        'create', 'edit',
+    ]);
+
+    Route::resource('/articles', ArticlesController::class)->except([
+        'create', 'edit',
+    ]);
+
+    Route::resource('/blogs', BlogsController::class)->except([
+        'create', 'edit',
+    ]);
+
+    Route::resource('/faqs', FaqsController::class)->except([
         'create', 'edit',
     ]);
 
