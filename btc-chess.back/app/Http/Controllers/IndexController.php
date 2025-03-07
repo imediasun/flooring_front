@@ -23,7 +23,7 @@ use Inertia\Response;
 
 class IndexController extends Controller {
 
-    const DEFAULT_LIMIT = 1;
+    const DEFAULT_LIMIT = 3;
     const DEFAULT_PAGE = 1;
 
 
@@ -45,15 +45,6 @@ class IndexController extends Controller {
     public function filter(Request $request): JsonResponse
     {
 
-//        arrival: selectedArrival === 1 ? 1 : undefined,
-//            cat: selectedCat !== 'all' ? selectedCat : undefined,
-//            'sizes[]': openSizeFilter ? selectedSizes : undefined,
-//            'intends[]': openIntendFilter ? selectedIntends : undefined,
-//            'colors[]': openColorFilter ? selectedColors : undefined,
-//            'stocks[]': openStockFilter ? selectedStocks : undefined,
-//            'waterproofs[]': openWaterproofFilter ? selectedWaterproofs : undefined,
-//            'brands[]': openBrandFilter ? selectedBrands : undefined,
-//
         $perPage = $request->input('limit', self::DEFAULT_LIMIT);
         $page = $request->input('page', self::DEFAULT_PAGE);
 
