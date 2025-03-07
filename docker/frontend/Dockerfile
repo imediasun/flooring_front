@@ -1,14 +1,16 @@
-FROM node:16.15.1-alpine
-
-COPY ./frontend /app
+FROM node:20.0.0-alpine
+#dev
+COPY ./admin_magellan /app
 
 WORKDIR /app
+COPY ./admin_magellan/package*.json ./
 
 RUN yarn install && yarn cache clean
 
-EXPOSE 8080 3000
+COPY ./admin_magellan /app
+EXPOSE 8080
 
-WORKDIR /var/www/frontend
+WORKDIR /var/www/admin_magellan
 
 CMD ["yarn", "run", "start"]
 

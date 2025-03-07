@@ -16,8 +16,7 @@ up-go-ai:
 connect_back: #connect to php application
 	@docker exec -it flooring-php-fpm bash
 
-install: install-php
-#install-frontend
+install: install-php install-frontend
 
 # Generate gRPC PHP classes inside the php-fpm container
 generate-grpc-ai:
@@ -31,7 +30,8 @@ setup:  ## Create and start containers
 	$(MAKE) up-redis
 	$(MAKE) install
 	$(MAKE) up-php
-	$(MAKE) up-papacarlo-nginx
+	$(MAKE) up-frontend
+	$(MAKE) up-flooring-nginx
 
 setup-db:  ## Create and start containers
 	$(MAKE) up-postgres_onboarding
@@ -74,9 +74,9 @@ up-redis: ## Create and start containers
 	docker compose up -d flooring-redis
 
 up-frontend: ## Start panel-ui
-	docker compose up --build  -d frontend
+	docker compose up --build -d admin-app
 
-up-papacarlo-nginx:
+up-flooring-nginx:
 	docker compose up -d --no-deps --build flooring-nginx
 
 proto-regenerate: ## Regenerate proto files in the existing php-fpm container
@@ -101,8 +101,8 @@ install-certs: ## Create and start containers
 
 
 install-frontend: ## Install dependecy before run in watcher mode
-	docker compose build frontend
-	docker compose run --rm --no-deps frontend yarn install
+	docker compose build admin-app
+	docker compose run --rm --no-deps admin-app yarn install
 
 up-php: ## Create and start containers
 	docker-compose up -d flooring-php-fpm

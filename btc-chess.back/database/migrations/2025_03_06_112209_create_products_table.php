@@ -19,6 +19,9 @@ return new class extends Migration
             $table->integer('width');
             $table->integer('height');
             $table->integer('depth');
+            $table->integer('order');
+            $table->string('photo', 37);
+
             $table->boolean('is_active');
             $table->boolean('new_arrival');
             $table->string('small_photo', 37)->nullable();

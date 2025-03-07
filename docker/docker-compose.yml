@@ -1,6 +1,24 @@
 version: '3.8'
 
 services:
+
+  admin-app:
+    container_name: admin-app
+    #entrypoint: /bin/sh -c "cd /var/www/excursions.front && npm i && npm run dev"
+    ports:
+      - "7082:8080"
+    expose:
+      - 8080
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/Dockerfile
+    volumes:
+      - ../admin_magellan:/var/www/admin_magellan
+    depends_on:
+      - flooring-php-fpm
+    networks:
+      - flooring
+
   flooring-php-fpm:
     container_name: flooring-php-fpm
     build:
@@ -81,13 +99,19 @@ services:
       - ../docker/nginx/conf.d:/etc/nginx/sites-enabled
       - ../docker/nginx/logs:/var/log/nginx
     ports:
-      - 80:80
-      - 443:443
+      - 8463:443
+      - 8943:443
     expose:
       - 80
+      - 8463
+      - 8943
     depends_on:
-      - flooring-php-fpm
-      - flooring-redis
+      flooring-php-fpm:
+        condition: service_healthy
+      admin-app:
+        condition: service_healthy
+      flooring-redis:
+        condition: service_started
     networks:
       - flooring
 

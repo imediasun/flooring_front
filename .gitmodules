@@ -1,1 +1,3 @@
-
+[submodule "admin_magellan"]
+	path = admin_magellan
+	url = git@github.com/imediasun/admin_magellan.git
