@@ -48,6 +48,7 @@ services:
       POSTGRES_DB: chess_db
     volumes:
       - flooring-postgres_front_data:/var/lib/postgresql/data
+      - ./init-db/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     ports:
       - "5437:5432"
     networks:
