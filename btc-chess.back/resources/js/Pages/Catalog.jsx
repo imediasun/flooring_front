@@ -8,13 +8,15 @@ import CatalogGrid from "@/Flooring/Modules/catalog-grid.jsx";
 
 
 export default function Catalog({
-    categories,
-    brands,
-    colors,
-    sizes,
-    intends,
-    stocks,
-    waterproofs}) {
+        categories,
+        brands,
+        colors,
+        sizes,
+        intends,
+        stocks,
+        waterproofs,
+        contactPage
+}) {
 
     return (
         <>
@@ -26,7 +28,7 @@ export default function Catalog({
                              colors={colors} sizes={sizes} intends={intends} stocks={stocks}/>
                 <AppointmentSection/>
             </div>
-            <Footer/>
+            <Footer contactPage={contactPage.settings}/>
         </>
     )
 }

@@ -45,7 +45,7 @@ class ArticlesController {
     }
 
     public function update(Request $request, $id) {
-        $article = Everything::find($id);
+        $article = Article::find($id);
         if ($article) {
 
             $bigImage = Photos::savePhotoFromBase64($request->big_photo, self::PATH_ARTICLE_PHOTOS);

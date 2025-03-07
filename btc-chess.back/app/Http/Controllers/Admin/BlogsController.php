@@ -27,7 +27,8 @@ class BlogsController {
             'small_caption' => $request->small_caption,
             'title' => $request->title,
             'big_photo' => $bigImage,
-            'small_photo' => $smallImage
+            'small_photo' => $smallImage,
+            'is_active' => $request->is_active
         ]);
 
         return response()->json([
@@ -53,7 +54,8 @@ class BlogsController {
             $update = [
                 'big_caption' => $request->big_caption,
                 'small_caption' => $request->small_caption,
-                'title' => $request->title
+                'title' => $request->title,
+                'is_active' => $request->is_active
             ];
 
             if ($bigImage) {

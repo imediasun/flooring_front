@@ -1,24 +1,10 @@
 import Breadcrumbs from "../Components/Breadcrumbs";
-import product1Img from "../../../img/content/catalog/product1.png"
-import product2Img from "../../../img/content/catalog/product2.png"
-import product3Img from "../../../img/content/catalog/product3.png"
-import product4Img from "../../../img/content/catalog/product4.png"
-import product5Img from "../../../img/content/catalog/product5.png"
-import product6Img from "../../../img/content/catalog/product6.png"
-import product7Img from "../../../img/content/catalog/product7.png"
-import product8Img from "../../../img/content/catalog/product8.png"
-import product9Img from "../../../img/content/catalog/product9.png"
-import product10Img from "../../../img/content/catalog/product10.png"
-import product11Img from "../../../img/content/catalog/product11.png"
-import product12Img from "../../../img/content/catalog/product12.png"
-import product13Img from "../../../img/content/catalog/product13.png"
-import product14Img from "../../../img/content/catalog/product14.png"
-import product15Img from "../../../img/content/catalog/product15.png"
 import Pagination from "../Components/Pagination";
 import SortTrigger from "../Components/Sort";
 import FiltersSidebar from "@/Pages/Partials/Filters";
 import SvgIcon from "../Components/SvgIcon";
-import { useState } from "react";
+import {useState} from "react";
+import {useGetFilterQuery} from "@/services/endpoints/filterEndpoints.js";
 
 
 export default function CatalogGrid({
@@ -28,253 +14,132 @@ export default function CatalogGrid({
                                         sizes,
                                         intends,
                                         stocks,
-                                        waterproofs}) {
-  const [isOpenFilters, setIsOpenFilters] = useState(false)
+                                        waterproofs
+                                    }) {
 
-  const closeFiltersHandle = () => {
-    setIsOpenFilters(false)
-    window.document.body.classList.remove("menu-lock")
-  }
-  const opneFiltersHandle = () => {
-    window.document.body.classList.add("menu-lock")
-    setIsOpenFilters(true)
-  }
+    const [isOpenFilters, setIsOpenFilters] = useState(false)
+    const [page, setPage] = useState(1);
 
-  const breadcrumbsData = [
-    {
-      "label": "Main",
-      "href": "/"
-    },
-    {
-      "label": "Catalog",
-      "href": "/catalog"
+    const closeFiltersHandle = () => {
+        setIsOpenFilters(false)
+        window.document.body.classList.remove("menu-lock")
     }
-  ]
-
-  const paginationData = [
-    {
-      "label": "1",
-      "href": "/",
-      "isActive": true
-    },
-    {
-      "label": "2",
-      "href": "/",
-      "isActive": false
-    },
-    {
-      "label": "3",
-      "href": "/",
-      "isActive": false
-    },
-    {
-      "label": "...",
-      "href": "/",
-      "isActive": false
-    },
-    {
-      "label": "23",
-      "href": "/",
-      "isActive": false
+    const opneFiltersHandle = () => {
+        window.document.body.classList.add("menu-lock")
+        setIsOpenFilters(true)
     }
-  ]
 
-  return(
-    <div className="global-section catalog-grid-section">
-      <div className="container">
-        <Breadcrumbs data={breadcrumbsData} />
-        <div className="catalog-grid">
-          <div className="catalog-grid__heading">
-            <h3 className="global-section-title catalog-title text-align-left"><b>Our</b> catalog</h3>
-            <div className="catalog-search-result">(245)</div>
-          </div>
+    const [searchParams, setSearchParams] = useState('');
 
-          <div className="catalog-grid__controls">
-            <button type="button" aria-label="filters btn" className="catalog-filters-trigger" onClick={opneFiltersHandle}>
-              <span className="symbol"><SvgIcon name={"filter-set"} /></span>
-              <span className="value">Filter</span>
-            </button>
-            <SortTrigger/>
-          </div>
+    const {data: products, isLoading, isError, isSuccess, error} = useGetFilterQuery(searchParams);
+    // , {
+    //     skip: searchParams.length === 0,
+    // });
 
-          <div className="catalog-grid__row">
-            <div className="catalog-grid__sidebar">
-              <FiltersSidebar waterproofs={waterproofs} categories={categories} brands={brands}
-                              colors={colors} sizes={sizes} intends={intends} stocks={stocks} isOpen={isOpenFilters} closeFilters={closeFiltersHandle} openFilters={opneFiltersHandle}/>
+
+    const breadcrumbsData = [
+        {
+            "label": "Main",
+            "href": "/"
+        },
+        {
+            "label": "Catalog",
+            "href": "/catalog"
+        }
+    ]
+
+    const paginationData = [
+        {
+            "label": "1",
+            "href": "/",
+            "isActive": true
+        },
+        {
+            "label": "2",
+            "href": "/",
+            "isActive": false
+        },
+        {
+            "label": "3",
+            "href": "/",
+            "isActive": false
+        },
+        {
+            "label": "...",
+            "href": "/",
+            "isActive": false
+        },
+        {
+            "label": "23",
+            "href": "/",
+            "isActive": false
+        }
+    ]
+
+    return (
+        <div className="global-section catalog-grid-section">
+            <div className="container">
+                <Breadcrumbs data={breadcrumbsData}/>
+                <div className="catalog-grid">
+                    <div className="catalog-grid__heading">
+                        <h3 className="global-section-title catalog-title text-align-left"><b>Our</b> catalog</h3>
+                        <div className="catalog-search-result">(245)</div>
+                    </div>
+
+                    <div className="catalog-grid__controls">
+                        <button type="button" aria-label="filters btn" className="catalog-filters-trigger"
+                                onClick={opneFiltersHandle}>
+                            <span className="symbol"><SvgIcon name={"filter-set"}/></span>
+                            <span className="value">Filter</span>
+                        </button>
+                        <SortTrigger/>
+                    </div>
+
+                    <div className="catalog-grid__row">
+                        <div className="catalog-grid__sidebar">
+                            <FiltersSidebar page={page} waterproofs={waterproofs} categories={categories}
+                                brands={brands} setSearchParams={setSearchParams}
+                                colors={colors} sizes={sizes} intends={intends} stocks={stocks}
+                                isOpen={isOpenFilters}
+                                closeFilters={closeFiltersHandle} openFilters={opneFiltersHandle}/>
+                        </div>
+                        <div className="catalog-grid__content">
+
+
+                            <div className="catalog-list">
+                                {
+                                    isLoading && 'Loading...'
+                                }
+                                {
+                                    !isLoading && products?.data && products.data.length > 0 && products.data.map((product) => (
+                                        <div className="product-card">
+                                            <div className="product-card__photo">
+                                                <img src={`/storage/${product.small_photo}`} alt="img"
+                                                     width="310" height="370"
+                                                     className="product-card__photo-img"/>
+                                                <a href={`/product/${product.slug}`} aria-label="details product link"
+                                                   className="product-card__link">details</a>
+                                            </div>
+                                            <div className="product-card__info">
+                                                <a href={`/brand/${product.brand_slug}`}
+                                                   aria-label="details product link" className="product-card__name">
+                                                    {product.brand_name}
+                                                </a>
+                                                <div className="product-card__detail">{product.name}</div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <Pagination
+                        current_page={products?.current_page}
+                        last_page={products?.last_page}
+                        onPageChange={(page) => setPage(page)}
+                    />
+                </div>
             </div>
-            <div className="catalog-grid__content">
-              <div className="catalog-list">
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product1Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9061 Vienna Oak</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product2Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 88169-3 platinum</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product3Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9013  Capri island</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product4Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate GF9006  Oak Wilmington</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product5Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate Gf7009  Oak seine</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product6Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Quarts Countertops</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product7Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9013  Capri island</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product8Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9061 Vienna Oak </div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product9Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 88169-3 platinum </div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product10Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 88169-3 platinum </div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product11Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9013  Capri island</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product12Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9061 Vienna Oak </div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product13Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9061 Vienna Oak </div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product14Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 9013  Capri island</div>
-                  </div>
-                </div>
-
-                <div className="product-card">
-                  <div className="product-card__photo">
-                    <img src={product15Img} alt="img" width="310" height="370" className="product-card__photo-img"/>
-                    <a href="#" aria-label="details product link" className="product-card__link">details</a>
-                  </div>
-                  <div className="product-card__info">
-                    <a href="#" aria-label="details product link" className="product-card__name">German flooring</a>
-                    <div className="product-card__detail">Laminate 88169-3 platinum </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Pagination data={paginationData}/>
         </div>
-      </div>
-    </div>
-  )
+    )
 }

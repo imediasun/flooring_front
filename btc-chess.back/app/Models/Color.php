@@ -3,10 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Color extends BaseModel
+class Color extends Model
 {
     use HasFactory;
 
     protected $table = 'colors';
+
+    protected $fillable = [
+        'name',
+        'hash',
+        'is_active',
+        'photo',
+    ];
 }

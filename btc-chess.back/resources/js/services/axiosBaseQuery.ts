@@ -22,27 +22,23 @@ const axiosBaseQuery =
     > =>
         async ({ url, method, data, params }, api) => {
             try {
-                // Створюємо екземпляр заголовків
                 const headers = new Headers();
 
-                // Якщо передано `prepareHeaders`, викликаємо його
                 if (prepareHeaders) {
                     await prepareHeaders(headers, { getState: api.getState });
                 }
 
-                // Конвертуємо `Headers` в об'єкт для Axios
                 const headersObject: Record<string, string> = {};
                 headers.forEach((value: any, key: any) => {
                     headersObject[key] = value;
                 });
 
-                // Виконуємо запит через Axios
                 const result = await axios({
                     url: baseUrl + url,
                     method,
                     data,
                     params,
-                    headers: headersObject, // Додаємо підготовлені заголовки
+                    headers: headersObject,
                 });
 
                 return { data: result.data };

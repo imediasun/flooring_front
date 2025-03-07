@@ -14,7 +14,8 @@ class BlogResource extends JsonResource
             'small_caption' => $this->small_caption,
             'big_caption' => $this->big_caption,
             'small_photo' => BlogsController::PATH_BLOG_PHOTOS . $this->small_photo,
-            'big_photo' => BlogsController::PATH_BLOG_PHOTOS . $this->big_photo
+            'big_photo' => BlogsController::PATH_BLOG_PHOTOS . $this->big_photo,
+            'is_active' => $this->is_active ? 1 : 0,
         ];
     }
 }

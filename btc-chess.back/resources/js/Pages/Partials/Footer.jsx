@@ -1,8 +1,9 @@
 import logoPng from "../../../img/content/logo.png"
 
-export default function Footer() {
-  return (
+export default function Footer({contactPage}) {
 
+
+  return (
     <footer className="footer">
       <div className="container">
         <h1 className="global-section-bigtitle footer-title"><b>Contact</b> us</h1>
@@ -34,10 +35,10 @@ export default function Footer() {
           <div className="footer-box__col tablet-full-col">
             <ul className="footer__contacts">
               <li>
-                <a href="tel:+2064688097" className="footer-contacts__link" aria-label="contact link">206-468-8097</a>
+                <a href="tel:+2064688097" className="footer-contacts__link" aria-label="contact link">{contactPage.phone}</a>
               </li>
               <li>
-                <a href="mailto:elitehousewa@gmail.com" className="footer-contacts__link" aria-label="contact link">elitehousewa@gmail.com</a>
+                <a href="mailto:elitehousewa@gmail.com" className="footer-contacts__link" aria-label="contact link">{contactPage.email}</a>
               </li>
             </ul>
           </div>
@@ -47,16 +48,16 @@ export default function Footer() {
           <div className="footer-box__col tablet-full-col">
             <ul className="footer__socials">
               <li>
-                <a href="https://www.instagram.com/_german_flooring_?igsh=MTFyZHN3Zm96YTZ2ZA==" className="footer-socials__link" target="_blank" aria-label="social link">Instagram</a>
+                <a href={contactPage.instagram} className="footer-socials__link" target="_blank" aria-label="social link">Instagram</a>
               </li>
               <li>
-                <a href="https://www.facebook.com/share/14qP2wjRL3Q/?mibextid=wwXIfr" className="footer-socials__link" target="_blank" aria-label="social link">Linkedin</a>
+                <a href={contactPage.linkedin} className="footer-socials__link" target="_blank" aria-label="social link">Linkedin</a>
               </li>
               <li>
-                <a href="#" className="footer-socials__link" target="_blank" aria-label="social link">Facebook</a>
+                <a href={contactPage.facebook} className="footer-socials__link" target="_blank" aria-label="social link">Facebook</a>
               </li>
               <li>
-                <a href="#" className="footer-socials__link" target="_blank" aria-label="social link">Twitter</a>
+                <a href={contactPage.twitter} className="footer-socials__link" target="_blank" aria-label="social link">Twitter</a>
               </li>
             </ul>
           </div>

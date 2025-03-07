@@ -1,6 +1,7 @@
 import AppointmentForm from "@/Pages/Partials/AppointmentForm"
 
 export default function AppointmentSection() {
+
   return(
     <div className="global-section appointment-section" id="appointment">
       <div className="container">

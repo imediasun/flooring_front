@@ -7,11 +7,13 @@ use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\EverythingsController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Models\Article;
 use App\Models\Blog;
 use App\Models\Color;
 use App\Models\Everything;
 use App\Models\Page;
+use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class Photos
@@ -46,6 +48,10 @@ class Photos
         if ($model instanceof Article) {
             self::deleteOne(ArticlesController::PATH_ARTICLE_PHOTOS . $model->small_photo);
             self::deleteOne(ArticlesController::PATH_ARTICLE_PHOTOS . $model->big_photo);
+        }
+
+        if ($model instanceof Product) {
+            self::deleteOne(ProductsController::PATH_PRODUCT_PHOTOS . $model->small_photo);
         }
 
         if ($model instanceof Blog) {

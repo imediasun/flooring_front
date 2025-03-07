@@ -12,12 +12,20 @@ class AdminBaseController
     const NUMBER_ITEM_OF_PAGE = 2;
     public function index(Request $request)
     {
-        $model = $this->getModelNameByUri($request->route()->action['prefix'], $request->route()->uri());
-        $items = $model::paginate(self::NUMBER_ITEM_OF_PAGE);
-        $result = $items->toArray();
-        $result['data'] = AdminICatalogItemResource::collection($items);
-        return response()->json($result);
+        $page = $request->input('page', 1);
 
+        if ($page == -1) {
+            $model = $this->getModelNameByUri($request->route()->action['prefix'], $request->route()->uri());
+            $items = $model::where('is_active', true)->get();
+        } else {
+            $model = $this->getModelNameByUri($request->route()->action['prefix'], $request->route()->uri());
+            $items = $model::where('is_active', true)->paginate(self::NUMBER_ITEM_OF_PAGE);
+            $result = $items->toArray();
+        }
+
+        $result['data'] = AdminICatalogItemResource::collection($items);
+
+        return response()->json($result);
     }
 
     protected function getModelNameByUri(string $prefix, string $uri): string

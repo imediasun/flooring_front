@@ -3,10 +3,12 @@
 use App\Http\Controllers\Admin\ArticlesController;
 use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\BrandsController;
+use App\Http\Controllers\Admin\CatalogController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\ColorsController;
 use App\Http\Controllers\Admin\FaqsController;
 use App\Http\Controllers\Admin\IntendsController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\StocksController;
 use App\Http\Controllers\Admin\SizesController;
 use App\Http\Controllers\Admin\WaterproofsController;
@@ -113,6 +115,12 @@ Route::prefix('/api/admin')->group(function () {
     Route::resource('/faqs', FaqsController::class)->except([
         'create', 'edit',
     ]);
+
+    Route::resource('/products', ProductsController::class)->except([
+        'create', 'edit',
+    ]);
+
+    Route::get('/catalog', [CatalogController::class, 'index'])->name('catalogs.index');
 
 });
 
