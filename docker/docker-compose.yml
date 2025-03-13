@@ -6,9 +6,9 @@ services:
     container_name: admin-app
     #entrypoint: /bin/sh -c "cd /var/www/excursions.front && npm i && npm run dev"
     ports:
-      - "7082:8080"
+      - "3000:3000"
     expose:
-      - 8080
+      - 3000
     build:
       context: ../
       dockerfile: ./docker/frontend/Dockerfile
@@ -44,7 +44,7 @@ services:
     volumes:
       - ./php-fpm/conf.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       #- ./php-fpm/docker-php-entrypoint:/usr/local/bin/docker-php-entrypoint
-      - ../btc-chess.back:/var/www/btc-chess.back
+      - ../btc-chess.back:/var/www/btc-chess.back:Z
       - ./php-fpm/php.ini:/usr/local/etc/php/conf.d/custom.ini
      # - ../Microservices/sitelogger/src:/var/www/Microservices/sitelogger
       #- "./chess.docker/nginx/cert/wonderkind.test/cacert.pem:/bin/cacert.pem"
