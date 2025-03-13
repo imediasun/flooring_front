@@ -11,7 +11,7 @@ rebuild: #rebuild all
 
 # Start Go AI microservice container
 up-go-ai:
-	docker-compose up -d grpc-ai
+	docker compose up -d grpc-ai
 
 connect_back: #connect to php application
 	@docker exec -it flooring-php-fpm bash
@@ -20,7 +20,7 @@ install: install-php install-frontend
 
 # Generate gRPC PHP classes inside the php-fpm container
 generate-grpc-ai:
-	docker-compose exec flooring-php-fpm protoc \
+	docker compose exec flooring-php-fpm protoc \
         --proto_path=/var/www/backend/ai_service \
         --php_out=/var/www/backend/src/Service \
         /var/www/backend/ai_service/ai_service.proto
@@ -105,7 +105,7 @@ install-frontend: ## Install dependecy before run in watcher mode
 	docker compose run --rm --no-deps admin-app yarn install
 
 up-php: ## Create and start containers
-	docker-compose up -d flooring-php-fpm
+	docker compose up -d flooring-php-fpm
 
 test:
-	docker-compose exec flooring-php-fpm vendor/bin/phpunit --configuration phpunit.xml
+	docker compose exec flooring-php-fpm vendor/bin/phpunit --configuration phpunit.xml
