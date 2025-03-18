@@ -2,5 +2,3 @@
 .env
 .idea
 **/nginx/cert/create-certificates.sh
-init-db
-nginx/cert/private
