@@ -1,10 +1,6 @@
 .DS_STORE
 .env
 .idea
-mysql_data
-mysql/dump
 **/nginx/cert/create-certificates.sh
-postgres_payment_data
-postgres_onboarding_data
-postgres_front_data
 init-db
+docker/nginx/cert/private

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Grpc\ChannelCredentials;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
