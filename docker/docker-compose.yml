@@ -1,13 +1,9 @@
-
 services:
 
   admin-app:
     container_name: admin-app
-    #entrypoint: /bin/sh -c "cd /var/www/excursions.front && npm i && npm run dev"
     ports:
       - "3000:3000"
-    expose:
-      - 3000
     build:
       context: ../
       dockerfile: ./docker/frontend/Dockerfile
@@ -30,23 +26,14 @@ services:
         GIT_SAFE_DIR: /var/www/btc-chess.back
     environment:
       XDEBUG_SESSION: 1
-      #XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1"
       XDEBUG_CONFIG: "client_host=host.docker.internal client_port=9003"
       PHP_IDE_CONFIG: "serverName=localhost"
-      PUID: ${PUID:-1002}
-      PGID: ${PGID:-1002}
-      GIT_SAFE_DIR: /var/www/btc-chess.back
-      ONBOARDINGSVC_HOST: "172.23.63.248" #Вставить свой IP по которому локально работает onboarding
-      ONBOARDINGSVC_PORT: "50052"  # Порт gRPC микросервиса
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./php-fpm/conf.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      #- ./php-fpm/docker-php-entrypoint:/usr/local/bin/docker-php-entrypoint
       - ../btc-chess.back:/var/www/btc-chess.back:Z
       - ./php-fpm/php.ini:/usr/local/etc/php/conf.d/custom.ini
-     # - ../Microservices/sitelogger/src:/var/www/Microservices/sitelogger
-      #- "./chess.docker/nginx/cert/wonderkind.test/cacert.pem:/bin/cacert.pem"
     restart: unless-stopped
     expose:
       - 9000
@@ -86,12 +73,8 @@ services:
     build:
       context: ../
       dockerfile: ./docker/nginx/Dockerfile
-    #image: nginx
     container_name: flooring-nginx
     hostname: flooring-nginx
-    healthcheck:
-      test: [ "CMD", "service", "nginx", "status" ]
-      timeout: 10s
     volumes:
       - ../btc-chess.back:/var/www/btc-chess.back
       - ../docker/nginx/cert/private:/etc/nginx/cert

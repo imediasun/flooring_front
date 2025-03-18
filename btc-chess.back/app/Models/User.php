@@ -2,64 +2,47 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User implements Authenticatable
+class User extends Authenticatable
 {
-    protected $attributes = [];
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
 
-    public function __construct(array $attributes = [])
-    {
-        $this->attributes = $attributes;
-    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function getAuthIdentifier()
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
     {
-        return $this->attributes['id'] ?? null;
-    }
-
-    public function getAuthPassword()
-    {
-        return $this->attributes['password'] ?? null;
-    }
-
-    public function getAuthPasswordName()
-    {
-        return 'password';
-    }
-
-    public function getRememberToken()
-    {
-        return $this->attributes['remember_token'] ?? null;
-    }
-
-    public function setRememberToken($value)
-    {
-        $this->attributes['remember_token'] = $value;
-    }
-
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
-    }
-
-    public function __get($key)
-    {
-        return $this->attributes[$key] ?? null;
-    }
-
-    public function __set($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    public function toArray()
-    {
-        return $this->attributes;
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }
