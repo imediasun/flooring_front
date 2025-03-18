@@ -3,4 +3,4 @@
 .idea
 **/nginx/cert/create-certificates.sh
 init-db
-docker/nginx/cert/private
+nginx/cert/private
